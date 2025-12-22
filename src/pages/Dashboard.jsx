@@ -173,7 +173,7 @@ const Dashboard = () => {
 
         {/* FAB Button */}
         <button className="fab-button" title="Nueva tarea" onClick={() => setShowModal(true)}>
-          <span>+</span>
+          +
         </button>
 
         {/* Create Task Modal */}

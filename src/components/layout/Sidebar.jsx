@@ -7,13 +7,11 @@ const Sidebar = () => {
       <div className="sidebar-content">
         {/* Branding */}
         <div className="sidebar-brand">
-          <div className="brand-icon">
-            <span>☑️</span>
-          </div>
-          <div className="brand-text">
-            <h1 className="brand-title">[How] ToDoList</h1>
-            <p className="brand-subtitle">AI Enhanced</p>
-          </div>
+          <img 
+            src="https://res.cloudinary.com/diycpogap/image/upload/v1766428693/logo_e2ytv1.png" 
+            alt="[How] ToDoList" 
+            className="brand-logo"
+          />
         </div>
 
         {/* Navigation */}
