@@ -31,6 +31,27 @@ const CardDetail = ({ show, onHide, onSave }) => {
     onHide()
   }
 
+  const handleSave = () => {
+    if (!title.trim()) {
+      alert('Por favor, añade un título')
+      return
+    }
+
+    const newCard = {
+      id: Date.now(),
+      title: title.trim(),
+      description: description.trim(),
+      category: tags.length > 0 ? tags[0].name : 'Personal',
+      completed: false,
+      aiEnhanced: false,
+      color: selectedColor,
+      aiPrompt: aiPrompt.trim()
+    }
+
+    onSave(newCard)
+    handleClose()
+  }
+
   return (
     <Modal 
       show={show} 
@@ -171,7 +192,7 @@ const CardDetail = ({ show, onHide, onSave }) => {
         <button className="btn-cancel" onClick={handleClose}>
           Cancelar
         </button>
-        <button className="btn-save">
+        <button className="btn-save" onClick={handleSave}>
           <span>💾</span> Guardar Tarea
         </button>
       </div>

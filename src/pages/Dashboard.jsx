@@ -64,6 +64,10 @@ const Dashboard = () => {
     console.log('AI Assist clicked for card:', id)
   }
 
+  const handleSaveCard = (newCard) => {
+    setCards([newCard, ...cards])
+  }
+
   return (
     <div className="dashboard-wrapper">
       {/* Sidebar */}
@@ -132,6 +136,7 @@ const Dashboard = () => {
         <CardDetail 
           show={showModal} 
           onHide={() => setShowModal(false)}
+          onSave={handleSaveCard}
         />
       </main>
     </div>
