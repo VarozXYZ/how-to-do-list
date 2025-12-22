@@ -4,6 +4,7 @@ import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Dashboard from './pages/Dashboard'
 import Completed from './pages/Completed'
+import Settings from './pages/Settings'
 
 function App() {
   return (
@@ -14,11 +15,12 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/completed" element={<Completed />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
       </CardsProvider>
     </BrowserRouter>
   )
-}
+} 
 
 export default App
