@@ -19,12 +19,12 @@ const CardDetail = ({ show, onHide, onSave }) => {
   ]
 
   const colors = [
-    { id: 'default', color: '#f1f5f9' },
-    { id: 'red', color: '#fee2e2' },
-    { id: 'amber', color: '#fef3c7' },
-    { id: 'green', color: '#dcfce7' },
-    { id: 'blue', color: '#dbeafe' },
-    { id: 'purple', color: '#f3e8ff' }
+    { id: 'default', color: '#f1f5f9', border: '#e2e8f0' },
+    { id: 'red', color: '#fef2f2', border: '#fecaca' },
+    { id: 'amber', color: '#fffbeb', border: '#fde68a' },
+    { id: 'green', color: '#f0fdf4', border: '#bbf7d0' },
+    { id: 'blue', color: '#eff6ff', border: '#bfdbfe' },
+    { id: 'purple', color: '#faf5ff', border: '#e9d5ff' }
   ]
 
   const removeTag = (tagToRemove) => {
@@ -54,6 +54,8 @@ const CardDetail = ({ show, onHide, onSave }) => {
       return
     }
 
+    const selectedColorObj = colors.find(c => c.id === selectedColor) || colors[0]
+    
     const newCard = {
       id: Date.now(),
       title: title.trim(),
@@ -61,7 +63,8 @@ const CardDetail = ({ show, onHide, onSave }) => {
       category: tags.length > 0 ? tags[0].name : 'Personal',
       completed: false,
       aiEnhanced: false,
-      color: selectedColor,
+      color: selectedColorObj.color,
+      borderColor: selectedColorObj.border,
       aiPrompt: aiPrompt.trim()
     }
 

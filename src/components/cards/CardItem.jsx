@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './CardItem.css'
 
 const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete }) => {
-  const { id, title, description, category, completed, aiEnhanced } = card
+  const { id, title, description, category, completed, aiEnhanced, color, borderColor } = card
   const [showMenu, setShowMenu] = useState(false)
 
   const getCategoryClass = (cat) => {
@@ -16,8 +16,19 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete }) => {
     return categories[cat] || 'category-blue'
   }
 
+  const getCardStyle = () => {
+    if (!color || color === '#f1f5f9') return {}
+    return {
+      background: `linear-gradient(135deg, ${color} 0%, #ffffff 100%)`,
+      borderColor: borderColor || color
+    }
+  }
+
   return (
-    <div className={`card-item ${aiEnhanced ? 'ai-enhanced' : ''}`}>
+    <div 
+      className={`card-item ${aiEnhanced ? 'ai-enhanced' : ''}`}
+      style={getCardStyle()}
+    >
       {/* Header */}
       <div className="card-header">
         <span className={`card-category ${getCategoryClass(category)}`}>
