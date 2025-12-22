@@ -2,11 +2,10 @@
 
 .dashboard-wrapper {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   background: #f6f7f8;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  overflow: hidden;
 }
 
 .dashboard-main {
@@ -14,7 +13,8 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
 }
 
@@ -274,7 +274,7 @@
 
 /* No Results */
 .no-results {
-  grid-column: span 3;
+  grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -282,6 +282,7 @@
   padding: 4rem 2rem;
   color: #94a3b8;
   text-align: center;
+  min-height: 300px;
 }
 
 .no-results span {
