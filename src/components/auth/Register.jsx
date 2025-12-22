@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Container, Card, Form, InputGroup, Button } from 'react-bootstrap'
 import './Login.css'
 
@@ -115,7 +116,7 @@ const Register = () => {
               {/* Login link */}
               <p className="text-center mt-4 mb-0 register-text">
                 ¿Ya tienes una cuenta?{' '}
-                <a href="#" className="register-link">Inicia Sesión</a>
+                <Link to="/login" className="register-link">Inicia Sesión</Link>
               </p>
             </Form>
           </Card.Body>
