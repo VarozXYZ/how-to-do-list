@@ -1,57 +1,13 @@
 import { useState } from 'react'
-import { Form, InputGroup } from 'react-bootstrap'
 import Sidebar from '../components/layout/Sidebar'
 import CardItem from '../components/cards/CardItem'
 import CardDetail from '../components/cards/CardDetail'
+import { useCards } from '../context/CardsContext'
 import './Dashboard.css'
 
-// Example cards - remove later
-const exampleCards = [
-  {
-    id: 1,
-    title: 'Plan Q3 Strategy',
-    description: 'Draft initial outline based on Q3 goals, focusing on social media growth.',
-    category: 'Marketing',
-    completed: false,
-    aiEnhanced: true
-  },
-  {
-    id: 2,
-    title: 'Buy Groceries',
-    description: 'Milk, Eggs, Bread, and organic vegetables for the week.',
-    category: 'Personal',
-    completed: false,
-    aiEnhanced: false
-  },
-  {
-    id: 3,
-    title: 'Update Website Hero',
-    description: 'Replace current image with the new 3D render and update CTA buttons.',
-    category: 'Design',
-    completed: false,
-    aiEnhanced: false
-  },
-  {
-    id: 4,
-    title: 'Team Sync',
-    description: 'Weekly sync with the development team to discuss sprint progress.',
-    category: 'Work',
-    completed: false,
-    aiEnhanced: false
-  },
-  {
-    id: 5,
-    title: 'Competitor Analysis',
-    description: "Review top 3 competitors' pricing models and feature sets.",
-    category: 'Research',
-    completed: false,
-    aiEnhanced: false
-  }
-]
-
 const Dashboard = () => {
+  const { activeCards, addCard, deleteCard, toggleComplete } = useCards()
   const [searchQuery, setSearchQuery] = useState('')
-  const [cards, setCards] = useState(exampleCards)
   const [showModal, setShowModal] = useState(false)
   const [filterCategory, setFilterCategory] = useState('all')
   const [sortBy, setSortBy] = useState('newest')
@@ -66,26 +22,12 @@ const Dashboard = () => {
     { value: 'z-a', label: 'Z-A' }
   ]
 
-  const handleToggleComplete = (id) => {
-    setCards(cards.map(card => 
-      card.id === id ? { ...card, completed: !card.completed } : card
-    ))
-  }
-
   const handleAiAssist = (id) => {
     console.log('AI Assist clicked for card:', id)
   }
 
-  const handleSaveCard = (newCard) => {
-    setCards([newCard, ...cards])
-  }
-
-  const handleDeleteCard = (id) => {
-    setCards(cards.filter(card => card.id !== id))
-  }
-
   // Filter and sort cards
-  const filteredCards = cards
+  const filteredCards = activeCards
     .filter(card => {
       const query = searchQuery.toLowerCase()
       const matchesSearch = (
@@ -215,9 +157,9 @@ const Dashboard = () => {
                 <CardItem
                   key={card.id}
                   card={card}
-                  onToggleComplete={handleToggleComplete}
+                  onToggleComplete={toggleComplete}
                   onAiAssist={handleAiAssist}
-                  onDelete={handleDeleteCard}
+                  onDelete={deleteCard}
                 />
               ))
             ) : (
@@ -238,7 +180,7 @@ const Dashboard = () => {
         <CardDetail 
           show={showModal} 
           onHide={() => setShowModal(false)}
-          onSave={handleSaveCard}
+          onSave={addCard}
         />
       </main>
     </div>
