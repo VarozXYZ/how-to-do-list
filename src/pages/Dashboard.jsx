@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Form, InputGroup } from 'react-bootstrap'
 import Sidebar from '../components/layout/Sidebar'
 import CardItem from '../components/cards/CardItem'
+import CardDetail from '../components/cards/CardDetail'
 import './Dashboard.css'
 
 // Example cards - remove later
@@ -51,6 +52,7 @@ const exampleCards = [
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [cards, setCards] = useState(exampleCards)
+  const [showModal, setShowModal] = useState(false)
 
   const handleToggleComplete = (id) => {
     setCards(cards.map(card => 
@@ -122,9 +124,15 @@ const Dashboard = () => {
         </div>
 
         {/* FAB Button */}
-        <button className="fab-button" title="Nueva tarea">
+        <button className="fab-button" title="Nueva tarea" onClick={() => setShowModal(true)}>
           <span>+</span>
         </button>
+
+        {/* Create Task Modal */}
+        <CardDetail 
+          show={showModal} 
+          onHide={() => setShowModal(false)}
+        />
       </main>
     </div>
   )
