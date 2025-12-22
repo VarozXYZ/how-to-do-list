@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import './CardItem.css'
 
-const CardItem = ({ card, onToggleComplete, onAiAssist }) => {
+const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete }) => {
   const { id, title, description, category, completed, aiEnhanced } = card
+  const [showMenu, setShowMenu] = useState(false)
 
   const getCategoryClass = (cat) => {
     const categories = {
@@ -21,9 +23,27 @@ const CardItem = ({ card, onToggleComplete, onAiAssist }) => {
         <span className={`card-category ${getCategoryClass(category)}`}>
           {category}
         </span>
-        <button className="card-more-btn">
-          <span>⋯</span>
-        </button>
+        <div className="card-menu-wrapper">
+          <button 
+            className="card-more-btn"
+            onClick={() => setShowMenu(!showMenu)}
+          >
+            <span>⋯</span>
+          </button>
+          {showMenu && (
+            <div className="card-dropdown">
+              <button 
+                className="dropdown-item delete"
+                onClick={() => {
+                  onDelete && onDelete(id)
+                  setShowMenu(false)
+                }}
+              >
+                <span>🗑️</span> Eliminar
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Content */}

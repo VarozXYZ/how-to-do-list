@@ -68,6 +68,10 @@ const Dashboard = () => {
     setCards([newCard, ...cards])
   }
 
+  const handleDeleteCard = (id) => {
+    setCards(cards.filter(card => card.id !== id))
+  }
+
   return (
     <div className="dashboard-wrapper">
       {/* Sidebar */}
@@ -122,6 +126,7 @@ const Dashboard = () => {
                 card={card}
                 onToggleComplete={handleToggleComplete}
                 onAiAssist={handleAiAssist}
+                onDelete={handleDeleteCard}
               />
             ))}
           </div>
