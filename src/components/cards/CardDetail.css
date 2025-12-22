@@ -382,6 +382,84 @@
   background: rgba(43, 140, 238, 0.05);
 }
 
+/* Tag Picker */
+.tag-picker-wrapper {
+  position: relative;
+}
+
+.tag-picker-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  z-index: 100;
+  min-width: 140px;
+}
+
+.tag-option {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.tag-option:hover {
+  transform: scale(1.02);
+}
+
+.tag-option.tag-blue {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.tag-option.tag-purple {
+  background: #f3e8ff;
+  color: #7c3aed;
+}
+
+.tag-option.tag-orange {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.tag-option.tag-green {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.tag-option.tag-pink {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.tag.tag-purple {
+  background: #f3e8ff;
+  color: #7c3aed;
+}
+
+.tag.tag-orange {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.tag.tag-pink {
+  background: #fce7f3;
+  color: #be185d;
+}
+
 /* Color Picker */
 .color-picker {
   display: flex;

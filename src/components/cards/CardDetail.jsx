@@ -8,6 +8,15 @@ const CardDetail = ({ show, onHide, onSave }) => {
   const [description, setDescription] = useState('')
   const [selectedColor, setSelectedColor] = useState('default')
   const [tags, setTags] = useState([])
+  const [showTagPicker, setShowTagPicker] = useState(false)
+
+  const availableTags = [
+    { name: 'Marketing', color: 'blue' },
+    { name: 'Personal', color: 'purple' },
+    { name: 'Design', color: 'orange' },
+    { name: 'Work', color: 'green' },
+    { name: 'Research', color: 'pink' }
+  ]
 
   const colors = [
     { id: 'default', color: '#f1f5f9' },
@@ -19,7 +28,14 @@ const CardDetail = ({ show, onHide, onSave }) => {
   ]
 
   const removeTag = (tagToRemove) => {
-    setTags(tags.filter(tag => tag !== tagToRemove))
+    setTags(tags.filter(tag => tag.name !== tagToRemove.name))
+  }
+
+  const addTag = (tag) => {
+    if (!tags.find(t => t.name === tag.name)) {
+      setTags([...tags, tag])
+    }
+    setShowTagPicker(false)
   }
 
   const handleClose = () => {
@@ -28,6 +44,7 @@ const CardDetail = ({ show, onHide, onSave }) => {
     setDescription('')
     setSelectedColor('default')
     setTags([])
+    setShowTagPicker(false)
     onHide()
   }
 
@@ -160,9 +177,29 @@ const CardDetail = ({ show, onHide, onSave }) => {
                   <button className="tag-remove" onClick={() => removeTag(tag)}>✕</button>
                 </span>
               ))}
-              <button className="add-tag-btn">
-                <span>+</span> Etiqueta
-              </button>
+              <div className="tag-picker-wrapper">
+                <button 
+                  className="add-tag-btn"
+                  onClick={() => setShowTagPicker(!showTagPicker)}
+                >
+                  <span>+</span> Etiqueta
+                </button>
+                {showTagPicker && (
+                  <div className="tag-picker-dropdown">
+                    {availableTags
+                      .filter(tag => !tags.find(t => t.name === tag.name))
+                      .map((tag) => (
+                        <button
+                          key={tag.name}
+                          className={`tag-option tag-${tag.color}`}
+                          onClick={() => addTag(tag)}
+                        >
+                          {tag.name}
+                        </button>
+                      ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
