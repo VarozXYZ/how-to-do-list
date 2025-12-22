@@ -53,6 +53,18 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [cards, setCards] = useState(exampleCards)
   const [showModal, setShowModal] = useState(false)
+  const [filterCategory, setFilterCategory] = useState('all')
+  const [sortBy, setSortBy] = useState('newest')
+  const [showFilterMenu, setShowFilterMenu] = useState(false)
+  const [showSortMenu, setShowSortMenu] = useState(false)
+
+  const categories = ['all', 'Marketing', 'Personal', 'Design', 'Work', 'Research']
+  const sortOptions = [
+    { value: 'newest', label: 'Más recientes' },
+    { value: 'oldest', label: 'Más antiguos' },
+    { value: 'a-z', label: 'A-Z' },
+    { value: 'z-a', label: 'Z-A' }
+  ]
 
   const handleToggleComplete = (id) => {
     setCards(cards.map(card => 
@@ -72,15 +84,32 @@ const Dashboard = () => {
     setCards(cards.filter(card => card.id !== id))
   }
 
-  // Filter cards based on search query
-  const filteredCards = cards.filter(card => {
-    const query = searchQuery.toLowerCase()
-    return (
-      card.title.toLowerCase().includes(query) ||
-      card.description.toLowerCase().includes(query) ||
-      card.category.toLowerCase().includes(query)
-    )
-  })
+  // Filter and sort cards
+  const filteredCards = cards
+    .filter(card => {
+      const query = searchQuery.toLowerCase()
+      const matchesSearch = (
+        card.title.toLowerCase().includes(query) ||
+        card.description.toLowerCase().includes(query) ||
+        card.category.toLowerCase().includes(query)
+      )
+      const matchesCategory = filterCategory === 'all' || card.category === filterCategory
+      return matchesSearch && matchesCategory
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'oldest':
+          return a.id - b.id
+        case 'newest':
+          return b.id - a.id
+        case 'a-z':
+          return a.title.localeCompare(b.title)
+        case 'z-a':
+          return b.title.localeCompare(a.title)
+        default:
+          return 0
+      }
+    })
 
   return (
     <div className="dashboard-wrapper">
@@ -119,12 +148,63 @@ const Dashboard = () => {
           <div className="section-header">
             <h3 className="section-title">Tareas Activas</h3>
             <div className="section-actions">
-              <button className="action-btn">
-                <span>☰</span> Filter
-              </button>
-              <button className="action-btn">
-                <span>↕</span> Sort
-              </button>
+              {/* Filter Button */}
+              <div className="action-wrapper">
+                <button 
+                  className={`action-btn ${filterCategory !== 'all' ? 'active' : ''}`}
+                  onClick={() => {
+                    setShowFilterMenu(!showFilterMenu)
+                    setShowSortMenu(false)
+                  }}
+                >
+                  <span>☰</span> Filter {filterCategory !== 'all' && `(${filterCategory})`}
+                </button>
+                {showFilterMenu && (
+                  <div className="action-dropdown">
+                    {categories.map(cat => (
+                      <button
+                        key={cat}
+                        className={`dropdown-option ${filterCategory === cat ? 'selected' : ''}`}
+                        onClick={() => {
+                          setFilterCategory(cat)
+                          setShowFilterMenu(false)
+                        }}
+                      >
+                        {cat === 'all' ? 'Todas las categorías' : cat}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Sort Button */}
+              <div className="action-wrapper">
+                <button 
+                  className="action-btn"
+                  onClick={() => {
+                    setShowSortMenu(!showSortMenu)
+                    setShowFilterMenu(false)
+                  }}
+                >
+                  <span>↕</span> Sort
+                </button>
+                {showSortMenu && (
+                  <div className="action-dropdown">
+                    {sortOptions.map(opt => (
+                      <button
+                        key={opt.value}
+                        className={`dropdown-option ${sortBy === opt.value ? 'selected' : ''}`}
+                        onClick={() => {
+                          setSortBy(opt.value)
+                          setShowSortMenu(false)
+                        }}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
