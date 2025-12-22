@@ -37,7 +37,26 @@ const Dashboard = () => {
           </div>
         </header>
 
-        {/* Content area coming next */}
+        {/* Content Area */}
+        <div className="dashboard-content">
+          {/* Section Header */}
+          <div className="section-header">
+            <h3 className="section-title">Tareas Activas</h3>
+            <div className="section-actions">
+              <button className="action-btn">
+                <span>☰</span> Filter
+              </button>
+              <button className="action-btn">
+                <span>↕</span> Sort
+              </button>
+            </div>
+          </div>
+
+          {/* Card Grid */}
+          <div className="cards-grid">
+            {/* Cards coming next */}
+          </div>
+        </div>
       </main>
     </div>
   )
