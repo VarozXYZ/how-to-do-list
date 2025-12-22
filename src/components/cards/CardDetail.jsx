@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Modal } from 'react-bootstrap'
 import { useCards } from '../../context/CardsContext'
 import './CardDetail.css'
@@ -14,6 +14,26 @@ const CardDetail = ({ show, onHide, onSave }) => {
   const [showNewTagForm, setShowNewTagForm] = useState(false)
   const [newTagName, setNewTagName] = useState('')
   const [newTagColor, setNewTagColor] = useState('#eff6ff')
+  
+  const tagPickerRef = useRef(null)
+
+  // Close tag picker when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (tagPickerRef.current && !tagPickerRef.current.contains(event.target)) {
+        setShowTagPicker(false)
+        setShowNewTagForm(false)
+      }
+    }
+
+    if (showTagPicker) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showTagPicker])
 
   const colorPresets = [
     { color: '#eff6ff', borderColor: '#bfdbfe', textColor: '#1d4ed8' }, // Blue
@@ -179,7 +199,7 @@ const CardDetail = ({ show, onHide, onSave }) => {
           {/* Tag Selection */}
           <div className="metadata-section">
             <label className="form-label-modal">Etiqueta</label>
-            <div className="tag-selector-wrapper">
+            <div className="tag-selector-wrapper" ref={tagPickerRef}>
               <button 
                 className="tag-selector-btn"
                 style={{ 

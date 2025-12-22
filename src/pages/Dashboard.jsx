@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Sidebar from '../components/layout/Sidebar'
 import CardItem from '../components/cards/CardItem'
 import CardDetail from '../components/cards/CardDetail'
@@ -13,6 +13,29 @@ const Dashboard = () => {
   const [sortBy, setSortBy] = useState('newest')
   const [showFilterMenu, setShowFilterMenu] = useState(false)
   const [showSortMenu, setShowSortMenu] = useState(false)
+  
+  const filterRef = useRef(null)
+  const sortRef = useRef(null)
+
+  // Close menus when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setShowFilterMenu(false)
+      }
+      if (sortRef.current && !sortRef.current.contains(event.target)) {
+        setShowSortMenu(false)
+      }
+    }
+
+    if (showFilterMenu || showSortMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showFilterMenu, showSortMenu])
 
   const sortOptions = [
     { value: 'newest', label: 'Más recientes' },
@@ -93,7 +116,7 @@ const Dashboard = () => {
             <h3 className="section-title">Tareas Activas ({filteredCards.length})</h3>
             <div className="section-actions">
               {/* Filter Button */}
-              <div className="action-wrapper">
+              <div className="action-wrapper" ref={filterRef}>
                 <button 
                   className={`action-btn ${filterTagId !== 'all' ? 'active' : ''}`}
                   onClick={() => {
@@ -140,7 +163,7 @@ const Dashboard = () => {
               </div>
 
               {/* Sort Button */}
-              <div className="action-wrapper">
+              <div className="action-wrapper" ref={sortRef}>
                 <button 
                   className="action-btn"
                   onClick={() => {

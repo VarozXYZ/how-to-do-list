@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useCards } from '../../context/CardsContext'
 import './CardItem.css'
 
@@ -6,6 +6,24 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete }) => {
   const { id, title, description, tagId, completed } = card
   const { getTagById } = useCards()
   const [showMenu, setShowMenu] = useState(false)
+  const menuRef = useRef(null)
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false)
+      }
+    }
+
+    if (showMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showMenu])
 
   const tag = getTagById(tagId)
 
@@ -43,7 +61,7 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete }) => {
         >
           {tag?.name || 'Sin etiqueta'}
         </span>
-        <div className="card-menu-wrapper">
+        <div className="card-menu-wrapper" ref={menuRef}>
           <button 
             className="card-more-btn"
             onClick={() => setShowMenu(!showMenu)}
