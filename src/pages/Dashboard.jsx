@@ -72,6 +72,16 @@ const Dashboard = () => {
     setCards(cards.filter(card => card.id !== id))
   }
 
+  // Filter cards based on search query
+  const filteredCards = cards.filter(card => {
+    const query = searchQuery.toLowerCase()
+    return (
+      card.title.toLowerCase().includes(query) ||
+      card.description.toLowerCase().includes(query) ||
+      card.category.toLowerCase().includes(query)
+    )
+  })
+
   return (
     <div className="dashboard-wrapper">
       {/* Sidebar */}
@@ -120,15 +130,22 @@ const Dashboard = () => {
 
           {/* Card Grid */}
           <div className="cards-grid">
-            {cards.map(card => (
-              <CardItem
-                key={card.id}
-                card={card}
-                onToggleComplete={handleToggleComplete}
-                onAiAssist={handleAiAssist}
-                onDelete={handleDeleteCard}
-              />
-            ))}
+            {filteredCards.length > 0 ? (
+              filteredCards.map(card => (
+                <CardItem
+                  key={card.id}
+                  card={card}
+                  onToggleComplete={handleToggleComplete}
+                  onAiAssist={handleAiAssist}
+                  onDelete={handleDeleteCard}
+                />
+              ))
+            ) : (
+              <div className="no-results">
+                <span>🔍</span>
+                <p>No se encontraron tareas</p>
+              </div>
+            )}
           </div>
         </div>
 
