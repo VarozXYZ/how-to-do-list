@@ -1,10 +1,66 @@
 import { useState } from 'react'
 import { Form, InputGroup } from 'react-bootstrap'
 import Sidebar from '../components/layout/Sidebar'
+import CardItem from '../components/cards/CardItem'
 import './Dashboard.css'
+
+// Example cards - remove later
+const exampleCards = [
+  {
+    id: 1,
+    title: 'Plan Q3 Strategy',
+    description: 'Draft initial outline based on Q3 goals, focusing on social media growth.',
+    category: 'Marketing',
+    completed: false,
+    aiEnhanced: true
+  },
+  {
+    id: 2,
+    title: 'Buy Groceries',
+    description: 'Milk, Eggs, Bread, and organic vegetables for the week.',
+    category: 'Personal',
+    completed: false,
+    aiEnhanced: false
+  },
+  {
+    id: 3,
+    title: 'Update Website Hero',
+    description: 'Replace current image with the new 3D render and update CTA buttons.',
+    category: 'Design',
+    completed: false,
+    aiEnhanced: false
+  },
+  {
+    id: 4,
+    title: 'Team Sync',
+    description: 'Weekly sync with the development team to discuss sprint progress.',
+    category: 'Work',
+    completed: false,
+    aiEnhanced: false
+  },
+  {
+    id: 5,
+    title: 'Competitor Analysis',
+    description: "Review top 3 competitors' pricing models and feature sets.",
+    category: 'Research',
+    completed: false,
+    aiEnhanced: false
+  }
+]
 
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('')
+  const [cards, setCards] = useState(exampleCards)
+
+  const handleToggleComplete = (id) => {
+    setCards(cards.map(card => 
+      card.id === id ? { ...card, completed: !card.completed } : card
+    ))
+  }
+
+  const handleAiAssist = (id) => {
+    console.log('AI Assist clicked for card:', id)
+  }
 
   return (
     <div className="dashboard-wrapper">
@@ -54,7 +110,14 @@ const Dashboard = () => {
 
           {/* Card Grid */}
           <div className="cards-grid">
-            {/* Cards coming next */}
+            {cards.map(card => (
+              <CardItem
+                key={card.id}
+                card={card}
+                onToggleComplete={handleToggleComplete}
+                onAiAssist={handleAiAssist}
+              />
+            ))}
           </div>
         </div>
       </main>
