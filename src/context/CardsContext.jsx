@@ -2,52 +2,57 @@ import { createContext, useState, useContext } from 'react'
 
 const CardsContext = createContext(null)
 
-// Example cards
+// Default tags with colors
+const defaultTags = [
+  { id: 'marketing', name: 'Marketing', color: '#eff6ff', borderColor: '#bfdbfe', textColor: '#1d4ed8' },
+  { id: 'personal', name: 'Personal', color: '#faf5ff', borderColor: '#e9d5ff', textColor: '#7c3aed' },
+  { id: 'design', name: 'Diseño', color: '#fff7ed', borderColor: '#fed7aa', textColor: '#c2410c' },
+  { id: 'work', name: 'Trabajo', color: '#f0fdf4', borderColor: '#bbf7d0', textColor: '#15803d' },
+  { id: 'research', name: 'Investigación', color: '#fdf2f8', borderColor: '#fbcfe8', textColor: '#be185d' }
+]
+
+// Example cards using tags
 const initialCards = [
   {
     id: 1,
     title: 'Plan Q3 Strategy',
     description: 'Draft initial outline based on Q3 goals, focusing on social media growth.',
-    category: 'Marketing',
-    completed: false,
-    aiEnhanced: true
+    tagId: 'marketing',
+    completed: false
   },
   {
     id: 2,
-    title: 'Buy Groceries',
-    description: 'Milk, Eggs, Bread, and organic vegetables for the week.',
-    category: 'Personal',
-    completed: false,
-    aiEnhanced: false
+    title: 'Comprar víveres',
+    description: 'Leche, huevos, pan y verduras orgánicas para la semana.',
+    tagId: 'personal',
+    completed: false
   },
   {
     id: 3,
-    title: 'Update Website Hero',
-    description: 'Replace current image with the new 3D render and update CTA buttons.',
-    category: 'Design',
-    completed: false,
-    aiEnhanced: false
+    title: 'Actualizar Hero del sitio',
+    description: 'Reemplazar la imagen actual con el nuevo render 3D y actualizar los botones CTA.',
+    tagId: 'design',
+    completed: false
   },
   {
     id: 4,
-    title: 'Team Sync',
-    description: 'Weekly sync with the development team to discuss sprint progress.',
-    category: 'Work',
-    completed: false,
-    aiEnhanced: false
+    title: 'Sync del equipo',
+    description: 'Reunión semanal con el equipo de desarrollo para discutir el progreso del sprint.',
+    tagId: 'work',
+    completed: false
   },
   {
     id: 5,
-    title: 'Competitor Analysis',
-    description: "Review top 3 competitors' pricing models and feature sets.",
-    category: 'Research',
-    completed: false,
-    aiEnhanced: false
+    title: 'Análisis de competencia',
+    description: 'Revisar los modelos de precios y características de los 3 principales competidores.',
+    tagId: 'research',
+    completed: false
   }
 ]
 
 export const CardsProvider = ({ children }) => {
   const [cards, setCards] = useState(initialCards)
+  const [tags, setTags] = useState(defaultTags)
 
   const addCard = (newCard) => {
     setCards([newCard, ...cards])
@@ -63,6 +68,16 @@ export const CardsProvider = ({ children }) => {
     ))
   }
 
+  const addTag = (newTag) => {
+    const tagId = newTag.name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now()
+    setTags([...tags, { ...newTag, id: tagId }])
+    return tagId
+  }
+
+  const getTagById = (tagId) => {
+    return tags.find(tag => tag.id === tagId) || tags[0]
+  }
+
   const activeCards = cards.filter(card => !card.completed)
   const completedCards = cards.filter(card => card.completed)
 
@@ -70,9 +85,12 @@ export const CardsProvider = ({ children }) => {
     cards,
     activeCards,
     completedCards,
+    tags,
     addCard,
     deleteCard,
-    toggleComplete
+    toggleComplete,
+    addTag,
+    getTagById
   }
 
   return (
@@ -89,4 +107,3 @@ export const useCards = () => {
   }
   return context
 }
-

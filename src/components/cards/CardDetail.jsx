@@ -1,50 +1,40 @@
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
+import { useCards } from '../../context/CardsContext'
 import './CardDetail.css'
 
 const CardDetail = ({ show, onHide, onSave }) => {
+  const { tags, addTag } = useCards()
+  
   const [title, setTitle] = useState('')
   const [aiPrompt, setAiPrompt] = useState('')
   const [description, setDescription] = useState('')
-  const [selectedColor, setSelectedColor] = useState('default')
-  const [tags, setTags] = useState([])
+  const [selectedTagId, setSelectedTagId] = useState(tags[0]?.id || '')
   const [showTagPicker, setShowTagPicker] = useState(false)
+  const [showNewTagForm, setShowNewTagForm] = useState(false)
+  const [newTagName, setNewTagName] = useState('')
+  const [newTagColor, setNewTagColor] = useState('#eff6ff')
 
-  const availableTags = [
-    { name: 'Marketing', color: 'blue' },
-    { name: 'Personal', color: 'purple' },
-    { name: 'Design', color: 'orange' },
-    { name: 'Work', color: 'green' },
-    { name: 'Research', color: 'pink' }
+  const colorPresets = [
+    { color: '#eff6ff', borderColor: '#bfdbfe', textColor: '#1d4ed8' }, // Blue
+    { color: '#faf5ff', borderColor: '#e9d5ff', textColor: '#7c3aed' }, // Purple
+    { color: '#fff7ed', borderColor: '#fed7aa', textColor: '#c2410c' }, // Orange
+    { color: '#f0fdf4', borderColor: '#bbf7d0', textColor: '#15803d' }, // Green
+    { color: '#fdf2f8', borderColor: '#fbcfe8', textColor: '#be185d' }, // Pink
+    { color: '#fef2f2', borderColor: '#fecaca', textColor: '#dc2626' }, // Red
+    { color: '#fffbeb', borderColor: '#fde68a', textColor: '#d97706' }, // Amber
+    { color: '#f0fdfa', borderColor: '#99f6e4', textColor: '#0d9488' }, // Teal
   ]
-
-  const colors = [
-    { id: 'default', color: '#f1f5f9', border: '#e2e8f0' },
-    { id: 'red', color: '#fef2f2', border: '#fecaca' },
-    { id: 'amber', color: '#fffbeb', border: '#fde68a' },
-    { id: 'green', color: '#f0fdf4', border: '#bbf7d0' },
-    { id: 'blue', color: '#eff6ff', border: '#bfdbfe' },
-    { id: 'purple', color: '#faf5ff', border: '#e9d5ff' }
-  ]
-
-  const removeTag = (tagToRemove) => {
-    setTags(tags.filter(tag => tag.name !== tagToRemove.name))
-  }
-
-  const addTag = (tag) => {
-    if (!tags.find(t => t.name === tag.name)) {
-      setTags([...tags, tag])
-    }
-    setShowTagPicker(false)
-  }
 
   const handleClose = () => {
     setTitle('')
     setAiPrompt('')
     setDescription('')
-    setSelectedColor('default')
-    setTags([])
+    setSelectedTagId(tags[0]?.id || '')
     setShowTagPicker(false)
+    setShowNewTagForm(false)
+    setNewTagName('')
+    setNewTagColor('#eff6ff')
     onHide()
   }
 
@@ -54,23 +44,39 @@ const CardDetail = ({ show, onHide, onSave }) => {
       return
     }
 
-    const selectedColorObj = colors.find(c => c.id === selectedColor) || colors[0]
-    
     const newCard = {
       id: Date.now(),
       title: title.trim(),
       description: description.trim(),
-      category: tags.length > 0 ? tags[0].name : 'Personal',
+      tagId: selectedTagId,
       completed: false,
-      aiEnhanced: false,
-      color: selectedColorObj.color,
-      borderColor: selectedColorObj.border,
       aiPrompt: aiPrompt.trim()
     }
 
     onSave(newCard)
     handleClose()
   }
+
+  const handleCreateTag = () => {
+    if (!newTagName.trim()) return
+    
+    const colorPreset = colorPresets.find(c => c.color === newTagColor) || colorPresets[0]
+    const newTag = {
+      name: newTagName.trim(),
+      color: colorPreset.color,
+      borderColor: colorPreset.borderColor,
+      textColor: colorPreset.textColor
+    }
+    
+    const newTagId = addTag(newTag)
+    setSelectedTagId(newTagId)
+    setNewTagName('')
+    setNewTagColor('#eff6ff')
+    setShowNewTagForm(false)
+    setShowTagPicker(false)
+  }
+
+  const selectedTag = tags.find(t => t.id === selectedTagId) || tags[0]
 
   return (
     <Modal 
@@ -170,61 +176,97 @@ const CardDetail = ({ show, onHide, onSave }) => {
             </div>
           </div>
 
-          {/* Tags */}
+          {/* Tag Selection */}
           <div className="metadata-section">
-            <label className="form-label-modal">Etiquetas</label>
-            <div className="tags-container">
-              {tags.map((tag, index) => (
-                <span key={index} className={`tag tag-${tag.color}`}>
-                  {tag.name}
-                  <button className="tag-remove" onClick={() => removeTag(tag)}>✕</button>
-                </span>
-              ))}
-              <div className="tag-picker-wrapper">
-                <button 
-                  className="add-tag-btn"
-                  onClick={() => setShowTagPicker(!showTagPicker)}
-                >
-                  <span>+</span> Etiqueta
-                </button>
-                {showTagPicker && (
-                  <div className="tag-picker-dropdown">
-                    {availableTags
-                      .filter(tag => !tags.find(t => t.name === tag.name))
-                      .map((tag) => (
-                        <button
-                          key={tag.name}
-                          className={`tag-option tag-${tag.color}`}
-                          onClick={() => addTag(tag)}
+            <label className="form-label-modal">Etiqueta</label>
+            <div className="tag-selector-wrapper">
+              <button 
+                className="tag-selector-btn"
+                style={{ 
+                  backgroundColor: selectedTag?.color,
+                  borderColor: selectedTag?.borderColor,
+                  color: selectedTag?.textColor
+                }}
+                onClick={() => setShowTagPicker(!showTagPicker)}
+              >
+                {selectedTag?.name || 'Seleccionar'}
+                <span className="dropdown-icon">▾</span>
+              </button>
+              
+              {showTagPicker && (
+                <div className="tag-picker-dropdown">
+                  {tags.map((tag) => (
+                    <button
+                      key={tag.id}
+                      className="tag-option"
+                      style={{ 
+                        backgroundColor: tag.color,
+                        borderColor: tag.borderColor,
+                        color: tag.textColor
+                      }}
+                      onClick={() => {
+                        setSelectedTagId(tag.id)
+                        setShowTagPicker(false)
+                      }}
+                    >
+                      {tag.name}
+                    </button>
+                  ))}
+                  
+                  <div className="tag-picker-divider"></div>
+                  
+                  {!showNewTagForm ? (
+                    <button 
+                      className="create-tag-btn"
+                      onClick={() => setShowNewTagForm(true)}
+                    >
+                      <span>+</span> Crear etiqueta
+                    </button>
+                  ) : (
+                    <div className="new-tag-form">
+                      <input
+                        type="text"
+                        className="new-tag-input"
+                        placeholder="Nombre de la etiqueta"
+                        value={newTagName}
+                        onChange={(e) => setNewTagName(e.target.value)}
+                        autoFocus
+                      />
+                      <div className="new-tag-colors">
+                        {colorPresets.map((preset, idx) => (
+                          <button
+                            key={idx}
+                            className={`color-preset-btn ${newTagColor === preset.color ? 'selected' : ''}`}
+                            style={{ backgroundColor: preset.color, borderColor: preset.borderColor }}
+                            onClick={() => setNewTagColor(preset.color)}
+                          />
+                        ))}
+                      </div>
+                      <div className="new-tag-actions">
+                        <button 
+                          className="new-tag-cancel"
+                          onClick={() => {
+                            setShowNewTagForm(false)
+                            setNewTagName('')
+                          }}
                         >
-                          {tag.name}
+                          Cancelar
                         </button>
-                      ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Color Picker */}
-          <div className="metadata-section full-width">
-            <label className="form-label-modal">Color de la tarjeta</label>
-            <div className="color-picker">
-              {colors.map((c) => (
-                <button
-                  key={c.id}
-                  className={`color-btn ${selectedColor === c.id ? 'selected' : ''}`}
-                  style={{ backgroundColor: c.color }}
-                  onClick={() => setSelectedColor(c.id)}
-                >
-                  {selectedColor === c.id && <span>✓</span>}
-                </button>
-              ))}
+                        <button 
+                          className="new-tag-save"
+                          onClick={handleCreateTag}
+                          disabled={!newTagName.trim()}
+                        >
+                          Crear
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
-
-        {/* Footer coming next */}
       </div>
 
       {/* Footer */}

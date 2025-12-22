@@ -6,15 +6,14 @@ import { useCards } from '../context/CardsContext'
 import './Dashboard.css'
 
 const Dashboard = () => {
-  const { activeCards, addCard, deleteCard, toggleComplete } = useCards()
+  const { activeCards, tags, addCard, deleteCard, toggleComplete, getTagById } = useCards()
   const [searchQuery, setSearchQuery] = useState('')
   const [showModal, setShowModal] = useState(false)
-  const [filterCategory, setFilterCategory] = useState('all')
+  const [filterTagId, setFilterTagId] = useState('all')
   const [sortBy, setSortBy] = useState('newest')
   const [showFilterMenu, setShowFilterMenu] = useState(false)
   const [showSortMenu, setShowSortMenu] = useState(false)
 
-  const categories = ['all', 'Marketing', 'Personal', 'Design', 'Work', 'Research']
   const sortOptions = [
     { value: 'newest', label: 'Más recientes' },
     { value: 'oldest', label: 'Más antiguos' },
@@ -30,13 +29,14 @@ const Dashboard = () => {
   const filteredCards = activeCards
     .filter(card => {
       const query = searchQuery.toLowerCase()
+      const tag = getTagById(card.tagId)
       const matchesSearch = (
         card.title.toLowerCase().includes(query) ||
         card.description.toLowerCase().includes(query) ||
-        card.category.toLowerCase().includes(query)
+        (tag?.name || '').toLowerCase().includes(query)
       )
-      const matchesCategory = filterCategory === 'all' || card.category === filterCategory
-      return matchesSearch && matchesCategory
+      const matchesTag = filterTagId === 'all' || card.tagId === filterTagId
+      return matchesSearch && matchesTag
     })
     .sort((a, b) => {
       switch (sortBy) {
@@ -53,6 +53,8 @@ const Dashboard = () => {
       }
     })
 
+  const selectedFilterTag = filterTagId !== 'all' ? getTagById(filterTagId) : null
+
   return (
     <div className="dashboard-wrapper">
       {/* Sidebar */}
@@ -63,8 +65,8 @@ const Dashboard = () => {
         {/* Header */}
         <header className="dashboard-header">
           <div className="header-left">
-            <h2 className="header-title">Dashboard</h2>
-            <p className="header-subtitle">Welcome back, here are your tasks for today.</p>
+            <h2 className="header-title">Mis Tareas</h2>
+            <p className="header-subtitle">Bienvenido, aquí están tus tareas de hoy.</p>
           </div>
           <div className="header-right">
             <div className="search-wrapper">
@@ -72,7 +74,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 className="search-input"
-                placeholder="Search tasks..."
+                placeholder="Buscar tareas..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -88,31 +90,49 @@ const Dashboard = () => {
         <div className="dashboard-content">
           {/* Section Header */}
           <div className="section-header">
-            <h3 className="section-title">Tareas Activas</h3>
+            <h3 className="section-title">Tareas Activas ({filteredCards.length})</h3>
             <div className="section-actions">
               {/* Filter Button */}
               <div className="action-wrapper">
                 <button 
-                  className={`action-btn ${filterCategory !== 'all' ? 'active' : ''}`}
+                  className={`action-btn ${filterTagId !== 'all' ? 'active' : ''}`}
                   onClick={() => {
                     setShowFilterMenu(!showFilterMenu)
                     setShowSortMenu(false)
                   }}
+                  style={selectedFilterTag ? {
+                    backgroundColor: selectedFilterTag.color,
+                    borderColor: selectedFilterTag.borderColor,
+                    color: selectedFilterTag.textColor
+                  } : {}}
                 >
-                  <span>☰</span> Filter {filterCategory !== 'all' && `(${filterCategory})`}
+                  <span>☰</span> {selectedFilterTag ? selectedFilterTag.name : 'Filtrar'}
                 </button>
                 {showFilterMenu && (
                   <div className="action-dropdown">
-                    {categories.map(cat => (
+                    <button
+                      className={`dropdown-option ${filterTagId === 'all' ? 'selected' : ''}`}
+                      onClick={() => {
+                        setFilterTagId('all')
+                        setShowFilterMenu(false)
+                      }}
+                    >
+                      Todas las etiquetas
+                    </button>
+                    {tags.map(tag => (
                       <button
-                        key={cat}
-                        className={`dropdown-option ${filterCategory === cat ? 'selected' : ''}`}
+                        key={tag.id}
+                        className={`dropdown-option ${filterTagId === tag.id ? 'selected' : ''}`}
+                        style={{
+                          backgroundColor: tag.color,
+                          color: tag.textColor
+                        }}
                         onClick={() => {
-                          setFilterCategory(cat)
+                          setFilterTagId(tag.id)
                           setShowFilterMenu(false)
                         }}
                       >
-                        {cat === 'all' ? 'Todas las categorías' : cat}
+                        {tag.name}
                       </button>
                     ))}
                   </div>
@@ -128,7 +148,7 @@ const Dashboard = () => {
                     setShowFilterMenu(false)
                   }}
                 >
-                  <span>↕</span> Sort
+                  <span>↕</span> Ordenar
                 </button>
                 {showSortMenu && (
                   <div className="action-dropdown">

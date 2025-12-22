@@ -1,38 +1,47 @@
 import { useState } from 'react'
+import { useCards } from '../../context/CardsContext'
 import './CardItem.css'
 
 const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete }) => {
-  const { id, title, description, category, completed, aiEnhanced, color, borderColor } = card
+  const { id, title, description, tagId, completed } = card
+  const { getTagById } = useCards()
   const [showMenu, setShowMenu] = useState(false)
 
-  const getCategoryClass = (cat) => {
-    const categories = {
-      'Marketing': 'category-blue',
-      'Personal': 'category-purple',
-      'Design': 'category-orange',
-      'Work': 'category-green',
-      'Research': 'category-pink'
-    }
-    return categories[cat] || 'category-blue'
-  }
+  const tag = getTagById(tagId)
 
   const getCardStyle = () => {
-    if (!color || color === '#f1f5f9') return {}
+    if (!tag) return {}
     return {
-      background: `linear-gradient(135deg, ${color} 0%, #ffffff 100%)`,
-      borderColor: borderColor || color
+      background: `linear-gradient(135deg, ${tag.color} 0%, #ffffff 100%)`,
+      borderColor: tag.borderColor
+    }
+  }
+
+  const getButtonStyle = () => {
+    if (!tag) return {}
+    return {
+      background: `linear-gradient(135deg, ${tag.textColor} 0%, ${tag.borderColor} 100%)`,
+      color: '#ffffff',
+      border: 'none'
     }
   }
 
   return (
     <div 
-      className={`card-item ${aiEnhanced ? 'ai-enhanced' : ''}`}
+      className="card-item"
       style={getCardStyle()}
     >
       {/* Header */}
       <div className="card-header">
-        <span className={`card-category ${getCategoryClass(category)}`}>
-          {category}
+        <span 
+          className="card-category"
+          style={{
+            backgroundColor: tag?.color,
+            color: tag?.textColor,
+            borderColor: tag?.borderColor
+          }}
+        >
+          {tag?.name || 'Sin etiqueta'}
         </span>
         <div className="card-menu-wrapper">
           <button 
@@ -64,11 +73,12 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete }) => {
       {/* Footer */}
       <div className="card-footer">
         <button 
-          className={`ai-assist-btn ${aiEnhanced ? 'enhanced' : ''}`}
+          className="ai-assist-btn"
+          style={getButtonStyle()}
           onClick={() => onAiAssist && onAiAssist(id)}
         >
           <span>✨</span>
-          <span>{aiEnhanced ? 'AI Enhance' : 'AI Assist'}</span>
+          <span>Mejorar con IA</span>
         </button>
         <label className="checkbox-wrapper">
           <input
