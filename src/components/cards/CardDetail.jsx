@@ -79,7 +79,22 @@ const CardDetail = ({ show, onHide, onSave }) => {
           </div>
         </div>
 
-        {/* Description coming next */}
+        {/* Description */}
+        <div className="form-group">
+          <label className="form-label-modal">Descripción y notas</label>
+          <textarea
+            className="form-textarea-modal"
+            placeholder="Añade detalles, enlaces o subtareas aquí..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            rows={5}
+          />
+        </div>
+
+        {/* Divider */}
+        <div className="modal-divider"></div>
+
+        {/* Metadata coming next */}
       </div>
 
       {/* Footer coming next */}

@@ -229,3 +229,36 @@
   color: #64748b;
 }
 
+/* Textarea */
+.form-textarea-modal {
+  width: 100%;
+  min-height: 140px;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 1rem;
+  color: #0f172a;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  resize: vertical;
+  transition: all 0.2s ease;
+  line-height: 1.6;
+}
+
+.form-textarea-modal::placeholder {
+  color: #94a3b8;
+}
+
+.form-textarea-modal:focus {
+  outline: none;
+  border-color: #2b8cee;
+  box-shadow: 0 0 0 4px rgba(43, 140, 238, 0.1);
+}
+
+/* Divider */
+.modal-divider {
+  height: 1px;
+  background: #e2e8f0;
+  width: 100%;
+}
+
