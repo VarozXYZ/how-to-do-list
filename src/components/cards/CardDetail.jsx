@@ -38,9 +38,48 @@ const CardDetail = ({ show, onHide, onSave }) => {
         </button>
       </div>
 
-      {/* Body coming next */}
+      {/* Body */}
       <div className="modal-body-custom">
-        {/* Content will be added in next steps */}
+        {/* Title Input */}
+        <div className="form-group">
+          <label className="form-label-modal">Título de la tarea</label>
+          <input
+            type="text"
+            className="form-input-modal"
+            placeholder="Ej: Revisar reporte trimestral"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+
+        {/* AI Assistant Section */}
+        <div className="ai-assistant-box">
+          <span className="ai-assistant-label">
+            <span>✨</span> Asistente IA
+          </span>
+          <div className="ai-assistant-content">
+            <div className="ai-input-row">
+              <div className="ai-input-wrapper">
+                <span className="ai-input-icon">🪄</span>
+                <input
+                  type="text"
+                  className="ai-input"
+                  placeholder="Ej: 'Generar checklist para lanzamiento de producto'..."
+                  value={aiPrompt}
+                  onChange={(e) => setAiPrompt(e.target.value)}
+                />
+              </div>
+              <button className="ai-generate-btn">
+                <span>⚡</span> Generar
+              </button>
+            </div>
+            <p className="ai-helper-text">
+              La IA completará la descripción y sugerirá etiquetas automáticamente.
+            </p>
+          </div>
+        </div>
+
+        {/* Description coming next */}
       </div>
 
       {/* Footer coming next */}
