@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap'
 import { useCards } from '../../context/CardsContext'
 import './CardDetail.css'
 
-const CardDetail = ({ show, onHide, onSave }) => {
+const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const { tags, addTag } = useCards()
   
   const [title, setTitle] = useState('')
@@ -16,6 +16,17 @@ const CardDetail = ({ show, onHide, onSave }) => {
   const [newTagColor, setNewTagColor] = useState('#eff6ff')
   
   const tagPickerRef = useRef(null)
+  const isEditing = !!editCard
+
+  // Populate form when editing
+  useEffect(() => {
+    if (editCard) {
+      setTitle(editCard.title || '')
+      setDescription(editCard.description || '')
+      setSelectedTagId(editCard.tagId || tags[0]?.id || '')
+      setAiPrompt(editCard.aiPrompt || '')
+    }
+  }, [editCard, tags])
 
   // Close tag picker when clicking outside
   useEffect(() => {
@@ -64,16 +75,25 @@ const CardDetail = ({ show, onHide, onSave }) => {
       return
     }
 
-    const newCard = {
-      id: Date.now(),
-      title: title.trim(),
-      description: description.trim(),
-      tagId: selectedTagId,
-      completed: false,
-      aiPrompt: aiPrompt.trim()
+    if (isEditing) {
+      const updatedData = {
+        title: title.trim(),
+        description: description.trim(),
+        tagId: selectedTagId,
+        aiPrompt: aiPrompt.trim()
+      }
+      onUpdate && onUpdate(editCard.id, updatedData)
+    } else {
+      const newCard = {
+        id: Date.now(),
+        title: title.trim(),
+        description: description.trim(),
+        tagId: selectedTagId,
+        completed: false,
+        aiPrompt: aiPrompt.trim()
+      }
+      onSave(newCard)
     }
-
-    onSave(newCard)
     handleClose()
   }
 
@@ -110,11 +130,11 @@ const CardDetail = ({ show, onHide, onSave }) => {
       <div className="modal-header-custom">
         <div className="modal-header-left">
           <div className="modal-icon">
-            <span>📝</span>
+            <span>{isEditing ? '✏️' : '📝'}</span>
           </div>
           <div className="modal-header-text">
-            <h2 className="modal-title-custom">Nueva Tarea</h2>
-            <p className="modal-subtitle">Define los detalles de tu actividad</p>
+            <h2 className="modal-title-custom">{isEditing ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
+            <p className="modal-subtitle">{isEditing ? 'Modifica los detalles de tu tarea' : 'Define los detalles de tu actividad'}</p>
           </div>
         </div>
         <button className="modal-close-btn" onClick={handleClose}>
@@ -295,7 +315,7 @@ const CardDetail = ({ show, onHide, onSave }) => {
           Cancelar
         </button>
         <button className="btn-save" onClick={handleSave}>
-          <span>💾</span> Guardar Tarea
+          <span>💾</span> {isEditing ? 'Actualizar' : 'Guardar Tarea'}
         </button>
       </div>
     </Modal>

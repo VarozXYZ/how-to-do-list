@@ -6,9 +6,10 @@ import { useCards } from '../context/CardsContext'
 import './Dashboard.css'
 
 const Dashboard = () => {
-  const { activeCards, tags, addCard, deleteCard, toggleComplete, getTagById } = useCards()
+  const { activeCards, tags, addCard, updateCard, deleteCard, toggleComplete, getTagById } = useCards()
   const [searchQuery, setSearchQuery] = useState('')
   const [showModal, setShowModal] = useState(false)
+  const [editingCard, setEditingCard] = useState(null)
   const [filterTagId, setFilterTagId] = useState('all')
   const [sortBy, setSortBy] = useState('newest')
   const [showFilterMenu, setShowFilterMenu] = useState(false)
@@ -46,6 +47,16 @@ const Dashboard = () => {
 
   const handleAiAssist = (id) => {
     console.log('AI Assist clicked for card:', id)
+  }
+
+  const handleEdit = (card) => {
+    setEditingCard(card)
+    setShowModal(true)
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+    setEditingCard(null)
   }
 
   // Filter and sort cards
@@ -203,6 +214,7 @@ const Dashboard = () => {
                   onToggleComplete={toggleComplete}
                   onAiAssist={handleAiAssist}
                   onDelete={deleteCard}
+                  onEdit={handleEdit}
                 />
               ))
             ) : (
@@ -219,11 +231,13 @@ const Dashboard = () => {
           +
         </button>
 
-        {/* Create Task Modal */}
+        {/* Create/Edit Task Modal */}
         <CardDetail 
           show={showModal} 
-          onHide={() => setShowModal(false)}
+          onHide={handleCloseModal}
           onSave={addCard}
+          onUpdate={updateCard}
+          editCard={editingCard}
         />
       </main>
     </div>

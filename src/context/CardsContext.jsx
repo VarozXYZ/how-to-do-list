@@ -68,6 +68,12 @@ export const CardsProvider = ({ children }) => {
     ))
   }
 
+  const updateCard = (id, updatedData) => {
+    setCards(cards.map(card =>
+      card.id === id ? { ...card, ...updatedData } : card
+    ))
+  }
+
   const addTag = (newTag) => {
     const tagId = newTag.name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now()
     setTags([...tags, { ...newTag, id: tagId }])
@@ -87,6 +93,7 @@ export const CardsProvider = ({ children }) => {
     completedCards,
     tags,
     addCard,
+    updateCard,
     deleteCard,
     toggleComplete,
     addTag,

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useCards } from '../../context/CardsContext'
 import './CardItem.css'
 
-const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete }) => {
+const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
   const { id, title, description, tagId, completed } = card
   const { getTagById } = useCards()
   const [showMenu, setShowMenu] = useState(false)
@@ -38,7 +38,7 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete }) => {
   const getButtonStyle = () => {
     if (!tag) return {}
     return {
-      background: `linear-gradient(135deg, ${tag.textColor} 0%, ${tag.borderColor} 100%)`,
+      background: `linear-gradient(135deg, ${tag.textColor} 0%, ${tag.textColor} 100%, ${tag.borderColor} 100%)`,
       color: '#ffffff',
       border: 'none'
     }
@@ -70,6 +70,15 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete }) => {
           </button>
           {showMenu && (
             <div className="card-dropdown">
+              <button 
+                className="dropdown-item"
+                onClick={() => {
+                  onEdit && onEdit(card)
+                  setShowMenu(false)
+                }}
+              >
+                <span>✏️</span> Editar
+              </button>
               <button 
                 className="dropdown-item delete"
                 onClick={() => {
