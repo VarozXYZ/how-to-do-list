@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Página de Inicio de Sesión - [How] ToDoList</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6c2bee",
+                        "primary-hover": "#5b24c9",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#161022",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1e162e",
+                        "input-light": "#f9f8fc",
+                        "input-dark": "#2a2438",
+                        "border-light": "#d7cfe7",
+                        "border-dark": "#3f3650",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "2rem", 
+                        "xl": "3rem", 
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(108, 43, 238, 0.15)',
+                        'glow': '0 0 20px rgba(108, 43, 238, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Gradient Background Animation (Optional static fallback included) */
+        .mesh-gradient {
+            background-color: #f6f6f8;
+            background-image: 
+                radial-gradient(at 40% 20%, hsla(261,90%,75%,0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(270,75%,70%,0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(260,85%,72%,0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, hsla(265,90%,75%,0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(260,85%,70%,0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, hsla(270,75%,72%,0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, hsla(260,85%,72%,0.15) 0px, transparent 50%);
+        }
+        
+        .dark .mesh-gradient {
+            background-color: #161022;
+            background-image: 
+                radial-gradient(at 40% 20%, hsla(261,90%,60%,0.1) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(270,75%,55%,0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(260,85%,60%,0.1) 0px, transparent 50%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #6c2bee 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glassmorphism hint for card */
+        .glass-card {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="font-display text-gray-900 dark:text-gray-100 mesh-gradient min-h-screen flex items-center justify-center p-4 transition-colors duration-300">
+<!-- Main Container -->
+<main class="w-full max-w-[480px] relative z-10">
+<!-- Login Card -->
+<div class="glass-card bg-card-light dark:bg-card-dark rounded-xl shadow-soft dark:shadow-none border border-white/50 dark:border-white/5 p-8 sm:p-10 flex flex-col gap-6 w-full">
+<!-- Header Section -->
+<div class="flex flex-col items-center justify-center text-center pb-2">
+<!-- Logo / Icon -->
+<div class="mb-4 flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-4xl">
+                        auto_awesome
+                    </span>
+</div>
+<!-- Headline -->
+<h1 class="text-3xl font-bold tracking-tight mb-2 text-[#120d1b] dark:text-white">
+<span class="text-primary">[How]</span> ToDoList
+                </h1>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-medium">
+                    Productividad inteligente, potenciada por IA
+                </p>
+</div>
+<!-- Form Section -->
+<form class="flex flex-col gap-5 w-full">
+<!-- Username / Email Field -->
+<div class="flex flex-col gap-1.5">
+<label class="text-[#120d1b] dark:text-gray-200 text-sm font-semibold pl-1" for="email">Correo Electrónico o Usuario</label>
+<div class="relative flex items-center">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<input class="w-full h-12 pl-12 pr-4 bg-input-light dark:bg-input-dark border border-border-light dark:border-border-dark rounded-full focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-[#120d1b] dark:text-white placeholder-gray-400 dark:placeholder-gray-500" id="email" placeholder="nombre@ejemplo.com" type="text"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center pl-1 pr-1">
+<label class="text-[#120d1b] dark:text-gray-200 text-sm font-semibold" for="password">Contraseña</label>
+<a class="text-primary text-xs font-medium hover:underline" href="#">¿Olvidaste tu contraseña?</a>
+</div>
+<div class="relative flex items-center">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-primary">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<input class="w-full h-12 pl-12 pr-12 bg-input-light dark:bg-input-dark border border-border-light dark:border-border-dark rounded-full focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-[#120d1b] dark:text-white placeholder-gray-400 dark:placeholder-gray-500" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-primary transition-colors cursor-pointer" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Submit Button -->
+<div class="pt-2">
+<button class="group relative w-full h-12 flex justify-center items-center gap-2 rounded-full bg-gradient-to-r from-primary to-[#8b5cf6] text-white font-bold text-base shadow-glow transition-transform active:scale-[0.98] hover:shadow-lg overflow-hidden" type="button">
+<span class="relative z-10 flex items-center gap-2">
+                            Iniciar Sesión
+                            <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</span>
+<!-- Shimmer effect overlay -->
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</button>
+</div>
+</form>
+<!-- Divider -->
+<div class="relative flex items-center py-2">
+<div class="flex-grow border-t border-border-light dark:border-border-dark"></div>
+<span class="flex-shrink-0 mx-4 text-gray-400 dark:text-gray-500 text-xs font-medium">O continúa con</span>
+<div class="flex-grow border-t border-border-light dark:border-border-dark"></div>
+</div>
+<!-- Social Login Placeholders (Using standard buttons for consistency) -->
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 h-10 rounded-full border border-border-light dark:border-border-dark bg-white dark:bg-input-dark hover:bg-gray-50 dark:hover:bg-[#322c42] transition-colors">
+<!-- Google G Icon placeholder description: A generic 'G' shape or logo -->
+<img alt="Google Logo" class="w-5 h-5" data-alt="Google G colorful logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBt_QWa_OUWVKFFAD7MJauPa0-uyPSF9PwJa9LzuQjAsiIuw_sGIXHEWTWhxLTuE2Hnara5YtMGjFE8BaOCr-tK2lCAFOGI1QHJFV8ET_VclTCph9wYgx_jMrUf14KMnFzbrvv-obqQDsk5G-r8B0NtDEbX_6FEd_DJ_IvFgMTUqrpl4NI8pE-ZUgEOddUQdS9Yq-PozYVeH69ZBYP_XvYvcA9c7QHrGQNGtRpnUKmx_AHfYk0UPRNrhPIGbikiP_v3BS0A68yVATQ"/>
+<span class="text-sm font-medium text-gray-700 dark:text-gray-200">Google</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-10 rounded-full border border-border-light dark:border-border-dark bg-white dark:bg-input-dark hover:bg-gray-50 dark:hover:bg-[#322c42] transition-colors">
+<!-- Apple Icon placeholder description: An apple shape silhouette -->
+<span class="material-symbols-outlined text-gray-900 dark:text-white text-[22px]">
+                        laptop_mac
+                    </span>
+<span class="text-sm font-medium text-gray-700 dark:text-gray-200">Apple</span>
+</button>
+</div>
+<!-- Footer Section -->
+<div class="text-center pt-2">
+<p class="text-gray-500 dark:text-gray-400 text-sm">
+                    ¿No tienes una cuenta? 
+                    <a class="text-primary font-bold hover:underline decoration-2 underline-offset-2 ml-1" href="#">Regístrate</a>
+</p>
+</div>
+</div>
+<!-- Decorative abstract element behind card (bottom right) -->
+<div class="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl -z-10 animate-pulse"></div>
+<!-- Decorative abstract element behind card (top left) -->
+<div class="absolute -top-10 -left-10 w-40 h-40 bg-purple-400/20 rounded-full blur-3xl -z-10 animate-pulse" style="animation-delay: 1s;"></div>
+</main>
+</body></html>

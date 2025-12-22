@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configuración de Perfil - ToDo AI</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                        "border-light": "#e7edf3",
+                        "border-dark": "#2a3b4d",
+                        "text-primary-light": "#0d141b",
+                        "text-primary-dark": "#ffffff",
+                        "text-secondary-light": "#4c739a",
+                        "text-secondary-dark": "#94a3b8",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom range slider styling for cross-browser consistency */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #2b8cee;
+            cursor: pointer;
+            margin-top: -8px; 
+            box-shadow: 0 0 0 4px rgba(43, 140, 238, 0.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #e2e8f0;
+            border-radius: 2px;
+        }
+        .dark input[type=range]::-webkit-slider-runnable-track {
+            background: #334155;
+        }
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark font-display antialiased selection:bg-primary/30">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-md px-4 md:px-10 py-3">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 32px;">check_circle</span>
+</div>
+<h2 class="text-text-primary-light dark:text-text-primary-dark text-xl font-bold leading-tight tracking-[-0.015em]">ToDo AI</h2>
+</div>
+<!-- Desktop Menu -->
+<div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-6">
+<a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span> Tablero
+                    </a>
+<a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span> Calendario
+                    </a>
+<a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">smart_toy</span> IA Asistente
+                    </a>
+<a class="text-primary font-bold text-sm leading-normal flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">person</span> Perfil
+                    </a>
+</nav>
+<div class="flex gap-2 items-center border-l border-border-light dark:border-border-dark pl-6">
+<button class="flex items-center justify-center overflow-hidden rounded-full size-10 hover:bg-border-light dark:hover:bg-border-dark transition-colors text-text-primary-light dark:text-text-primary-dark">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 ring-2 ring-primary/20" data-alt="User avatar small" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAG0h7DmQ-00sKFhHEnMsZkLs7P1F4iiRtSXvfIjFj7bkMnaJnSodfRlwSpbfQTgDzVDRfA6qhbiAaC_uG7PsGxFxGkSwO--oQ3cDcqkHgPbpYFqVGGTMyshTGHF8mtl6ZNsbBnOkMH7Dq70sl7lbTzneZnMECpOe9T2E2U50N1Taf5I_SQh5g9RKfiffpBrogWrIdZDc-h8ioF1XX1t4kY09OjguRfWv1loA2kGcaGHn1pK4Guy-zkaD7I38TgzpgTYkBWWkdDCvAd");'>
+</div>
+</div>
+</div>
+<!-- Mobile Menu Toggle (Visual Only) -->
+<div class="md:hidden">
+<button class="p-2 text-text-primary-light dark:text-text-primary-dark">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content Layout -->
+<main class="flex-1 flex justify-center py-8 px-4 md:px-6">
+<div class="w-full max-w-[800px] flex flex-col gap-8">
+<!-- Page Heading -->
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-text-primary-light dark:text-text-primary-dark">Configuración de Perfil</h1>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal">
+                        Gestiona tu cuenta y personaliza tu experiencia con la IA.
+                    </p>
+</div>
+<!-- Profile Header Card -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 md:p-8 shadow-sm border border-border-light dark:border-border-dark flex flex-col md:flex-row items-center gap-6 md:gap-8">
+<div class="relative group">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-28 md:size-32 shadow-md ring-4 ring-white dark:ring-surface-dark" data-alt="Profile picture of Alex Design" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAxWD_gFr-zx5Pcq7oSd6dzVZ7_huZqA0ijM4j9O7grbTdhA5OsEzIFA-WFhE0urczfMi8w9Fc6hoWNM95gPKY1ax4o07PYoDZnm2pYW4OoojobtOLapIWA8dM7cqQMPEOLHzIFFTw7D8HHXW2TbB_ysReU0UUr_F28kHunGHYB5cEhP2ru1XLsh4UESBOZX3rY1C4Do9-M-D9_dveD7CADX_7qSEr0Bs7-atQ6vBxD2CWgewGx_FCNEtrbf55S08Qse0QkqM6z-Gi5");'>
+</div>
+<button class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 shadow-lg hover:bg-blue-600 transition-transform transform hover:scale-105" title="Cambiar foto">
+<span class="material-symbols-outlined text-[20px]">photo_camera</span>
+</button>
+</div>
+<div class="flex flex-col items-center md:items-start flex-1 gap-1">
+<h2 class="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark">Alex Design</h2>
+<p class="text-text-secondary-light dark:text-text-secondary-dark">alex@example.com</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">Pro Member</span>
+</div>
+</div>
+<div class="w-full md:w-auto mt-4 md:mt-0">
+<button class="w-full md:w-auto px-6 py-3 bg-background-light dark:bg-background-dark hover:bg-border-light dark:hover:bg-border-dark border border-border-light dark:border-border-dark text-text-primary-light dark:text-text-primary-dark font-bold rounded-xl transition-all text-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">upload</span>
+                            Cambiar Foto
+                        </button>
+</div>
+</div>
+<!-- Personal Information Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 px-1">
+<span class="material-symbols-outlined text-primary">badge</span>
+<h3 class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">Información Personal</h3>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-border-light dark:border-border-dark grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark">Nombre de usuario</span>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</span>
+<input class="w-full pl-11 pr-4 py-3 rounded-xl bg-background-light dark:bg-background-dark border-border-light dark:border-border-dark focus:border-primary focus:ring-primary text-text-primary-light dark:text-text-primary-dark" placeholder="Tu nombre" type="text" value="Alex Design"/>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark">Correo electrónico</span>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</span>
+<input class="w-full pl-11 pr-4 py-3 rounded-xl bg-background-light dark:bg-background-dark border-border-light dark:border-border-dark focus:border-primary focus:ring-primary text-text-primary-light dark:text-text-primary-dark" placeholder="tu@email.com" type="email" value="alex@example.com"/>
+</div>
+</label>
+<label class="flex flex-col gap-2 md:col-span-2">
+<span class="text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark">Biografía</span>
+<textarea class="w-full p-4 rounded-xl bg-background-light dark:bg-background-dark border-border-light dark:border-border-dark focus:border-primary focus:ring-primary text-text-primary-light dark:text-text-primary-dark resize-none" placeholder="Cuéntanos un poco sobre ti..." rows="3"></textarea>
+</label>
+</div>
+</section>
+<!-- App Preferences Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 px-1">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h3 class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">Preferencias de la Aplicación</h3>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden divide-y divide-border-light dark:divide-border-dark">
+<!-- Dark Mode Toggle -->
+<div class="p-5 flex items-center justify-between hover:bg-background-light/50 dark:hover:bg-background-dark/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+<span class="material-symbols-outlined">dark_mode</span>
+</div>
+<div>
+<p class="font-bold text-text-primary-light dark:text-text-primary-dark">Modo Oscuro</p>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Cambia la apariencia a tonos oscuros.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Notifications Toggle -->
+<div class="p-5 flex items-center justify-between hover:bg-background-light/50 dark:hover:bg-background-dark/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400">
+<span class="material-symbols-outlined">notifications_active</span>
+</div>
+<div>
+<p class="font-bold text-text-primary-light dark:text-text-primary-dark">Notificaciones Push</p>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Recibe alertas de tus tareas pendientes.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Sound Toggle -->
+<div class="p-5 flex items-center justify-between hover:bg-background-light/50 dark:hover:bg-background-dark/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined">volume_up</span>
+</div>
+<div>
+<p class="font-bold text-text-primary-light dark:text-text-primary-dark">Efectos de Sonido</p>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Sonidos al completar tareas.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- AI Configuration Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 px-1">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<h3 class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">Configuración de IA</h3>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 md:p-8 shadow-sm border border-border-light dark:border-border-dark space-y-8">
+<!-- Creativity Slider -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
+                                    Nivel de Creatividad
+                                    <span class="material-symbols-outlined text-sm text-text-secondary-light dark:text-text-secondary-dark" title="Define qué tan creativas son las sugerencias">info</span>
+</label>
+<span class="text-primary font-bold bg-primary/10 px-3 py-1 rounded-full text-sm">Equilibrado</span>
+</div>
+<input class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-primary" max="100" min="0" type="range" value="50"/>
+<div class="flex justify-between text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">
+<span>Preciso</span>
+<span>Creativo</span>
+</div>
+</div>
+<!-- Personality Selector -->
+<div class="space-y-4">
+<p class="font-bold text-text-primary-light dark:text-text-primary-dark">Personalidad del Asistente</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<!-- Option 1 -->
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="ai_personality" type="radio"/>
+<div class="p-4 rounded-xl border-2 border-border-light dark:border-border-dark peer-checked:border-primary peer-checked:bg-primary/5 hover:border-primary/50 transition-all h-full flex flex-col gap-2">
+<div class="size-10 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined">sentiment_satisfied</span>
+</div>
+<span class="font-bold text-text-primary-light dark:text-text-primary-dark">Amigable</span>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-snug">Tono casual, usa emojis y es motivador.</span>
+</div>
+</label>
+<!-- Option 2 -->
+<label class="cursor-pointer group">
+<input checked="" class="peer sr-only" name="ai_personality" type="radio"/>
+<div class="p-4 rounded-xl border-2 border-border-light dark:border-border-dark peer-checked:border-primary peer-checked:bg-primary/5 hover:border-primary/50 transition-all h-full flex flex-col gap-2">
+<div class="size-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined">business_center</span>
+</div>
+<span class="font-bold text-text-primary-light dark:text-text-primary-dark">Profesional</span>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-snug">Conciso, directo y enfocado en productividad.</span>
+</div>
+</label>
+<!-- Option 3 -->
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="ai_personality" type="radio"/>
+<div class="p-4 rounded-xl border-2 border-border-light dark:border-border-dark peer-checked:border-primary peer-checked:bg-primary/5 hover:border-primary/50 transition-all h-full flex flex-col gap-2">
+<div class="size-10 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<span class="font-bold text-text-primary-light dark:text-text-primary-dark">Analítico</span>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-snug">Detallado, ofrece datos y contexto extra.</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Footer -->
+<div class="pt-4 pb-12 flex flex-col md:flex-row items-center justify-between gap-6">
+<button class="w-full md:w-auto text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 px-6 py-3 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">logout</span>
+                        Cerrar Sesión
+                    </button>
+<div class="flex w-full md:w-auto gap-4">
+<button class="flex-1 md:flex-none px-6 py-3 rounded-xl font-bold text-text-secondary-light dark:text-text-secondary-dark hover:bg-border-light dark:hover:bg-border-dark transition-colors">
+                            Cancelar
+                        </button>
+<button class="flex-1 md:flex-none bg-primary hover:bg-blue-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">save</span>
+                            Guardar Cambios
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
