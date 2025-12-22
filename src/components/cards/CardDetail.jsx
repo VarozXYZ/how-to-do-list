@@ -166,7 +166,15 @@ const CardDetail = ({ show, onHide, onSave }) => {
         {/* Footer coming next */}
       </div>
 
-      {/* Footer coming next */}
+      {/* Footer */}
+      <div className="modal-footer-custom">
+        <button className="btn-cancel" onClick={handleClose}>
+          Cancelar
+        </button>
+        <button className="btn-save">
+          <span>💾</span> Guardar Tarea
+        </button>
+      </div>
     </Modal>
   )
 }
