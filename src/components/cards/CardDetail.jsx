@@ -6,11 +6,28 @@ const CardDetail = ({ show, onHide, onSave }) => {
   const [title, setTitle] = useState('')
   const [aiPrompt, setAiPrompt] = useState('')
   const [description, setDescription] = useState('')
+  const [selectedColor, setSelectedColor] = useState('default')
+  const [tags, setTags] = useState([])
+
+  const colors = [
+    { id: 'default', color: '#f1f5f9' },
+    { id: 'red', color: '#fee2e2' },
+    { id: 'amber', color: '#fef3c7' },
+    { id: 'green', color: '#dcfce7' },
+    { id: 'blue', color: '#dbeafe' },
+    { id: 'purple', color: '#f3e8ff' }
+  ]
+
+  const removeTag = (tagToRemove) => {
+    setTags(tags.filter(tag => tag !== tagToRemove))
+  }
 
   const handleClose = () => {
     setTitle('')
     setAiPrompt('')
     setDescription('')
+    setSelectedColor('default')
+    setTags([])
     onHide()
   }
 
@@ -94,7 +111,59 @@ const CardDetail = ({ show, onHide, onSave }) => {
         {/* Divider */}
         <div className="modal-divider"></div>
 
-        {/* Metadata coming next */}
+        {/* Metadata Grid */}
+        <div className="metadata-grid">
+          {/* Date & Time */}
+          <div className="metadata-section">
+            <label className="form-label-modal">Fecha y Hora</label>
+            <div className="datetime-row">
+              <button className="datetime-btn">
+                <span>📅</span>
+                <span>Hoy</span>
+                <span className="dropdown-icon">▾</span>
+              </button>
+              <button className="datetime-btn time-btn">
+                <span>🕐</span>
+                <span>14:00</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Tags */}
+          <div className="metadata-section">
+            <label className="form-label-modal">Etiquetas</label>
+            <div className="tags-container">
+              {tags.map((tag, index) => (
+                <span key={index} className={`tag tag-${tag.color}`}>
+                  {tag.name}
+                  <button className="tag-remove" onClick={() => removeTag(tag)}>✕</button>
+                </span>
+              ))}
+              <button className="add-tag-btn">
+                <span>+</span> Etiqueta
+              </button>
+            </div>
+          </div>
+
+          {/* Color Picker */}
+          <div className="metadata-section full-width">
+            <label className="form-label-modal">Color de la tarjeta</label>
+            <div className="color-picker">
+              {colors.map((c) => (
+                <button
+                  key={c.id}
+                  className={`color-btn ${selectedColor === c.id ? 'selected' : ''}`}
+                  style={{ backgroundColor: c.color }}
+                  onClick={() => setSelectedColor(c.id)}
+                >
+                  {selectedColor === c.id && <span>✓</span>}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer coming next */}
       </div>
 
       {/* Footer coming next */}
