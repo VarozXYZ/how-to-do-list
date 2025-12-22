@@ -120,6 +120,11 @@ const Dashboard = () => {
             ))}
           </div>
         </div>
+
+        {/* FAB Button */}
+        <button className="fab-button" title="Nueva tarea">
+          <span>+</span>
+        </button>
       </main>
     </div>
   )
