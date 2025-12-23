@@ -287,17 +287,56 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, getTagById
 
 ## 🚧 Pending Work
 
-### Immediate Next Steps
-1. **AI Integration** (Priority)
+### 🔴 Alta prioridad
+1. **AI Integration**
    - Setup DeepSeek API connection via OpenAI SDK
    - Implement "Mejorar con IA" functionality
    - Auto-generate/improve task descriptions
 
-### Frontend Improvements (Optional)
-- Notifications system
-- Dark mode toggle (UI exists in Settings, needs implementation)
-- Search improvements
-- Profile photo upload functionality
+2. **Sistema de prioridad**
+   - Añadir campo de prioridad a las tarjetas (Alta, Media, Baja)
+   - Añadir filtro por prioridad en el Dashboard
+   - Añadir opción de ordenar por prioridad
+
+### 🟡 Media prioridad
+3. **Rediseño de controles de tarjeta**
+   - Eliminar el menú de tres puntos (⋯)
+   - Reemplazar con botón de papelera (🗑️) para eliminar
+   - La edición ya funciona al hacer clic en la tarjeta
+
+4. **Rediseño del FAB (Floating Action Button)**
+   - El botón actual de "Nueva tarea" es feo y sticky
+   - Mejorar diseño y comportamiento
+
+5. **Mejora visual de etiquetas**
+   - La etiqueta en la tarjeta se ve mal con el mismo color de fondo
+   - Necesita mejor contraste/diferenciación visual
+
+6. **Sistema de notificaciones**
+   - El botón de notificaciones no funciona
+   - Implementar sistema completo de notificaciones
+
+7. **Logout accesible**
+   - Añadir botón de logout en la zona de Usuario del Sidebar
+   - Actualmente no hay forma visible de cerrar sesión
+
+8. **Conectar configuración al backend**
+   - La página de Settings está totalmente desconectada
+   - Persistir cambios de perfil en la base de datos
+   - Guardar preferencias del usuario
+
+### 🟢 Baja prioridad
+9. **Modo oscuro**
+   - UI existe en Settings pero no funciona
+   - Implementar toggle funcional con persistencia
+
+10. **Efectos de sonido**
+    - Añadir sonidos para acciones (crear, completar, eliminar)
+    - Opción para activar/desactivar en Settings
+
+11. **Otras mejoras**
+    - Profile photo upload functionality
+    - Search improvements
 
 ---
 
