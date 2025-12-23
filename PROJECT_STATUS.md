@@ -15,6 +15,7 @@ A modern ToDo list application with AI integration (using DeepSeek via OpenAI SD
 - Create, edit, and manage tasks with custom tags/colors
 - Get AI-powered suggestions and task improvements
 - Have a beautiful, responsive UI with Spanish language support
+- Dark mode support with persistent theme preference
 
 ---
 
@@ -33,7 +34,7 @@ src/
 │   ├── auth/ (Login, Register)
 │   ├── cards/ (CardItem, CardDetail, CardList)
 │   └── layout/ (Sidebar, Layout, Navbar)
-├── context/ (AuthContext, CardsContext)
+├── context/ (AuthContext, CardsContext, ThemeContext)
 ├── pages/ (Dashboard, Completed, Settings)
 ├── services/ (api.js, auth.js)
 └── main.jsx, App.jsx, index.css
@@ -86,7 +87,7 @@ server/
 
 ---
 
-## ✅ Completed Work (This Session)
+## ✅ Completed Work (Session 1)
 
 ### Layout & Styling Fixes
 1. **Full-width layout** - Removed centering constraints, fixed horizontal scroll
@@ -94,36 +95,22 @@ server/
 3. **FAB button** - Improved centering of the + icon, subtle hover animation
 
 ### Logo & Branding
-4. **Custom logo** - Replaced emoji logo with Cloudinary-hosted image:
-   `https://res.cloudinary.com/diycpogap/image/upload/v1766428693/logo_e2ytv1.png`
+4. **Custom logo** - Replaced emoji logo with Cloudinary-hosted image
 5. **Navigation icons** - Changed "Mis Tareas" icon to clipboard emoji (📋)
 
 ### Card System Overhaul
 6. **Tag-based color system** - Complete refactor:
    - Tags now determine card colors (gradient background + border)
-   - Tags also determine "Mejorar con IA" button color
    - Default tags: Marketing, Personal, Diseño, Trabajo, Investigación
    - Custom tag creation with 8 color presets
    - Removed separate color picker
 
 7. **Card colors** - Subtle gradients from tag color to white, matching borders
 
-8. **AI Button styling** - Solid color with subtle gradient, Spanish text "Mejorar con IA"
-
 ### UX Improvements
-9. **Click-outside behavior** - All dropdown menus close when clicking outside:
-   - Card three-dots menu
-   - Filter dropdown
-   - Sort dropdown
-   - Tag picker in modal
-
-10. **Edit functionality** - Added ability to edit existing cards:
-    - Edit option in card dropdown menu
-    - Modal adapts title/button text for edit mode
-    - Pre-fills form with existing data
-
-### Translations
-11. **Spanish UI** - Dashboard header, buttons, and labels translated
+8. **Click-outside behavior** - All dropdown menus close when clicking outside
+9. **Edit functionality** - Clicking a card opens edit modal
+10. **Spanish capitalization** - Fixed throughout the app
 
 ---
 
@@ -163,19 +150,54 @@ server/
    - `AuthContext.jsx` - Global auth state, login/register/logout
    - `CardsContext.jsx` - Async API calls, loading states
 
-6. **Component Updates**
-   - `Login.jsx` / `Register.jsx` - Connected to auth API with error handling
-   - `App.jsx` - Protected routes (redirect to /login if not authenticated)
-   - `Dashboard.jsx` / `Completed.jsx` - Loading states while fetching
-   - `CardDetail.jsx` - Async save/update with loading indicator
+6. **Additional Fixes**
+   - Date/time pickers using react-datepicker with custom styling
+   - Tag deletion functionality
+   - Default dates (current date + 2 hours for new cards)
+   - Sticky sidebar on all pages
 
-### Additional Fixes
-7. **Spanish capitalization** - Fixed throughout the app (only first letter capitalized)
-8. **Date/time pickers** - Using react-datepicker with custom styling
-9. **Tag deletion** - Added ability to delete custom tags
-10. **Default dates** - New cards default to current date + 2 hours
-11. **Sticky sidebar** - Fixed position sidebar on all pages
-12. **Click-to-edit cards** - Clicking a card opens edit modal
+---
+
+## ✅ Completed Work (Session 3 - December 23, 2025)
+
+### Card Controls Redesign
+1. **Removed three-dots menu** - Replaced with direct delete button
+2. **Delete button styling** - Uses tag's color scheme with opacity for visibility
+3. **AI button unified** - Changed to consistent blue (#3D97EF) with "IA" text
+4. **AI button tooltip** - Shows "Mejorar con IA" on hover
+
+### User Interface Improvements
+5. **Logout button** - Added accessible logout button in sidebar with SVG icon
+6. **Settings connected to backend** - Username and bio now persist to database
+
+### Dark Mode Implementation ✅
+7. **ThemeContext** - New context for global theme management
+   - `darkMode` state with `toggleDarkMode` function
+   - Persistence in localStorage
+   - Applies `dark-mode` class to document.body
+
+8. **CSS Variables** - Light/dark theme support in `index.css`:
+   ```css
+   :root {
+     --bg-primary, --bg-secondary, --bg-card, --bg-input
+     --text-primary, --text-secondary, --text-muted
+     --border-color, --border-light
+     --shadow-sm
+   }
+   ```
+
+9. **Component Updates for Dark Mode**:
+   - `Sidebar.css` - Dark background, borders, hover states
+   - `Dashboard.css` - Main background, filter buttons
+   - `CardItem.css` - Card gradients that adapt to theme
+   - `CardItem.jsx` - Dynamic gradient calculation for dark mode
+   - `CardDetail.css` - Modal styling, inputs, datepicker
+   - `Settings.css` - All sections, inputs, toggles, buttons
+
+10. **Dynamic Logos** - Theme-aware logo switching:
+    - Light theme: `logo-white_p2msnm.png`
+    - Dark theme: `logo-dark_hlp0ri.png`
+    - Applied in Sidebar, Login, and Register pages
 
 ---
 
@@ -221,8 +243,9 @@ how-to-do-list/
 │   │       ├── Layout.jsx
 │   │       └── Navbar.jsx
 │   ├── context/
-│   │   ├── AuthContext.jsx  # Auth state + API calls
-│   │   └── CardsContext.jsx # Cards/tags state + API calls
+│   │   ├── AuthContext.jsx   # Auth state + API calls
+│   │   ├── CardsContext.jsx  # Cards/tags state + API calls
+│   │   └── ThemeContext.jsx  # Dark mode state + toggle
 │   ├── pages/
 │   │   ├── Dashboard.jsx + Dashboard.css
 │   │   ├── Completed.jsx
@@ -245,18 +268,25 @@ how-to-do-list/
 
 ## 🔧 Key Technical Details
 
-### CardsContext (src/context/CardsContext.jsx)
-Main state management for cards and tags:
+### ThemeContext (src/context/ThemeContext.jsx)
+```javascript
+// Provides
+{ darkMode: boolean, toggleDarkMode: function }
 
+// Persists to localStorage key: 'darkMode'
+// Applies/removes class 'dark-mode' on document.body
+```
+
+### CardsContext (src/context/CardsContext.jsx)
 ```javascript
 // Default tags structure
 { id: 'marketing', name: 'Marketing', color: '#eff6ff', borderColor: '#bfdbfe', textColor: '#1d4ed8' }
 
 // Card structure
-{ id, title, description, tagId, completed, aiPrompt }
+{ id, title, description, tagId, completed, aiPrompt, dueDate, dueTime }
 
 // Available functions
-addCard, updateCard, deleteCard, toggleComplete, addTag, getTagById
+addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 ```
 
 ### Color Presets for Custom Tags
@@ -280,7 +310,7 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, getTagById
 /dashboard → Dashboard (main tasks view)
 /completed → Completed tasks
 /settings → User settings/profile
-/ → Redirects to /login
+/ → Redirects to /dashboard (if authenticated) or /login
 ```
 
 ---
@@ -290,7 +320,7 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, getTagById
 ### 🔴 Alta prioridad
 1. **AI Integration**
    - Setup DeepSeek API connection via OpenAI SDK
-   - Implement "Mejorar con IA" functionality
+   - Implement "IA" button functionality
    - Auto-generate/improve task descriptions
 
 2. **Sistema de prioridad**
@@ -299,44 +329,32 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, getTagById
    - Añadir opción de ordenar por prioridad
 
 ### 🟡 Media prioridad
-3. **Rediseño de controles de tarjeta**
-   - Eliminar el menú de tres puntos (⋯)
-   - Reemplazar con botón de papelera (🗑️) para eliminar
-   - La edición ya funciona al hacer clic en la tarjeta
-
-4. **Rediseño del FAB (Floating Action Button)**
+3. **Rediseño del FAB (Floating Action Button)**
    - El botón actual de "Nueva tarea" es feo y sticky
    - Mejorar diseño y comportamiento
 
-5. **Mejora visual de etiquetas**
-   - La etiqueta en la tarjeta se ve mal con el mismo color de fondo
-   - Necesita mejor contraste/diferenciación visual
-
-6. **Sistema de notificaciones**
-   - El botón de notificaciones no funciona
+4. **Sistema de notificaciones**
+   - El botón de notificaciones (🔔) no funciona
    - Implementar sistema completo de notificaciones
 
-7. **Logout accesible**
-   - Añadir botón de logout en la zona de Usuario del Sidebar
-   - Actualmente no hay forma visible de cerrar sesión
-
-8. **Conectar configuración al backend**
-   - La página de Settings está totalmente desconectada
-   - Persistir cambios de perfil en la base de datos
-   - Guardar preferencias del usuario
-
 ### 🟢 Baja prioridad
-9. **Modo oscuro**
-   - UI existe en Settings pero no funciona
-   - Implementar toggle funcional con persistencia
+5. **Efectos de sonido**
+   - Añadir sonidos para acciones (crear, completar, eliminar)
+   - Opción para activar/desactivar en Settings
 
-10. **Efectos de sonido**
-    - Añadir sonidos para acciones (crear, completar, eliminar)
-    - Opción para activar/desactivar en Settings
+6. **Otras mejoras**
+   - Profile photo upload functionality
+   - Search improvements
 
-11. **Otras mejoras**
-    - Profile photo upload functionality
-    - Search improvements
+---
+
+## ✅ Recently Completed (Previously Pending)
+
+- ~~Rediseño de controles de tarjeta~~ → Delete button added, three-dots removed
+- ~~Mejora visual de etiquetas~~ → Tags now have distinct styling
+- ~~Logout accesible~~ → Added in sidebar with icon
+- ~~Conectar configuración al backend~~ → Username/bio connected
+- ~~Modo oscuro~~ → Fully implemented with CSS variables and persistence
 
 ---
 
@@ -344,7 +362,7 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, getTagById
 
 1. **No documentation/tests unless explicitly requested**
 2. **Commit and push after each significant change**
-3. **Spanish language for UI**
+3. **Spanish language for UI (proper capitalization rules)**
 4. **"IA Sugerencias" page was removed from the project scope**
 5. **Social login buttons kept as disabled placeholders**
 
@@ -352,7 +370,8 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, getTagById
 
 ## 🔗 External Resources
 
-- **Logo URL:** `https://res.cloudinary.com/diycpogap/image/upload/v1766428693/logo_e2ytv1.png`
+- **Logo (Light theme):** `https://res.cloudinary.com/diycpogap/image/upload/v1766521088/logo-white_p2msnm.png`
+- **Logo (Dark theme):** `https://res.cloudinary.com/diycpogap/image/upload/v1766521136/logo-dark_hlp0ri.png`
 - **Design References:** Located in `/references/` folder (HTML + PNG mockups)
 - **Font:** Plus Jakarta Sans (imported via Google Fonts in CSS)
 
@@ -380,9 +399,9 @@ npm run dev
 1. ✅ Frontend and backend are fully connected and functional
 2. ✅ Authentication works (register, login, logout, protected routes)
 3. ✅ Cards and tags are persisted to `server/data.json`
-4. The AI "Mejorar con IA" button currently only logs to console - needs DeepSeek integration
-5. The Settings page has toggles that don't persist - need backend/localStorage implementation
-6. The `.env` file must be in the `server/` folder (not project root) for JWT to work
-7. User data is isolated - each user only sees their own cards and custom tags
-8. Default tags are shared across all users (defined in `server/config/db.js`)
-
+4. ✅ Dark mode fully functional with CSS variables and localStorage
+5. ✅ Settings page connected (username, bio persist)
+6. The AI "IA" button currently only logs to console - needs DeepSeek integration
+7. The `.env` file must be in the `server/` folder (not project root) for JWT to work
+8. User data is isolated - each user only sees their own cards and custom tags
+9. Default tags are shared across all users (defined in `server/config/db.js`)
