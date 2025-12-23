@@ -1,107 +1,133 @@
-import { createContext, useState, useContext } from 'react'
+import { createContext, useState, useContext, useEffect } from 'react'
+import * as cardsService from '../services/cards'
+import * as tagsService from '../services/tags'
 
 const CardsContext = createContext(null)
 
-// Default tags with colors
-const defaultTags = [
-  { id: 'marketing', name: 'Marketing', color: '#eff6ff', borderColor: '#bfdbfe', textColor: '#1d4ed8' },
-  { id: 'personal', name: 'Personal', color: '#faf5ff', borderColor: '#e9d5ff', textColor: '#7c3aed' },
-  { id: 'design', name: 'Diseño', color: '#fff7ed', borderColor: '#fed7aa', textColor: '#c2410c' },
-  { id: 'work', name: 'Trabajo', color: '#f0fdf4', borderColor: '#bbf7d0', textColor: '#15803d' },
-  { id: 'research', name: 'Investigación', color: '#fdf2f8', borderColor: '#fbcfe8', textColor: '#be185d' }
-]
-
-// Example cards using tags
-const initialCards = [
-  {
-    id: 1,
-    title: 'Plan Q3 Strategy',
-    description: 'Draft initial outline based on Q3 goals, focusing on social media growth.',
-    tagId: 'marketing',
-    completed: false
-  },
-  {
-    id: 2,
-    title: 'Comprar víveres',
-    description: 'Leche, huevos, pan y verduras orgánicas para la semana.',
-    tagId: 'personal',
-    completed: false
-  },
-  {
-    id: 3,
-    title: 'Actualizar Hero del sitio',
-    description: 'Reemplazar la imagen actual con el nuevo render 3D y actualizar los botones CTA.',
-    tagId: 'design',
-    completed: false
-  },
-  {
-    id: 4,
-    title: 'Sync del equipo',
-    description: 'Reunión semanal con el equipo de desarrollo para discutir el progreso del sprint.',
-    tagId: 'work',
-    completed: false
-  },
-  {
-    id: 5,
-    title: 'Análisis de competencia',
-    description: 'Revisar los modelos de precios y características de los 3 principales competidores.',
-    tagId: 'research',
-    completed: false
-  }
-]
-
 export const CardsProvider = ({ children }) => {
-  const [cards, setCards] = useState(initialCards)
-  const [tags, setTags] = useState(defaultTags)
+  const [cards, setCards] = useState([])
+  const [tags, setTags] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  const addCard = (newCard) => {
-    setCards([newCard, ...cards])
+  // Fetch cards and tags on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const [cardsData, tagsData] = await Promise.all([
+          cardsService.getCards(),
+          tagsService.getTags()
+        ])
+        setCards(cardsData)
+        setTags(tagsData)
+        setError(null)
+      } catch (err) {
+        console.error('Error fetching data:', err)
+        setError('Error al cargar los datos')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  // Add a new card
+  const addCard = async (cardData) => {
+    try {
+      const newCard = await cardsService.createCard(cardData)
+      setCards([newCard, ...cards])
+      return newCard
+    } catch (err) {
+      console.error('Error creating card:', err)
+      throw err
+    }
   }
 
-  const deleteCard = (id) => {
-    setCards(cards.filter(card => card.id !== id))
+  // Delete a card
+  const deleteCard = async (id) => {
+    try {
+      await cardsService.deleteCard(id)
+      setCards(cards.filter(card => card.id !== id))
+    } catch (err) {
+      console.error('Error deleting card:', err)
+      throw err
+    }
   }
 
-  const toggleComplete = (id) => {
-    setCards(cards.map(card =>
-      card.id === id ? { ...card, completed: !card.completed } : card
-    ))
+  // Toggle card completion
+  const toggleComplete = async (id) => {
+    try {
+      const result = await cardsService.toggleCardComplete(id)
+      setCards(cards.map(card =>
+        card.id === id ? { ...card, completed: result.completed } : card
+      ))
+    } catch (err) {
+      console.error('Error toggling card:', err)
+      throw err
+    }
   }
 
-  const updateCard = (id, updatedData) => {
-    setCards(cards.map(card =>
-      card.id === id ? { ...card, ...updatedData } : card
-    ))
+  // Update a card
+  const updateCard = async (id, updatedData) => {
+    try {
+      const updatedCard = await cardsService.updateCard(id, updatedData)
+      setCards(cards.map(card =>
+        card.id === id ? updatedCard : card
+      ))
+      return updatedCard
+    } catch (err) {
+      console.error('Error updating card:', err)
+      throw err
+    }
   }
 
-  const addTag = (newTag) => {
-    const tagId = newTag.name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now()
-    setTags([...tags, { ...newTag, id: tagId }])
-    return tagId
+  // Add a new tag
+  const addTag = async (tagData) => {
+    try {
+      const newTag = await tagsService.createTag(tagData)
+      setTags([...tags, newTag])
+      return newTag.id
+    } catch (err) {
+      console.error('Error creating tag:', err)
+      throw err
+    }
   }
 
-  const deleteTag = (tagId) => {
-    // Don't allow deleting default tags
-    const defaultTagIds = ['marketing', 'personal', 'design', 'work', 'research']
-    if (defaultTagIds.includes(tagId)) return false
-    
-    // Update cards that use this tag to use the first default tag
-    setCards(cards.map(card => 
-      card.tagId === tagId ? { ...card, tagId: 'marketing' } : card
-    ))
-    setTags(tags.filter(tag => tag.id !== tagId))
-    return true
+  // Delete a tag
+  const deleteTag = async (tagId) => {
+    try {
+      // Check if it's a default tag
+      const tag = tags.find(t => t.id === tagId)
+      if (tag?.isDefault) return false
+
+      await tagsService.deleteTag(tagId)
+      
+      // Update local state
+      setCards(cards.map(card => 
+        card.tagId === tagId ? { ...card, tagId: 'marketing' } : card
+      ))
+      setTags(tags.filter(tag => tag.id !== tagId))
+      return true
+    } catch (err) {
+      console.error('Error deleting tag:', err)
+      throw err
+    }
   }
 
+  // Check if tag is a default one
   const isDefaultTag = (tagId) => {
-    const defaultTagIds = ['marketing', 'personal', 'design', 'work', 'research']
-    return defaultTagIds.includes(tagId)
+    const tag = tags.find(t => t.id === tagId)
+    return tag?.isDefault || false
   }
 
+  // Get tag by ID
   const getTagById = (tagId) => {
     return tags.find(tag => tag.id === tagId) || tags[0]
   }
 
+  // Computed values
   const activeCards = cards.filter(card => !card.completed)
   const completedCards = cards.filter(card => card.completed)
 
@@ -110,6 +136,8 @@ export const CardsProvider = ({ children }) => {
     activeCards,
     completedCards,
     tags,
+    loading,
+    error,
     addCard,
     updateCard,
     deleteCard,
