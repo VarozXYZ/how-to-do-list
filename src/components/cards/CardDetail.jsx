@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { Modal } from 'react-bootstrap'
+import DatePicker, { registerLocale } from 'react-datepicker'
+import es from 'date-fns/locale/es'
+import 'react-datepicker/dist/react-datepicker.css'
 import { useCards } from '../../context/CardsContext'
 import './CardDetail.css'
+
+registerLocale('es', es)
 
 const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const { tags, addTag } = useCards()
@@ -10,8 +15,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const [aiPrompt, setAiPrompt] = useState('')
   const [description, setDescription] = useState('')
   const [selectedTagId, setSelectedTagId] = useState(tags[0]?.id || '')
-  const [dueDate, setDueDate] = useState('')
-  const [dueTime, setDueTime] = useState('')
+  const [dueDate, setDueDate] = useState(null)
+  const [dueTime, setDueTime] = useState(null)
   const [showTagPicker, setShowTagPicker] = useState(false)
   const [showNewTagForm, setShowNewTagForm] = useState(false)
   const [newTagName, setNewTagName] = useState('')
@@ -27,8 +32,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       setDescription(editCard.description || '')
       setSelectedTagId(editCard.tagId || tags[0]?.id || '')
       setAiPrompt(editCard.aiPrompt || '')
-      setDueDate(editCard.dueDate || '')
-      setDueTime(editCard.dueTime || '')
+      setDueDate(editCard.dueDate ? new Date(editCard.dueDate) : null)
+      setDueTime(editCard.dueTime ? new Date(`2000-01-01T${editCard.dueTime}`) : null)
     }
   }, [editCard, tags])
 
@@ -66,8 +71,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     setAiPrompt('')
     setDescription('')
     setSelectedTagId(tags[0]?.id || '')
-    setDueDate('')
-    setDueTime('')
+    setDueDate(null)
+    setDueTime(null)
     setShowTagPicker(false)
     setShowNewTagForm(false)
     setNewTagName('')
@@ -87,8 +92,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         description: description.trim(),
         tagId: selectedTagId,
         aiPrompt: aiPrompt.trim(),
-        dueDate,
-        dueTime
+        dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null,
+        dueTime: dueTime ? dueTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : null
       }
       onUpdate && onUpdate(editCard.id, updatedData)
     } else {
@@ -99,8 +104,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         tagId: selectedTagId,
         completed: false,
         aiPrompt: aiPrompt.trim(),
-        dueDate,
-        dueTime
+        dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null,
+        dueTime: dueTime ? dueTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : null
       }
       onSave(newCard)
     }
@@ -216,20 +221,34 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
             <div className="datetime-row">
               <div className="datetime-input-wrapper">
                 <span className="datetime-icon">📅</span>
-                <input
-                  type="date"
+                <DatePicker
+                  selected={dueDate}
+                  onChange={(date) => setDueDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  locale="es"
+                  placeholderText="Fecha"
                   className="datetime-input"
-                  value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
+                  calendarClassName="custom-calendar"
+                  popperPlacement="bottom-start"
+                  isClearable
                 />
               </div>
               <div className="datetime-input-wrapper">
                 <span className="datetime-icon">🕐</span>
-                <input
-                  type="time"
+                <DatePicker
+                  selected={dueTime}
+                  onChange={(time) => setDueTime(time)}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  timeCaption="Hora"
+                  dateFormat="HH:mm"
+                  locale="es"
+                  placeholderText="Hora"
                   className="datetime-input"
-                  value={dueTime}
-                  onChange={(e) => setDueTime(e.target.value)}
+                  calendarClassName="custom-calendar"
+                  popperPlacement="bottom-start"
+                  isClearable
                 />
               </div>
             </div>
