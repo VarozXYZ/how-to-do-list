@@ -7,6 +7,8 @@
   overflow: hidden;
   font-family: 'Plus Jakarta Sans', sans-serif;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  background: var(--bg-secondary);
+  transition: background-color 0.3s ease;
 }
 
 .task-modal .modal-dialog {
@@ -19,8 +21,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e7edf3;
-  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .modal-header-left {
@@ -48,16 +51,18 @@
 .modal-title-custom {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #0d141b;
+  color: var(--text-primary);
   margin: 0;
   line-height: 1.3;
+  transition: color 0.3s ease;
 }
 
 .modal-subtitle {
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--text-tertiary);
   margin: 0;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .modal-close-btn {
@@ -66,7 +71,7 @@
   border-radius: 12px;
   background: transparent;
   border: none;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 1.25rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -76,19 +81,20 @@
 }
 
 .modal-close-btn:hover {
-  background: #f1f5f9;
-  color: #475569;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
 }
 
 /* Body */
 .modal-body-custom {
   padding: 1.5rem;
-  background: #ffffff;
+  background: var(--bg-secondary);
   max-height: 60vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  transition: background-color 0.3s ease;
 }
 
 /* Form Group */
@@ -101,8 +107,9 @@
 .form-label-modal {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #334155;
+  color: var(--text-secondary);
   margin-left: 0.25rem;
+  transition: color 0.3s ease;
 }
 
 .form-input-modal {
@@ -110,23 +117,24 @@
   height: 56px;
   padding: 0 1rem;
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
   font-size: 1.125rem;
   font-weight: 500;
-  color: #0f172a;
+  color: var(--text-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   transition: all 0.2s ease;
 }
 
 .form-input-modal::placeholder {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .form-input-modal:focus {
   outline: none;
-  border-color: #2b8cee;
-  box-shadow: 0 0 0 4px rgba(43, 140, 238, 0.1);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 4px rgba(61, 151, 239, 0.15);
 }
 
 /* AI Assistant Section */
@@ -235,31 +243,33 @@
   min-height: 140px;
   padding: 1rem;
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
   font-size: 1rem;
-  color: #0f172a;
+  color: var(--text-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
   resize: vertical;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   transition: all 0.2s ease;
   line-height: 1.6;
 }
 
 .form-textarea-modal::placeholder {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .form-textarea-modal:focus {
   outline: none;
-  border-color: #2b8cee;
-  box-shadow: 0 0 0 4px rgba(43, 140, 238, 0.1);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 4px rgba(61, 151, 239, 0.15);
 }
 
 /* Divider */
 .modal-divider {
   height: 1px;
-  background: #e2e8f0;
+  background: var(--border-color);
   width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 /* Metadata Grid */
@@ -547,28 +557,30 @@
   justify-content: flex-end;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
+  background: var(--bg-tertiary);
+  border-top: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-cancel {
   height: 44px;
   padding: 0 1.5rem;
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   background: transparent;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #475569;
+  color: var(--text-secondary);
   font-family: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
+  transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
 
 .btn-cancel:hover {
-  background: #ffffff;
-  color: #0f172a;
-  border-color: #cbd5e1;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--text-muted);
 }
 
 .btn-save {

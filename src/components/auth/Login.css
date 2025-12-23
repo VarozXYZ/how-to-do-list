@@ -16,6 +16,12 @@
 }
 
 /* Header */
+.auth-logo {
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 0.75rem;
+}
+
 .login-title {
   font-size: 1.75rem;
   font-weight: 700;

@@ -2,7 +2,11 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Container, Card, Form, InputGroup, Button, OverlayTrigger, Tooltip, Alert } from 'react-bootstrap'
 import { useAuth } from '../../context/AuthContext'
+import { useTheme } from '../../context/ThemeContext'
 import './Login.css'
+
+const LOGO_LIGHT = 'https://res.cloudinary.com/diycpogap/image/upload/v1766521088/logo-white_p2msnm.png'
+const LOGO_DARK = 'https://res.cloudinary.com/diycpogap/image/upload/v1766521136/logo-dark_hlp0ri.png'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -12,6 +16,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
 
   const { login } = useAuth()
+  const { darkMode } = useTheme()
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -43,9 +48,11 @@ const Login = () => {
           <Card.Body>
             {/* Header */}
             <div className="text-center mb-4">
-              <h1 className="login-title">
-                <span className="text-blue">[How]</span> ToDoList
-              </h1>
+              <img 
+                src={darkMode ? LOGO_DARK : LOGO_LIGHT} 
+                alt="[How] ToDoList" 
+                className="auth-logo"
+              />
               <p className="login-subtitle">
                 Productividad inteligente, potenciada por IA
               </p>

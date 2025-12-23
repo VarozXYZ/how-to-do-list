@@ -6,9 +6,10 @@
   flex-direction: column;
   min-width: 0;
   min-height: 100vh;
-  background: #f6f7f8;
+  background: var(--bg-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
   margin-left: 260px;
+  transition: background-color 0.3s ease;
 }
 
 .settings-header {
@@ -21,14 +22,16 @@
 .settings-title {
   font-size: 2rem;
   font-weight: 800;
-  color: #0d141b;
+  color: var(--text-primary);
   margin: 0 0 0.5rem 0;
+  transition: color 0.3s ease;
 }
 
 .settings-subtitle {
-  color: #4c739a;
+  color: var(--text-secondary);
   font-size: 1rem;
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 .settings-content {
@@ -43,14 +46,15 @@
 
 /* Profile Card */
 .profile-card {
-  background: #ffffff;
+  background: var(--bg-secondary);
   border-radius: 16px;
   padding: 1.5rem 2rem;
-  border: 1px solid #e7edf3;
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: 1.5rem;
   flex-wrap: wrap;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .profile-avatar-wrapper {
@@ -60,12 +64,13 @@
 .profile-avatar {
   width: 100px;
   height: 100px;
-  background: #e7edf3;
+  background: var(--bg-tertiary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 3rem;
+  transition: background-color 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -100,13 +105,15 @@
 .profile-name {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #0d141b;
+  color: var(--text-primary);
   margin: 0 0 0.25rem 0;
+  transition: color 0.3s ease;
 }
 
 .profile-email {
-  color: #4c739a;
+  color: var(--text-secondary);
   margin: 0 0 0.5rem 0;
+  transition: color 0.3s ease;
 }
 
 .profile-badge {
@@ -121,22 +128,23 @@
 
 .change-photo-btn {
   padding: 0.75rem 1.5rem;
-  background: #f6f7f8;
-  border: 1px solid #e7edf3;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #0d141b;
+  color: var(--text-primary);
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   gap: 0.5rem;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.2s ease;
 }
 
 .change-photo-btn:hover {
-  background: #e7edf3;
+  background: var(--bg-hover);
 }
 
 /* Section Styles */
@@ -155,21 +163,23 @@
 
 .section-header-settings span {
   font-size: 1.25rem;
-  color: #2b8cee;
+  color: var(--accent-primary);
 }
 
 .section-header-settings h3 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #0d141b;
+  color: var(--text-primary);
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 .section-card {
-  background: #ffffff;
+  background: var(--bg-secondary);
   border-radius: 16px;
   padding: 1.5rem;
-  border: 1px solid #e7edf3;
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .section-card.no-padding {
@@ -197,7 +207,8 @@
 .form-field label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #4c739a;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
 }
 
 .input-with-icon {
@@ -216,28 +227,28 @@
   width: 100%;
   padding: 0.875rem 1rem 0.875rem 2.75rem;
   border-radius: 12px;
-  border: 1px solid #e7edf3;
-  background: #f6f7f8;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
   font-size: 1rem;
-  color: #0d141b;
+  color: var(--text-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.2s ease;
 }
 
 .input-with-icon input:focus {
   outline: none;
-  border-color: #2b8cee;
-  box-shadow: 0 0 0 3px rgba(43, 140, 238, 0.1);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(61, 151, 239, 0.1);
 }
 
 .form-field textarea {
   width: 100%;
   padding: 1rem;
   border-radius: 12px;
-  border: 1px solid #e7edf3;
-  background: #f6f7f8;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
   font-size: 1rem;
-  color: #0d141b;
+  color: var(--text-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
   resize: none;
   transition: all 0.2s ease;
@@ -245,8 +256,8 @@
 
 .form-field textarea:focus {
   outline: none;
-  border-color: #2b8cee;
-  box-shadow: 0 0 0 3px rgba(43, 140, 238, 0.1);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(61, 151, 239, 0.1);
 }
 
 /* Preference Items */
@@ -255,7 +266,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #e7edf3;
+  border-bottom: 1px solid var(--border-color);
   transition: background 0.2s ease;
 }
 
@@ -264,7 +275,7 @@
 }
 
 .preference-item:hover {
-  background: #f8fafc;
+  background: var(--bg-tertiary);
 }
 
 .preference-info {
@@ -297,14 +308,16 @@
 
 .preference-title {
   font-weight: 700;
-  color: #0d141b;
+  color: var(--text-primary);
   margin: 0 0 0.125rem 0;
+  transition: color 0.3s ease;
 }
 
 .preference-desc {
   font-size: 0.875rem;
-  color: #4c739a;
+  color: var(--text-secondary);
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 /* Toggle Switch */
@@ -418,8 +431,9 @@
   margin-top: 0.5rem;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #94a3b8;
+  color: var(--text-tertiary);
   letter-spacing: 0.05em;
+  transition: color 0.3s ease;
 }
 
 /* Personality Grid */
@@ -439,7 +453,7 @@
 .personality-option {
   position: relative;
   padding: 1rem;
-  border: 2px solid #e7edf3;
+  border: 2px solid var(--border-color);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -449,12 +463,12 @@
 }
 
 .personality-option:hover {
-  border-color: rgba(43, 140, 238, 0.5);
+  border-color: rgba(61, 151, 239, 0.5);
 }
 
 .personality-option.selected {
-  border-color: #2b8cee;
-  background: rgba(43, 140, 238, 0.05);
+  border-color: var(--accent-primary);
+  background: rgba(61, 151, 239, 0.1);
 }
 
 .personality-option input {
@@ -487,13 +501,15 @@
 
 .personality-name {
   font-weight: 700;
-  color: #0d141b;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .personality-desc {
   font-size: 0.75rem;
-  color: #4c739a;
+  color: var(--text-secondary);
   line-height: 1.4;
+  transition: color 0.3s ease;
 }
 
 /* Footer */
@@ -539,14 +555,14 @@
   border-radius: 12px;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #4c739a;
+  color: var(--text-secondary);
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.2s ease;
 }
 
 .btn-cancel-settings:hover {
-  background: #e7edf3;
+  background: var(--bg-hover);
 }
 
 .btn-save-settings {

@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Sidebar from '../components/layout/Sidebar'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 import './Settings.css'
 
 const Settings = () => {
   const { user, logout, updateProfile } = useAuth()
+  const { darkMode, toggleDarkMode } = useTheme()
   const navigate = useNavigate()
   
   const [username, setUsername] = useState('')
@@ -15,7 +17,6 @@ const Settings = () => {
   const [message, setMessage] = useState({ type: '', text: '' })
   
   // Preferences (stored in localStorage for now)
-  const [darkMode, setDarkMode] = useState(false)
   const [notifications, setNotifications] = useState(true)
   const [sounds, setSounds] = useState(true)
   const [creativity, setCreativity] = useState(50)
@@ -29,11 +30,10 @@ const Settings = () => {
       setBio(user.bio || '')
     }
     
-    // Load preferences from localStorage
+    // Load preferences from localStorage (darkMode is handled by ThemeContext)
     const savedPrefs = localStorage.getItem('userPreferences')
     if (savedPrefs) {
       const prefs = JSON.parse(savedPrefs)
-      setDarkMode(prefs.darkMode ?? false)
       setNotifications(prefs.notifications ?? true)
       setSounds(prefs.sounds ?? true)
       setCreativity(prefs.creativity ?? 50)
@@ -55,8 +55,10 @@ const Settings = () => {
       // Save profile to backend
       await updateProfile({ username, bio })
       
-      // Save preferences to localStorage
-      const prefs = { darkMode, notifications, sounds, creativity, personality }
+      // Save preferences to localStorage (darkMode is saved by ThemeContext)
+      const savedPrefs = localStorage.getItem('userPreferences')
+      const currentPrefs = savedPrefs ? JSON.parse(savedPrefs) : {}
+      const prefs = { ...currentPrefs, notifications, sounds, creativity, personality }
       localStorage.setItem('userPreferences', JSON.stringify(prefs))
       
       setMessage({ type: 'success', text: '¡Cambios guardados correctamente!' })
@@ -185,7 +187,7 @@ const Settings = () => {
                   <input
                     type="checkbox"
                     checked={darkMode}
-                    onChange={(e) => setDarkMode(e.target.checked)}
+                    onChange={(e) => toggleDarkMode(e.target.checked)}
                   />
                   <span className="toggle-slider"></span>
                 </label>

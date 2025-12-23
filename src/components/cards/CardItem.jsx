@@ -1,20 +1,22 @@
 import { useCards } from '../../context/CardsContext'
+import { useTheme } from '../../context/ThemeContext'
 import './CardItem.css'
 
 const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
   const { id, title, description, tagId, completed, dueDate, dueTime } = card
   const { getTagById } = useCards()
+  const { darkMode } = useTheme()
 
   const tag = getTagById(tagId)
 
   const getCardStyle = () => {
     if (!tag) return {}
+    const endColor = darkMode ? '#1e293b' : '#ffffff'
     return {
-      background: `linear-gradient(135deg, ${tag.color} 0%, #ffffff 100%)`,
-      borderColor: tag.borderColor
+      background: `linear-gradient(135deg, ${tag.color}${darkMode ? '40' : ''} 0%, ${endColor} 100%)`,
+      borderColor: darkMode ? tag.borderColor + '60' : tag.borderColor
     }
   }
-
 
   return (
     <div 
@@ -41,8 +43,8 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
           }}
           title="Eliminar tarea"
           style={{
-            background: `${tag?.textColor}15`,
-            borderColor: `${tag?.textColor}30`,
+            background: `${tag?.textColor}${darkMode ? '30' : '15'}`,
+            borderColor: `${tag?.textColor}${darkMode ? '50' : '30'}`,
             color: tag?.textColor
           }}
         >

@@ -1,9 +1,14 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import { useTheme } from '../../context/ThemeContext'
 import './Sidebar.css'
+
+const LOGO_LIGHT = 'https://res.cloudinary.com/diycpogap/image/upload/v1766521088/logo-white_p2msnm.png'
+const LOGO_DARK = 'https://res.cloudinary.com/diycpogap/image/upload/v1766521136/logo-dark_hlp0ri.png'
 
 const Sidebar = () => {
   const { user, logout } = useAuth()
+  const { darkMode } = useTheme()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -17,7 +22,7 @@ const Sidebar = () => {
         {/* Branding */}
         <div className="sidebar-brand">
           <img 
-            src="https://res.cloudinary.com/diycpogap/image/upload/v1766428693/logo_e2ytv1.png" 
+            src={darkMode ? LOGO_DARK : LOGO_LIGHT} 
             alt="[How] ToDoList" 
             className="brand-logo"
           />
