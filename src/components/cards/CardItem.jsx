@@ -3,7 +3,7 @@ import { useCards } from '../../context/CardsContext'
 import './CardItem.css'
 
 const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
-  const { id, title, description, tagId, completed } = card
+  const { id, title, description, tagId, completed, dueDate, dueTime } = card
   const { getTagById } = useCards()
   const [showMenu, setShowMenu] = useState(false)
   const menuRef = useRef(null)
@@ -94,8 +94,26 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
       </div>
 
       {/* Content */}
-      <h4 className="card-title">{title}</h4>
-      <p className="card-description">{description}</p>
+      <div 
+        className="card-content"
+        onClick={() => onEdit && onEdit(card)}
+        style={{ cursor: 'pointer' }}
+      >
+        <h4 className="card-title">{title}</h4>
+        <p className="card-description">{description}</p>
+        
+        {/* Date display */}
+        {(dueDate || dueTime) && (
+          <div className="card-date">
+            <span>📅</span>
+            <span>
+              {dueDate && new Date(dueDate).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+              {dueDate && dueTime && ' • '}
+              {dueTime}
+            </span>
+          </div>
+        )}
+      </div>
 
       {/* Footer */}
       <div className="card-footer">

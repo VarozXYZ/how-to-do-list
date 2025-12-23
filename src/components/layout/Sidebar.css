@@ -9,6 +9,9 @@
   flex-direction: column;
   justify-content: space-between;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
 }
 
 .sidebar-content {
