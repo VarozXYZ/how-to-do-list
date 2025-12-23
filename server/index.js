@@ -1,6 +1,15 @@
-require('dotenv').config()
+const path = require('path')
+require('dotenv').config({ path: path.join(__dirname, '.env') })
 const express = require('express')
 const cors = require('cors')
+
+// Check JWT_SECRET
+if (!process.env.JWT_SECRET) {
+  console.error('⚠️  WARNING: JWT_SECRET is not set in .env file!')
+  console.error('   Create a .env file in the server folder with:')
+  console.error('   JWT_SECRET=your-secret-key')
+  process.env.JWT_SECRET = 'fallback-dev-secret-not-for-production'
+}
 
 // Initialize database
 require('./config/db')

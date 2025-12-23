@@ -53,8 +53,8 @@ const register = async (req, res) => {
       user: { id: newUser.id, username, email, bio: '' }
     })
   } catch (error) {
-    console.error('Register error:', error)
-    res.status(500).json({ error: 'Error al crear el usuario.' })
+    console.error('Register error:', error.message)
+    res.status(500).json({ error: `Error al crear el usuario: ${error.message}` })
   }
 }
 

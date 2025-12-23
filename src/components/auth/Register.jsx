@@ -1,14 +1,52 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Container, Card, Form, InputGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
+import { Container, Card, Form, InputGroup, Button, OverlayTrigger, Tooltip, Alert } from 'react-bootstrap'
+import { useAuth } from '../../context/AuthContext'
 import './Login.css'
 
 const Register = () => {
-  const [name, setName] = useState('')
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const { register } = useAuth()
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+
+    // Validation
+    if (!username || !email || !password || !confirmPassword) {
+      setError('Por favor, completa todos los campos.')
+      return
+    }
+
+    if (password.length < 6) {
+      setError('La contraseña debe tener al menos 6 caracteres.')
+      return
+    }
+
+    if (password !== confirmPassword) {
+      setError('Las contraseñas no coinciden.')
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      await register(username, email, password)
+      navigate('/dashboard')
+    } catch (err) {
+      setError(err.response?.data?.error || 'Error al crear la cuenta. Inténtalo de nuevo.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="login-background">
@@ -18,18 +56,25 @@ const Register = () => {
             {/* Header */}
             <div className="text-center mb-4">
               <h1 className="login-title">
-                <span className="text-blue">[How]</span>ToDoList
+                <span className="text-blue">[How]</span> ToDoList
               </h1>
               <p className="login-subtitle">
                 Crea tu cuenta y empieza a ser productivo
               </p>
             </div>
 
+            {/* Error Alert */}
+            {error && (
+              <Alert variant="danger" className="mb-3" onClose={() => setError('')} dismissible>
+                {error}
+              </Alert>
+            )}
+
             {/* Form */}
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
                 <Form.Label className="form-label-custom">
-                  Nombre completo
+                  Nombre de usuario
                 </Form.Label>
                 <InputGroup>
                   <InputGroup.Text className="input-icon">
@@ -37,10 +82,11 @@ const Register = () => {
                   </InputGroup.Text>
                   <Form.Control
                     type="text"
-                    placeholder="Tu nombre"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Tu nombre de usuario"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     className="form-input"
+                    disabled={loading}
                   />
                 </InputGroup>
               </Form.Group>
@@ -59,6 +105,7 @@ const Register = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="form-input"
+                    disabled={loading}
                   />
                 </InputGroup>
               </Form.Group>
@@ -73,10 +120,11 @@ const Register = () => {
                   </InputGroup.Text>
                   <Form.Control
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
+                    placeholder="Mínimo 6 caracteres"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-input"
+                    disabled={loading}
                   />
                   <InputGroup.Text 
                     className="input-icon-right"
@@ -98,16 +146,22 @@ const Register = () => {
                   </InputGroup.Text>
                   <Form.Control
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
+                    placeholder="Repite tu contraseña"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="form-input"
+                    disabled={loading}
                   />
                 </InputGroup>
               </Form.Group>
 
-              <Button type="submit" className="btn-login w-100 mt-3">
-                Crear cuenta <span className="ms-2">→</span>
+              <Button 
+                type="submit" 
+                className="btn-login w-100 mt-3"
+                disabled={loading}
+              >
+                {loading ? 'Creando cuenta...' : 'Crear cuenta'}
+                {!loading && <span className="ms-2">→</span>}
               </Button>
 
               {/* Divider */}
