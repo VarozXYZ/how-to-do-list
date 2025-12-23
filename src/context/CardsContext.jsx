@@ -80,6 +80,24 @@ export const CardsProvider = ({ children }) => {
     return tagId
   }
 
+  const deleteTag = (tagId) => {
+    // Don't allow deleting default tags
+    const defaultTagIds = ['marketing', 'personal', 'design', 'work', 'research']
+    if (defaultTagIds.includes(tagId)) return false
+    
+    // Update cards that use this tag to use the first default tag
+    setCards(cards.map(card => 
+      card.tagId === tagId ? { ...card, tagId: 'marketing' } : card
+    ))
+    setTags(tags.filter(tag => tag.id !== tagId))
+    return true
+  }
+
+  const isDefaultTag = (tagId) => {
+    const defaultTagIds = ['marketing', 'personal', 'design', 'work', 'research']
+    return defaultTagIds.includes(tagId)
+  }
+
   const getTagById = (tagId) => {
     return tags.find(tag => tag.id === tagId) || tags[0]
   }
@@ -97,6 +115,8 @@ export const CardsProvider = ({ children }) => {
     deleteCard,
     toggleComplete,
     addTag,
+    deleteTag,
+    isDefaultTag,
     getTagById
   }
 

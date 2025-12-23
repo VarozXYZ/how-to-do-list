@@ -425,7 +425,14 @@
   min-width: 140px;
 }
 
+.tag-option-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
 .tag-option {
+  flex: 1;
   padding: 0.5rem 0.75rem;
   border: none;
   border-radius: 8px;
@@ -439,6 +446,28 @@
 
 .tag-option:hover {
   transform: scale(1.02);
+}
+
+.tag-delete-btn {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 4px;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.tag-delete-btn:hover {
+  background: #fecaca;
 }
 
 .tag-option.tag-blue {

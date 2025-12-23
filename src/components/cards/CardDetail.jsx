@@ -9,7 +9,7 @@ import './CardDetail.css'
 registerLocale('es', es)
 
 const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
-  const { tags, addTag } = useCards()
+  const { tags, addTag, deleteTag, isDefaultTag } = useCards()
   
   const [title, setTitle] = useState('')
   const [aiPrompt, setAiPrompt] = useState('')
@@ -25,9 +25,16 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const tagPickerRef = useRef(null)
   const isEditing = !!editCard
 
-  // Populate form when editing
+  // Set defaults when modal opens
   useEffect(() => {
-    if (editCard) {
+    if (show && !editCard) {
+      // New card: set default date/time to now + 2 hours
+      const now = new Date()
+      const twoHoursLater = new Date(now.getTime() + 2 * 60 * 60 * 1000)
+      setDueDate(now)
+      setDueTime(twoHoursLater)
+    } else if (editCard) {
+      // Editing: populate with existing data
       setTitle(editCard.title || '')
       setDescription(editCard.description || '')
       setSelectedTagId(editCard.tagId || tags[0]?.id || '')
@@ -35,7 +42,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       setDueDate(editCard.dueDate ? new Date(editCard.dueDate) : null)
       setDueTime(editCard.dueTime ? new Date(`2000-01-01T${editCard.dueTime}`) : null)
     }
-  }, [editCard, tags])
+  }, [show, editCard, tags])
 
   // Close tag picker when clicking outside
   useEffect(() => {
@@ -274,21 +281,37 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
               {showTagPicker && (
                 <div className="tag-picker-dropdown">
                   {tags.map((tag) => (
-                    <button
-                      key={tag.id}
-                      className="tag-option"
-                      style={{ 
-                        backgroundColor: tag.color,
-                        borderColor: tag.borderColor,
-                        color: tag.textColor
-                      }}
-                      onClick={() => {
-                        setSelectedTagId(tag.id)
-                        setShowTagPicker(false)
-                      }}
-                    >
-                      {tag.name}
-                    </button>
+                    <div key={tag.id} className="tag-option-wrapper">
+                      <button
+                        className="tag-option"
+                        style={{ 
+                          backgroundColor: tag.color,
+                          borderColor: tag.borderColor,
+                          color: tag.textColor
+                        }}
+                        onClick={() => {
+                          setSelectedTagId(tag.id)
+                          setShowTagPicker(false)
+                        }}
+                      >
+                        {tag.name}
+                      </button>
+                      {!isDefaultTag(tag.id) && (
+                        <button
+                          className="tag-delete-btn"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            if (selectedTagId === tag.id) {
+                              setSelectedTagId(tags[0]?.id || '')
+                            }
+                            deleteTag(tag.id)
+                          }}
+                          title="Eliminar etiqueta"
+                        >
+                          ×
+                        </button>
+                      )}
+                    </div>
                   ))}
                   
                   <div className="tag-picker-divider"></div>
