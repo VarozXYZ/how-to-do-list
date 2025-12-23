@@ -83,6 +83,35 @@
   border-radius: 12px;
 }
 
+.logout-btn {
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s ease;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-btn:hover {
+  background: #fee2e2;
+  opacity: 1;
+}
+
+.logout-icon {
+  width: 20px;
+  height: 20px;
+  filter: invert(30%) sepia(10%) saturate(500%) hue-rotate(180deg);
+}
+
+.logout-btn:hover .logout-icon {
+  filter: invert(25%) sepia(80%) saturate(2000%) hue-rotate(340deg) brightness(90%);
+}
+
 .user-avatar {
   width: 40px;
   height: 40px;
@@ -95,6 +124,7 @@
 }
 
 .user-info {
+  flex: 1;
   min-width: 0;
 }
 

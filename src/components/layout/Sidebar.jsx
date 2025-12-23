@@ -1,7 +1,16 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
 import './Sidebar.css'
 
 const Sidebar = () => {
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
+
   return (
     <aside className="sidebar">
       <div className="sidebar-content">
@@ -38,9 +47,20 @@ const Sidebar = () => {
             <span>👤</span>
           </div>
           <div className="user-info">
-            <p className="user-name">Usuario</p>
+            <p className="user-name">{user?.username || 'Usuario'}</p>
             <p className="user-plan">Free Plan</p>
           </div>
+          <button 
+            className="logout-btn"
+            onClick={handleLogout}
+            title="Cerrar sesión"
+          >
+            <img 
+              src="https://res.cloudinary.com/diycpogap/image/upload/v1766517175/lougout_kcajlg.svg" 
+              alt="Cerrar sesión"
+              className="logout-icon"
+            />
+          </button>
         </div>
       </div>
     </aside>
@@ -48,4 +68,3 @@ const Sidebar = () => {
 }
 
 export default Sidebar
-
