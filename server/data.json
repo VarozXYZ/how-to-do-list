@@ -9,7 +9,20 @@
       "createdAt": "2025-12-23T16:59:24.849Z"
     }
   ],
-  "cards": [],
+  "cards": [
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "test",
+      "description": "",
+      "tagId": "crypto-1766509597521",
+      "completed": false,
+      "aiPrompt": "",
+      "dueDate": "2025-12-23",
+      "dueTime": "20:06",
+      "createdAt": "2025-12-23T17:06:38.547Z"
+    }
+  ],
   "tags": [
     {
       "id": "marketing",
@@ -50,8 +63,17 @@
       "borderColor": "#fbcfe8",
       "textColor": "#be185d",
       "isDefault": true
+    },
+    {
+      "id": "crypto-1766509597521",
+      "userId": 1,
+      "name": "crypto",
+      "color": "#fff7ed",
+      "borderColor": "#fed7aa",
+      "textColor": "#c2410c",
+      "isDefault": false
     }
   ],
   "nextUserId": 2,
-  "nextCardId": 1
+  "nextCardId": 2
 }

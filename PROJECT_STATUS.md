@@ -4,8 +4,8 @@
 
 **Project Name:** [How] ToDoList - AI Enhanced Task Manager  
 **Repository:** https://github.com/VarozXYZ/how-to-do-list  
-**Tech Stack:** React + Vite (Frontend), Node.js + Express + SQLite (Backend - pending)  
-**Last Updated:** December 22, 2025
+**Tech Stack:** React + Vite (Frontend), Node.js + Express + JSON DB (Backend)  
+**Last Updated:** December 23, 2025
 
 ---
 
@@ -39,15 +39,25 @@ src/
 └── main.jsx, App.jsx, index.css
 ```
 
-#### 1.3 Backend Structure (PENDING)
+#### 1.3 Backend Structure ✅
 ```
 server/
-├── config/ (db.js)
-├── controllers/ (auth, cards, ai)
-├── middleware/ (auth.js)
-├── models/ (User, Card)
-├── routes/ (auth, cards, ai)
-└── index.js
+├── config/
+│   └── db.js              # JSON file database (read/write data.json)
+├── controllers/
+│   ├── authController.js  # Register, login, profile
+│   ├── cardsController.js # CRUD for cards
+│   └── tagsController.js  # CRUD for tags
+├── middleware/
+│   └── auth.js            # JWT verification middleware
+├── routes/
+│   ├── auth.js
+│   ├── cards.js
+│   └── tags.js
+├── data.json              # Database file (users, cards, tags)
+├── .env                   # JWT_SECRET, PORT
+├── index.js               # Express server entry point
+└── package.json
 ```
 
 ### Phase 2: Authentication UI ✅
@@ -62,11 +72,12 @@ server/
 - Card editing functionality
 - Tag-based color system
 
-### Phase 4: Backend Implementation (PENDING)
-- Express server setup
-- SQLite database
-- JWT authentication
-- RESTful API endpoints
+### Phase 4: Backend Implementation ✅
+- Express server setup with CORS
+- JSON file database (simpler than SQLite for this project)
+- JWT authentication with bcryptjs
+- RESTful API endpoints for auth, cards, and tags
+- Frontend fully connected to backend API
 
 ### Phase 5: AI Integration (PENDING)
 - DeepSeek API integration via OpenAI SDK
@@ -116,18 +127,87 @@ server/
 
 ---
 
+## ✅ Completed Work (Session 2 - December 23, 2025)
+
+### Backend Implementation
+1. **Server Setup** - Node.js + Express server on port 3001
+   - CORS enabled for frontend communication
+   - JSON file database (`data.json`) for simplicity
+   - Environment variables via dotenv (`.env` in server folder)
+
+2. **Authentication System**
+   - User registration with bcryptjs password hashing
+   - JWT token generation (stored in localStorage)
+   - Login/logout functionality
+   - Protected routes middleware
+
+3. **API Endpoints**
+   - `POST /api/auth/register` - Create new user
+   - `POST /api/auth/login` - Authenticate user
+   - `GET /api/auth/me` - Get current user
+   - `PUT /api/auth/profile` - Update profile
+   - `GET/POST /api/cards` - List/create cards (user-specific)
+   - `PUT/DELETE /api/cards/:id` - Update/delete cards
+   - `POST /api/cards/:id/toggle` - Toggle completion
+   - `GET/POST /api/tags` - List/create tags
+   - `DELETE /api/tags/:id` - Delete custom tags
+
+### Frontend-Backend Integration
+4. **API Service Layer**
+   - `src/services/api.js` - Axios instance with JWT interceptor
+   - `src/services/auth.js` - Auth API functions
+   - `src/services/cards.js` - Cards CRUD functions
+   - `src/services/tags.js` - Tags CRUD functions
+
+5. **Context Updates**
+   - `AuthContext.jsx` - Global auth state, login/register/logout
+   - `CardsContext.jsx` - Async API calls, loading states
+
+6. **Component Updates**
+   - `Login.jsx` / `Register.jsx` - Connected to auth API with error handling
+   - `App.jsx` - Protected routes (redirect to /login if not authenticated)
+   - `Dashboard.jsx` / `Completed.jsx` - Loading states while fetching
+   - `CardDetail.jsx` - Async save/update with loading indicator
+
+### Additional Fixes
+7. **Spanish capitalization** - Fixed throughout the app (only first letter capitalized)
+8. **Date/time pickers** - Using react-datepicker with custom styling
+9. **Tag deletion** - Added ability to delete custom tags
+10. **Default dates** - New cards default to current date + 2 hours
+11. **Sticky sidebar** - Fixed position sidebar on all pages
+12. **Click-to-edit cards** - Clicking a card opens edit modal
+
+---
+
 ## 📁 Current File Structure
 
 ```
 how-to-do-list/
 ├── public/
-├── references/           # UI design references
+├── references/              # UI design references
 │   ├── dashboard.html/png
 │   ├── crear-card.html/png
 │   ├── login.html/png
 │   ├── profile.html/png
 │   └── logo.png
-├── src/
+├── server/                  # Backend (Node.js + Express)
+│   ├── config/
+│   │   └── db.js            # JSON database helpers
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── cardsController.js
+│   │   └── tagsController.js
+│   ├── middleware/
+│   │   └── auth.js          # JWT verification
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── cards.js
+│   │   └── tags.js
+│   ├── data.json            # Database file
+│   ├── .env                 # JWT_SECRET, PORT
+│   ├── index.js
+│   └── package.json
+├── src/                     # Frontend (React + Vite)
 │   ├── components/
 │   │   ├── auth/
 │   │   │   ├── Login.jsx + Login.css
@@ -141,8 +221,8 @@ how-to-do-list/
 │   │       ├── Layout.jsx
 │   │       └── Navbar.jsx
 │   ├── context/
-│   │   ├── AuthContext.jsx
-│   │   └── CardsContext.jsx    # Main state management
+│   │   ├── AuthContext.jsx  # Auth state + API calls
+│   │   └── CardsContext.jsx # Cards/tags state + API calls
 │   ├── pages/
 │   │   ├── Dashboard.jsx + Dashboard.css
 │   │   ├── Completed.jsx
@@ -150,8 +230,10 @@ how-to-do-list/
 │   │   ├── LoginPage.jsx
 │   │   └── RegisterPage.jsx
 │   ├── services/
-│   │   ├── api.js
-│   │   └── auth.js
+│   │   ├── api.js           # Axios instance + interceptors
+│   │   ├── auth.js          # Auth API functions
+│   │   ├── cards.js         # Cards CRUD API
+│   │   └── tags.js          # Tags CRUD API
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── index.css
@@ -206,33 +288,16 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, getTagById
 ## 🚧 Pending Work
 
 ### Immediate Next Steps
-1. **Backend Setup**
-   - Create `server/` folder structure
-   - Initialize Express.js server
-   - Setup SQLite database with tables: Users, Cards, Tags
-
-2. **Authentication Backend**
-   - User registration with bcrypt password hashing
-   - JWT token generation and validation
-   - Auth middleware for protected routes
-
-3. **API Endpoints**
-   - `POST /api/auth/register`
-   - `POST /api/auth/login`
-   - `GET/POST/PUT/DELETE /api/cards`
-   - `GET/POST /api/tags`
-
-4. **AI Integration**
+1. **AI Integration** (Priority)
    - Setup DeepSeek API connection via OpenAI SDK
    - Implement "Mejorar con IA" functionality
-   - Auto-generate descriptions endpoint
+   - Auto-generate/improve task descriptions
 
 ### Frontend Improvements (Optional)
-- Date/time picker functionality (currently placeholder)
 - Notifications system
 - Dark mode toggle (UI exists in Settings, needs implementation)
-- Persist custom tags per user
 - Search improvements
+- Profile photo upload functionality
 
 ---
 
@@ -257,24 +322,28 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, getTagById
 ## 🚀 How to Run
 
 ```bash
-# Install dependencies
+# Frontend (runs on http://localhost:5173)
 npm install
-
-# Run development server
 npm run dev
 
-# Build for production
-npm run build
+# Backend (runs on http://localhost:3001)
+cd server
+npm install
+npm run dev
+
+# Note: Both servers must be running for the app to work
 ```
 
 ---
 
 ## 📌 Notes for Future Sessions
 
-1. The frontend is mostly complete and functional with local state
-2. Backend needs to be built from scratch following the structure in Phase 1.3
-3. All card/tag data is currently stored in React state (CardsContext) - needs to be connected to backend API
+1. ✅ Frontend and backend are fully connected and functional
+2. ✅ Authentication works (register, login, logout, protected routes)
+3. ✅ Cards and tags are persisted to `server/data.json`
 4. The AI "Mejorar con IA" button currently only logs to console - needs DeepSeek integration
-5. Authentication UI is ready but not connected to any backend
-6. The Settings page has toggles that don't persist - need backend/localStorage implementation
+5. The Settings page has toggles that don't persist - need backend/localStorage implementation
+6. The `.env` file must be in the `server/` folder (not project root) for JWT to work
+7. User data is isolated - each user only sees their own cards and custom tags
+8. Default tags are shared across all users (defined in `server/config/db.js`)
 
