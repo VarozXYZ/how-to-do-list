@@ -1,0 +1,48 @@
+{
+  "users": [],
+  "cards": [],
+  "tags": [
+    {
+      "id": "marketing",
+      "name": "Marketing",
+      "color": "#eff6ff",
+      "borderColor": "#bfdbfe",
+      "textColor": "#1d4ed8",
+      "isDefault": true
+    },
+    {
+      "id": "personal",
+      "name": "Personal",
+      "color": "#faf5ff",
+      "borderColor": "#e9d5ff",
+      "textColor": "#7c3aed",
+      "isDefault": true
+    },
+    {
+      "id": "design",
+      "name": "Diseño",
+      "color": "#fff7ed",
+      "borderColor": "#fed7aa",
+      "textColor": "#c2410c",
+      "isDefault": true
+    },
+    {
+      "id": "work",
+      "name": "Trabajo",
+      "color": "#f0fdf4",
+      "borderColor": "#bbf7d0",
+      "textColor": "#15803d",
+      "isDefault": true
+    },
+    {
+      "id": "research",
+      "name": "Investigación",
+      "color": "#fdf2f8",
+      "borderColor": "#fbcfe8",
+      "textColor": "#be185d",
+      "isDefault": true
+    }
+  ],
+  "nextUserId": 1,
+  "nextCardId": 1
+}
