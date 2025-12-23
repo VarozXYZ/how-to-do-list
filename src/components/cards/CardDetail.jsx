@@ -21,6 +21,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const [showNewTagForm, setShowNewTagForm] = useState(false)
   const [newTagName, setNewTagName] = useState('')
   const [newTagColor, setNewTagColor] = useState('#eff6ff')
+  const [saving, setSaving] = useState(false)
   
   const tagPickerRef = useRef(null)
   const isEditing = !!editCard
@@ -87,39 +88,46 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     onHide()
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!title.trim()) {
       alert('Por favor, añade un título')
       return
     }
 
-    if (isEditing) {
-      const updatedData = {
-        title: title.trim(),
-        description: description.trim(),
-        tagId: selectedTagId,
-        aiPrompt: aiPrompt.trim(),
-        dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null,
-        dueTime: dueTime ? dueTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : null
+    setSaving(true)
+
+    try {
+      if (isEditing) {
+        const updatedData = {
+          title: title.trim(),
+          description: description.trim(),
+          tagId: selectedTagId,
+          aiPrompt: aiPrompt.trim(),
+          dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null,
+          dueTime: dueTime ? dueTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : null
+        }
+        await onUpdate(editCard.id, updatedData)
+      } else {
+        const newCard = {
+          title: title.trim(),
+          description: description.trim(),
+          tagId: selectedTagId,
+          aiPrompt: aiPrompt.trim(),
+          dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null,
+          dueTime: dueTime ? dueTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : null
+        }
+        await onSave(newCard)
       }
-      onUpdate && onUpdate(editCard.id, updatedData)
-    } else {
-      const newCard = {
-        id: Date.now(),
-        title: title.trim(),
-        description: description.trim(),
-        tagId: selectedTagId,
-        completed: false,
-        aiPrompt: aiPrompt.trim(),
-        dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null,
-        dueTime: dueTime ? dueTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : null
-      }
-      onSave(newCard)
+      handleClose()
+    } catch (error) {
+      console.error('Error saving card:', error)
+      alert('Error al guardar la tarea')
+    } finally {
+      setSaving(false)
     }
-    handleClose()
   }
 
-  const handleCreateTag = () => {
+  const handleCreateTag = async () => {
     if (!newTagName.trim()) return
     
     const colorPreset = colorPresets.find(c => c.color === newTagColor) || colorPresets[0]
@@ -130,12 +138,17 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       textColor: colorPreset.textColor
     }
     
-    const newTagId = addTag(newTag)
-    setSelectedTagId(newTagId)
-    setNewTagName('')
-    setNewTagColor('#eff6ff')
-    setShowNewTagForm(false)
-    setShowTagPicker(false)
+    try {
+      const newTagId = await addTag(newTag)
+      setSelectedTagId(newTagId)
+      setNewTagName('')
+      setNewTagColor('#eff6ff')
+      setShowNewTagForm(false)
+      setShowTagPicker(false)
+    } catch (error) {
+      console.error('Error creating tag:', error)
+      alert('Error al crear la etiqueta')
+    }
   }
 
   const selectedTag = tags.find(t => t.id === selectedTagId) || tags[0]
@@ -375,8 +388,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         <button className="btn-cancel" onClick={handleClose}>
           Cancelar
         </button>
-        <button className="btn-save" onClick={handleSave}>
-          <span>💾</span> {isEditing ? 'Actualizar' : 'Guardar tarea'}
+        <button className="btn-save" onClick={handleSave} disabled={saving}>
+          <span>💾</span> {saving ? 'Guardando...' : (isEditing ? 'Actualizar' : 'Guardar tarea')}
         </button>
       </div>
     </Modal>

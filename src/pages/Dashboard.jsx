@@ -6,7 +6,7 @@ import { useCards } from '../context/CardsContext'
 import './Dashboard.css'
 
 const Dashboard = () => {
-  const { activeCards, tags, addCard, updateCard, deleteCard, toggleComplete, getTagById } = useCards()
+  const { activeCards, tags, addCard, updateCard, deleteCard, toggleComplete, getTagById, loading } = useCards()
   const [searchQuery, setSearchQuery] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [editingCard, setEditingCard] = useState(null)
@@ -206,7 +206,12 @@ const Dashboard = () => {
 
           {/* Card Grid */}
           <div className="cards-grid">
-            {filteredCards.length > 0 ? (
+            {loading ? (
+              <div className="no-results">
+                <span>⏳</span>
+                <p>Cargando tareas...</p>
+              </div>
+            ) : filteredCards.length > 0 ? (
               filteredCards.map(card => (
                 <CardItem
                   key={card.id}

@@ -5,15 +5,16 @@ import { useCards } from '../context/CardsContext'
 import './Dashboard.css'
 
 const Completed = () => {
-  const { completedCards, toggleComplete, deleteCard } = useCards()
+  const { completedCards, toggleComplete, deleteCard, getTagById, loading } = useCards()
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredCards = completedCards.filter(card => {
     const query = searchQuery.toLowerCase()
+    const tag = getTagById(card.tagId)
     return (
       card.title.toLowerCase().includes(query) ||
       card.description.toLowerCase().includes(query) ||
-      card.category.toLowerCase().includes(query)
+      (tag?.name || '').toLowerCase().includes(query)
     )
   })
 
@@ -52,7 +53,12 @@ const Completed = () => {
 
           {/* Card Grid */}
           <div className="cards-grid">
-            {filteredCards.length > 0 ? (
+            {loading ? (
+              <div className="no-results">
+                <span>⏳</span>
+                <p>Cargando tareas...</p>
+              </div>
+            ) : filteredCards.length > 0 ? (
               filteredCards.map(card => (
                 <CardItem
                   key={card.id}
