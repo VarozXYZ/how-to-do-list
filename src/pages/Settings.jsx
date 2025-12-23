@@ -1,21 +1,86 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Sidebar from '../components/layout/Sidebar'
+import { useAuth } from '../context/AuthContext'
 import './Settings.css'
 
 const Settings = () => {
-  const [username, setUsername] = useState('Usuario')
-  const [email, setEmail] = useState('usuario@ejemplo.com')
+  const { user, logout, updateProfile } = useAuth()
+  const navigate = useNavigate()
+  
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [bio, setBio] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [message, setMessage] = useState({ type: '', text: '' })
+  
+  // Preferences (stored in localStorage for now)
   const [darkMode, setDarkMode] = useState(false)
   const [notifications, setNotifications] = useState(true)
   const [sounds, setSounds] = useState(true)
   const [creativity, setCreativity] = useState(50)
   const [personality, setPersonality] = useState('professional')
 
+  // Load user data and preferences on mount
+  useEffect(() => {
+    if (user) {
+      setUsername(user.username || '')
+      setEmail(user.email || '')
+      setBio(user.bio || '')
+    }
+    
+    // Load preferences from localStorage
+    const savedPrefs = localStorage.getItem('userPreferences')
+    if (savedPrefs) {
+      const prefs = JSON.parse(savedPrefs)
+      setDarkMode(prefs.darkMode ?? false)
+      setNotifications(prefs.notifications ?? true)
+      setSounds(prefs.sounds ?? true)
+      setCreativity(prefs.creativity ?? 50)
+      setPersonality(prefs.personality ?? 'professional')
+    }
+  }, [user])
+
   const getCreativityLabel = (value) => {
     if (value < 33) return 'Preciso'
     if (value > 66) return 'Creativo'
     return 'Equilibrado'
+  }
+
+  const handleSave = async () => {
+    setSaving(true)
+    setMessage({ type: '', text: '' })
+    
+    try {
+      // Save profile to backend
+      await updateProfile({ username, bio })
+      
+      // Save preferences to localStorage
+      const prefs = { darkMode, notifications, sounds, creativity, personality }
+      localStorage.setItem('userPreferences', JSON.stringify(prefs))
+      
+      setMessage({ type: 'success', text: '¡Cambios guardados correctamente!' })
+      setTimeout(() => setMessage({ type: '', text: '' }), 3000)
+    } catch (error) {
+      setMessage({ type: 'error', text: error.response?.data?.error || 'Error al guardar los cambios' })
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleCancel = () => {
+    // Reset to original values
+    if (user) {
+      setUsername(user.username || '')
+      setEmail(user.email || '')
+      setBio(user.bio || '')
+    }
+    setMessage({ type: '', text: '' })
+  }
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
   }
 
   return (
@@ -30,6 +95,13 @@ const Settings = () => {
         </div>
 
         <div className="settings-content">
+          {/* Message Alert */}
+          {message.text && (
+            <div className={`settings-alert ${message.type}`}>
+              {message.type === 'success' ? '✅' : '❌'} {message.text}
+            </div>
+          )}
+
           {/* Profile Card */}
           <div className="profile-card">
             <div className="profile-avatar-wrapper">
@@ -39,7 +111,7 @@ const Settings = () => {
               <button className="avatar-edit-btn">📷</button>
             </div>
             <div className="profile-info">
-              <h2 className="profile-name">{username}</h2>
+              <h2 className="profile-name">{username || 'Usuario'}</h2>
               <p className="profile-email">{email}</p>
               <span className="profile-badge">Free Plan</span>
             </div>
@@ -75,8 +147,9 @@ const Settings = () => {
                     <input
                       type="email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="tu@email.com"
+                      disabled
+                      className="disabled"
+                      title="El email no se puede cambiar"
                     />
                   </div>
                 </div>
@@ -138,7 +211,7 @@ const Settings = () => {
                 <div className="preference-info">
                   <div className="preference-icon green">🔊</div>
                   <div>
-                    <p className="preference-title">Efectos de Sonido</p>
+                    <p className="preference-title">Efectos de sonido</p>
                     <p className="preference-desc">Sonidos al completar tareas.</p>
                   </div>
                 </div>
@@ -164,7 +237,7 @@ const Settings = () => {
               {/* Creativity Slider */}
               <div className="ai-setting">
                 <div className="slider-header">
-                  <label>Nivel de Creatividad <span className="info-icon">ℹ️</span></label>
+                  <label>Nivel de creatividad <span className="info-icon">ℹ️</span></label>
                   <span className="creativity-badge">{getCreativityLabel(creativity)}</span>
                 </div>
                 <input
@@ -172,7 +245,7 @@ const Settings = () => {
                   min="0"
                   max="100"
                   value={creativity}
-                  onChange={(e) => setCreativity(e.target.value)}
+                  onChange={(e) => setCreativity(Number(e.target.value))}
                   className="creativity-slider"
                 />
                 <div className="slider-labels">
@@ -228,13 +301,13 @@ const Settings = () => {
 
           {/* Footer Actions */}
           <div className="settings-footer">
-            <button className="btn-logout">
+            <button className="btn-logout" onClick={handleLogout}>
               <span>🚪</span> Cerrar sesión
             </button>
             <div className="footer-actions">
-              <button className="btn-cancel-settings">Cancelar</button>
-              <button className="btn-save-settings">
-                <span>💾</span> Guardar cambios
+              <button className="btn-cancel-settings" onClick={handleCancel}>Cancelar</button>
+              <button className="btn-save-settings" onClick={handleSave} disabled={saving}>
+                <span>💾</span> {saving ? 'Guardando...' : 'Guardar cambios'}
               </button>
             </div>
           </div>
@@ -245,4 +318,3 @@ const Settings = () => {
 }
 
 export default Settings
-
