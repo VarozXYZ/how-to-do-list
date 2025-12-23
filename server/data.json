@@ -11,6 +11,66 @@
   ],
   "cards": [
     {
+      "id": 7,
+      "userId": 1,
+      "title": "5",
+      "description": "",
+      "tagId": "research",
+      "completed": false,
+      "aiPrompt": "",
+      "dueDate": "2025-12-23",
+      "dueTime": "21:58",
+      "createdAt": "2025-12-23T18:58:31.925Z"
+    },
+    {
+      "id": 6,
+      "userId": 1,
+      "title": "4",
+      "description": "",
+      "tagId": "work",
+      "completed": false,
+      "aiPrompt": "",
+      "dueDate": "2025-12-23",
+      "dueTime": "21:58",
+      "createdAt": "2025-12-23T18:58:18.532Z"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "title": "3",
+      "description": "",
+      "tagId": "design",
+      "completed": false,
+      "aiPrompt": "",
+      "dueDate": "2025-12-23",
+      "dueTime": "21:57",
+      "createdAt": "2025-12-23T18:58:07.382Z"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "title": "Test2",
+      "description": "",
+      "tagId": "personal",
+      "completed": false,
+      "aiPrompt": "",
+      "dueDate": "2025-12-23",
+      "dueTime": "21:57",
+      "createdAt": "2025-12-23T18:57:57.500Z"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "title": "Test1",
+      "description": "",
+      "tagId": "marketing",
+      "completed": false,
+      "aiPrompt": "",
+      "dueDate": "2025-12-23",
+      "dueTime": "21:57",
+      "createdAt": "2025-12-23T18:57:47.953Z"
+    },
+    {
       "id": 2,
       "userId": 1,
       "title": "Dar bicitos",
@@ -96,5 +156,5 @@
     }
   ],
   "nextUserId": 2,
-  "nextCardId": 3
+  "nextCardId": 8
 }

@@ -14,11 +14,6 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
-.card-item.ai-enhanced {
-  background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
-  border-color: #bfdbfe;
-}
-
 /* Header */
 .card-header {
   display: flex;
@@ -30,76 +25,31 @@
 .card-category {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.625rem;
-  border-radius: 6px;
-  font-size: 0.75rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
   font-weight: 600;
-  border: 1px solid;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.card-more-btn {
-  padding: 0.25rem;
+.card-delete-btn {
+  padding: 0.375rem;
   background: transparent;
   border: none;
-  border-radius: 50%;
+  border-radius: 8px;
   cursor: pointer;
-  color: #9ca3af;
-  font-size: 1.25rem;
+  font-size: 1rem;
   line-height: 1;
   transition: all 0.2s ease;
+  opacity: 0.5;
 }
 
-.card-more-btn:hover {
-  background: #f3f4f6;
-  color: #6b7280;
-}
-
-/* Card Menu */
-.card-menu-wrapper {
-  position: relative;
-}
-
-.card-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 0.25rem;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  padding: 0.375rem;
-  z-index: 50;
-  min-width: 120px;
-}
-
-.dropdown-item {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  border: none;
-  border-radius: 6px;
-  background: transparent;
-  font-size: 0.875rem;
-  font-weight: 500;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  color: #374151;
-}
-
-.dropdown-item:hover {
-  background: #f3f4f6;
-}
-
-.dropdown-item.delete {
-  color: #dc2626;
-}
-
-.dropdown-item.delete:hover {
+.card-delete-btn:hover {
   background: #fef2f2;
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 /* Content */
@@ -168,19 +118,8 @@
 }
 
 .ai-assist-btn:hover {
-  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-  border-color: #bfdbfe;
-  color: #2563eb;
-}
-
-.ai-assist-btn.enhanced {
-  background: linear-gradient(135deg, #2b8cee 0%, #60a5fa 100%);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(43, 140, 238, 0.3);
-}
-
-.ai-assist-btn.enhanced:hover {
-  box-shadow: 0 4px 12px rgba(43, 140, 238, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Checkbox */
@@ -226,4 +165,3 @@
 .checkbox-wrapper input:checked ~ .checkmark::after {
   opacity: 1;
 }
-
