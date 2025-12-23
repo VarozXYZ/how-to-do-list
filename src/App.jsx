@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { CardsProvider } from './context/CardsContext'
 import Login from './components/auth/Login'
@@ -7,25 +7,32 @@ import Dashboard from './pages/Dashboard'
 import Completed from './pages/Completed'
 import Settings from './pages/Settings'
 
-// Protected Route - requires authentication
-const ProtectedRoute = ({ children }) => {
+// Loading spinner component
+const LoadingSpinner = () => (
+  <div className="d-flex justify-content-center align-items-center min-vh-100">
+    <div className="spinner-border text-primary" role="status">
+      <span className="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+)
+
+// Protected Layout - wraps all protected routes with CardsProvider
+const ProtectedLayout = () => {
   const { isAuthenticated, loading } = useAuth()
 
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center align-items-center min-vh-100">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
-      </div>
-    )
+    return <LoadingSpinner />
   }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
   }
 
-  return children
+  return (
+    <CardsProvider>
+      <Outlet />
+    </CardsProvider>
+  )
 }
 
 // Public Route - redirects to dashboard if already logged in
@@ -33,13 +40,7 @@ const PublicRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth()
 
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center align-items-center min-vh-100">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
-      </div>
-    )
+    return <LoadingSpinner />
   }
 
   if (isAuthenticated) {
@@ -64,26 +65,12 @@ function AppRoutes() {
         </PublicRoute>
       } />
 
-      {/* Protected routes - require authentication */}
-      <Route path="/dashboard" element={
-        <ProtectedRoute>
-          <CardsProvider>
-            <Dashboard />
-          </CardsProvider>
-        </ProtectedRoute>
-      } />
-      <Route path="/completed" element={
-        <ProtectedRoute>
-          <CardsProvider>
-            <Completed />
-          </CardsProvider>
-        </ProtectedRoute>
-      } />
-      <Route path="/settings" element={
-        <ProtectedRoute>
-          <Settings />
-        </ProtectedRoute>
-      } />
+      {/* Protected routes - require authentication, share CardsProvider */}
+      <Route element={<ProtectedLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/completed" element={<Completed />} />
+        <Route path="/settings" element={<Settings />} />
+      </Route>
 
       {/* Default redirect */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />

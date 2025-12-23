@@ -11,13 +11,25 @@
   ],
   "cards": [
     {
+      "id": 2,
+      "userId": 1,
+      "title": "Dar bicitos",
+      "description": "En la frente",
+      "tagId": "novia-1766514918918",
+      "completed": true,
+      "aiPrompt": "",
+      "dueDate": "2025-12-23",
+      "dueTime": "19:35",
+      "createdAt": "2025-12-23T18:35:29.069Z"
+    },
+    {
       "id": 1,
       "userId": 1,
       "title": "test",
       "description": "",
       "tagId": "crypto-1766509597521",
       "completed": false,
-      "aiPrompt": "",
+      "aiPrompt": "hazme una receta de pastel de manzana",
       "dueDate": "2025-12-23",
       "dueTime": "20:06",
       "createdAt": "2025-12-23T17:06:38.547Z"
@@ -72,8 +84,17 @@
       "borderColor": "#fed7aa",
       "textColor": "#c2410c",
       "isDefault": false
+    },
+    {
+      "id": "novia-1766514918918",
+      "userId": 1,
+      "name": "Novia",
+      "color": "#fdf2f8",
+      "borderColor": "#fbcfe8",
+      "textColor": "#be185d",
+      "isDefault": false
     }
   ],
   "nextUserId": 2,
-  "nextCardId": 2
+  "nextCardId": 3
 }
