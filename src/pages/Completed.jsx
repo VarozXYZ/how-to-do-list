@@ -46,7 +46,7 @@ const Completed = () => {
         <div className="dashboard-content">
           <div className="section-header">
             <h3 className="section-title">
-              Tareas Completadas ({completedCards.length})
+              Tareas completadas ({completedCards.length})
             </h3>
           </div>
 

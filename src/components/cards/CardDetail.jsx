@@ -148,7 +148,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
             <span>{isEditing ? '✏️' : '📝'}</span>
           </div>
           <div className="modal-header-text">
-            <h2 className="modal-title-custom">{isEditing ? 'Editar Tarea' : 'Nueva Tarea'}</h2>
+            <h2 className="modal-title-custom">{isEditing ? 'Editar tarea' : 'Nueva tarea'}</h2>
             <p className="modal-subtitle">{isEditing ? 'Modifica los detalles de tu tarea' : 'Define los detalles de tu actividad'}</p>
           </div>
         </div>
@@ -217,7 +217,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         <div className="metadata-grid">
           {/* Date & Time */}
           <div className="metadata-section">
-            <label className="form-label-modal">Fecha y Hora</label>
+            <label className="form-label-modal">Fecha y hora</label>
             <div className="datetime-row">
               <div className="datetime-input-wrapper">
                 <span className="datetime-icon">📅</span>
@@ -353,7 +353,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
           Cancelar
         </button>
         <button className="btn-save" onClick={handleSave}>
-          <span>💾</span> {isEditing ? 'Actualizar' : 'Guardar Tarea'}
+          <span>💾</span> {isEditing ? 'Actualizar' : 'Guardar tarea'}
         </button>
       </div>
     </Modal>

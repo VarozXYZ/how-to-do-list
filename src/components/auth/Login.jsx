@@ -27,7 +27,7 @@ const Login = () => {
             <Form>
               <Form.Group className="mb-3">
                 <Form.Label className="form-label-custom">
-                  Correo Electrónico o Usuario
+                  Correo electrónico o usuario
                 </Form.Label>
                 <InputGroup>
                   <InputGroup.Text className="input-icon">
@@ -74,7 +74,7 @@ const Login = () => {
               </Form.Group>
 
               <Button type="submit" className="btn-login w-100 mt-3">
-                Iniciar Sesión <span className="ms-2">→</span>
+                Iniciar sesión <span className="ms-2">→</span>
               </Button>
 
               {/* Divider */}

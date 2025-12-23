@@ -18,7 +18,7 @@ const Sidebar = () => {
         <nav className="sidebar-nav">
           <NavLink to="/dashboard" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">📋</span>
-            <span className="nav-text">Mis Tareas</span>
+            <span className="nav-text">Mis tareas</span>
           </NavLink>
           <NavLink to="/completed" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">✔️</span>

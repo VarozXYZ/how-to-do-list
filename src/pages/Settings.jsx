@@ -25,7 +25,7 @@ const Settings = () => {
       <main className="settings-main">
         {/* Page Header */}
         <div className="settings-header">
-          <h1 className="settings-title">Configuración de Perfil</h1>
+          <h1 className="settings-title">Configuración de perfil</h1>
           <p className="settings-subtitle">Gestiona tu cuenta y personaliza tu experiencia con la IA.</p>
         </div>
 
@@ -44,7 +44,7 @@ const Settings = () => {
               <span className="profile-badge">Free Plan</span>
             </div>
             <button className="change-photo-btn">
-              <span>📤</span> Cambiar Foto
+              <span>📤</span> Cambiar foto
             </button>
           </div>
 
@@ -52,7 +52,7 @@ const Settings = () => {
           <section className="settings-section">
             <div className="section-header-settings">
               <span>👤</span>
-              <h3>Información Personal</h3>
+              <h3>Información personal</h3>
             </div>
             <div className="section-card">
               <div className="form-grid">
@@ -97,14 +97,14 @@ const Settings = () => {
           <section className="settings-section">
             <div className="section-header-settings">
               <span>⚙️</span>
-              <h3>Preferencias de la Aplicación</h3>
+              <h3>Preferencias de la aplicación</h3>
             </div>
             <div className="section-card no-padding">
               <div className="preference-item">
                 <div className="preference-info">
                   <div className="preference-icon purple">🌙</div>
                   <div>
-                    <p className="preference-title">Modo Oscuro</p>
+                    <p className="preference-title">Modo oscuro</p>
                     <p className="preference-desc">Cambia la apariencia a tonos oscuros.</p>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ const Settings = () => {
                 <div className="preference-info">
                   <div className="preference-icon pink">🔔</div>
                   <div>
-                    <p className="preference-title">Notificaciones Push</p>
+                    <p className="preference-title">Notificaciones push</p>
                     <p className="preference-desc">Recibe alertas de tus tareas pendientes.</p>
                   </div>
                 </div>
@@ -183,7 +183,7 @@ const Settings = () => {
 
               {/* Personality Selector */}
               <div className="ai-setting">
-                <label className="personality-label">Personalidad del Asistente</label>
+                <label className="personality-label">Personalidad del asistente</label>
                 <div className="personality-grid">
                   <label className={`personality-option ${personality === 'friendly' ? 'selected' : ''}`}>
                     <input
@@ -229,12 +229,12 @@ const Settings = () => {
           {/* Footer Actions */}
           <div className="settings-footer">
             <button className="btn-logout">
-              <span>🚪</span> Cerrar Sesión
+              <span>🚪</span> Cerrar sesión
             </button>
             <div className="footer-actions">
               <button className="btn-cancel-settings">Cancelar</button>
               <button className="btn-save-settings">
-                <span>💾</span> Guardar Cambios
+                <span>💾</span> Guardar cambios
               </button>
             </div>
           </div>

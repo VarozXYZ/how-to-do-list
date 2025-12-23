@@ -99,7 +99,7 @@ const Dashboard = () => {
         {/* Header */}
         <header className="dashboard-header">
           <div className="header-left">
-            <h2 className="header-title">Mis Tareas</h2>
+            <h2 className="header-title">Mis tareas</h2>
             <p className="header-subtitle">Bienvenido, aquí están tus tareas de hoy.</p>
           </div>
           <div className="header-right">
@@ -124,7 +124,7 @@ const Dashboard = () => {
         <div className="dashboard-content">
           {/* Section Header */}
           <div className="section-header">
-            <h3 className="section-title">Tareas Activas ({filteredCards.length})</h3>
+            <h3 className="section-title">Tareas activas ({filteredCards.length})</h3>
             <div className="section-actions">
               {/* Filter Button */}
               <div className="action-wrapper" ref={filterRef}>

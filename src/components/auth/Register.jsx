@@ -47,7 +47,7 @@ const Register = () => {
 
               <Form.Group className="mb-3">
                 <Form.Label className="form-label-custom">
-                  Correo Electrónico
+                  Correo electrónico
                 </Form.Label>
                 <InputGroup>
                   <InputGroup.Text className="input-icon">
@@ -90,7 +90,7 @@ const Register = () => {
 
               <Form.Group className="mb-3">
                 <Form.Label className="form-label-custom">
-                  Confirmar Contraseña
+                  Confirmar contraseña
                 </Form.Label>
                 <InputGroup>
                   <InputGroup.Text className="input-icon">
@@ -107,7 +107,7 @@ const Register = () => {
               </Form.Group>
 
               <Button type="submit" className="btn-login w-100 mt-3">
-                Crear Cuenta <span className="ms-2">→</span>
+                Crear cuenta <span className="ms-2">→</span>
               </Button>
 
               {/* Divider */}
@@ -152,7 +152,7 @@ const Register = () => {
               {/* Login link */}
               <p className="text-center mt-4 mb-0 register-text">
                 ¿Ya tienes una cuenta?{' '}
-                <Link to="/login" className="register-link">Inicia Sesión</Link>
+                <Link to="/login" className="register-link">Inicia sesión</Link>
               </p>
             </Form>
           </Card.Body>
