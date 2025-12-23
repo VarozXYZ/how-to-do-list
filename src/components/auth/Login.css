@@ -1,6 +1,6 @@
 .login-background {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f0ff 0%, #e8e0f0 50%, #ddd5eb 100%);
+  background: linear-gradient(135deg, #f0f7ff 0%, #e0eef8 50%, #d5e8f5 100%);
 }
 
 .login-card {
@@ -8,7 +8,7 @@
   max-width: 420px;
   border-radius: 20px;
   border: none;
-  box-shadow: 0 10px 40px rgba(138, 100, 200, 0.15);
+  box-shadow: 0 10px 40px rgba(65, 152, 238, 0.15);
 }
 
 .login-card .card-body {
@@ -16,21 +16,6 @@
 }
 
 /* Header */
-.login-icon-wrapper {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #e8e0f0 0%, #d4c8e8 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-icon {
-  font-size: 1.5rem;
-  color: #7c5cbf;
-}
-
 .login-title {
   font-size: 1.75rem;
   font-weight: 700;
@@ -38,8 +23,8 @@
   margin-bottom: 0.5rem;
 }
 
-.text-purple {
-  color: #7c5cbf;
+.text-blue {
+  color: #4198EE;
 }
 
 .login-subtitle {
@@ -95,18 +80,18 @@
 
 .forgot-password-link {
   font-size: 0.85rem;
-  color: #7c5cbf;
+  color: #4198EE;
   text-decoration: none;
 }
 
 .forgot-password-link:hover {
   text-decoration: underline;
-  color: #6a4caf;
+  color: #2d7fd4;
 }
 
 /* Button */
 .btn-login {
-  background: linear-gradient(135deg, #7c5cbf 0%, #6a4caf 100%);
+  background: linear-gradient(135deg, #4198EE 0%, #2d7fd4 100%);
   border: none;
   border-radius: 12px;
   padding: 0.875rem 1.5rem;
@@ -117,9 +102,9 @@
 }
 
 .btn-login:hover {
-  background: linear-gradient(135deg, #6a4caf 0%, #5a3c9f 100%);
+  background: linear-gradient(135deg, #2d7fd4 0%, #1a6bc0 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(124, 92, 191, 0.4);
+  box-shadow: 0 4px 15px rgba(65, 152, 238, 0.4);
 }
 
 /* Divider */
@@ -163,13 +148,13 @@
 }
 
 .register-link {
-  color: #7c5cbf;
+  color: #4198EE;
   font-weight: 600;
   text-decoration: none;
 }
 
 .register-link:hover {
   text-decoration: underline;
-  color: #6a4caf;
+  color: #2d7fd4;
 }
 

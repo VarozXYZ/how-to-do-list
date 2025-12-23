@@ -15,11 +15,8 @@ const Login = () => {
           <Card.Body>
             {/* Header */}
             <div className="text-center mb-4">
-              <div className="login-icon-wrapper mx-auto mb-3">
-                <span className="login-icon">✦</span>
-              </div>
               <h1 className="login-title">
-                <span className="text-purple">[How]</span> ToDoList
+                <span className="text-blue">[How]</span> ToDoList
               </h1>
               <p className="login-subtitle">
                 Productividad inteligente, potenciada por IA
