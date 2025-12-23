@@ -10,6 +10,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const [aiPrompt, setAiPrompt] = useState('')
   const [description, setDescription] = useState('')
   const [selectedTagId, setSelectedTagId] = useState(tags[0]?.id || '')
+  const [dueDate, setDueDate] = useState('')
+  const [dueTime, setDueTime] = useState('')
   const [showTagPicker, setShowTagPicker] = useState(false)
   const [showNewTagForm, setShowNewTagForm] = useState(false)
   const [newTagName, setNewTagName] = useState('')
@@ -25,6 +27,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       setDescription(editCard.description || '')
       setSelectedTagId(editCard.tagId || tags[0]?.id || '')
       setAiPrompt(editCard.aiPrompt || '')
+      setDueDate(editCard.dueDate || '')
+      setDueTime(editCard.dueTime || '')
     }
   }, [editCard, tags])
 
@@ -62,6 +66,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     setAiPrompt('')
     setDescription('')
     setSelectedTagId(tags[0]?.id || '')
+    setDueDate('')
+    setDueTime('')
     setShowTagPicker(false)
     setShowNewTagForm(false)
     setNewTagName('')
@@ -80,7 +86,9 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         title: title.trim(),
         description: description.trim(),
         tagId: selectedTagId,
-        aiPrompt: aiPrompt.trim()
+        aiPrompt: aiPrompt.trim(),
+        dueDate,
+        dueTime
       }
       onUpdate && onUpdate(editCard.id, updatedData)
     } else {
@@ -90,7 +98,9 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         description: description.trim(),
         tagId: selectedTagId,
         completed: false,
-        aiPrompt: aiPrompt.trim()
+        aiPrompt: aiPrompt.trim(),
+        dueDate,
+        dueTime
       }
       onSave(newCard)
     }
@@ -204,15 +214,24 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
           <div className="metadata-section">
             <label className="form-label-modal">Fecha y Hora</label>
             <div className="datetime-row">
-              <button className="datetime-btn">
-                <span>📅</span>
-                <span>Hoy</span>
-                <span className="dropdown-icon">▾</span>
-              </button>
-              <button className="datetime-btn time-btn">
-                <span>🕐</span>
-                <span>14:00</span>
-              </button>
+              <div className="datetime-input-wrapper">
+                <span className="datetime-icon">📅</span>
+                <input
+                  type="date"
+                  className="datetime-input"
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                />
+              </div>
+              <div className="datetime-input-wrapper">
+                <span className="datetime-icon">🕐</span>
+                <input
+                  type="time"
+                  className="datetime-input"
+                  value={dueTime}
+                  onChange={(e) => setDueTime(e.target.value)}
+                />
+              </div>
             </div>
           </div>
 

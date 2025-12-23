@@ -285,32 +285,52 @@
   gap: 0.5rem;
 }
 
-.datetime-btn {
+.datetime-input-wrapper {
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0.625rem 1rem;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
   background: #ffffff;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #334155;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  cursor: pointer;
+  gap: 0.5rem;
   transition: all 0.2s ease;
 }
 
-.datetime-btn:hover {
+.datetime-input-wrapper:hover {
   background: #f8fafc;
   border-color: #cbd5e1;
 }
 
-.datetime-btn.time-btn {
-  flex: 0 0 120px;
-  justify-content: center;
-  gap: 0.5rem;
+.datetime-input-wrapper:focus-within {
+  border-color: #4198EE;
+  box-shadow: 0 0 0 3px rgba(65, 152, 238, 0.1);
+}
+
+.datetime-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.datetime-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #334155;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none;
+  min-width: 0;
+}
+
+.datetime-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.datetime-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
 }
 
 .dropdown-icon {
