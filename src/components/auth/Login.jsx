@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Card, Form, InputGroup, Button } from 'react-bootstrap'
+import { Container, Card, Form, InputGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import './Login.css'
 
 const Login = () => {
@@ -16,7 +16,7 @@ const Login = () => {
             {/* Header */}
             <div className="text-center mb-4">
               <h1 className="login-title">
-                <span className="text-blue">[How]</span> ToDoList
+                <span className="text-blue">[How]</span>ToDoList
               </h1>
               <p className="login-subtitle">
                 Productividad inteligente, potenciada por IA
@@ -86,22 +86,34 @@ const Login = () => {
 
               {/* Social buttons (disabled - coming soon) */}
               <div className="d-flex gap-3">
-                <Button 
-                  variant="outline-secondary" 
-                  className="btn-social flex-fill"
-                  disabled
-                  title="Próximamente"
+                <OverlayTrigger
+                  placement="bottom"
+                  overlay={<Tooltip>Próximamente</Tooltip>}
                 >
-                  <span className="me-2">🔵</span> Google
-                </Button>
-                <Button 
-                  variant="outline-secondary" 
-                  className="btn-social flex-fill"
-                  disabled
-                  title="Próximamente"
+                  <span className="flex-fill">
+                    <Button 
+                      variant="outline-secondary" 
+                      className="btn-social w-100"
+                      disabled
+                    >
+                      <span className="me-2">🔵</span> Google
+                    </Button>
+                  </span>
+                </OverlayTrigger>
+                <OverlayTrigger
+                  placement="bottom"
+                  overlay={<Tooltip>Próximamente</Tooltip>}
                 >
-                  <span className="me-2">🍎</span> Apple
-                </Button>
+                  <span className="flex-fill">
+                    <Button 
+                      variant="outline-secondary" 
+                      className="btn-social w-100"
+                      disabled
+                    >
+                      <span className="me-2">🍎</span> Apple
+                    </Button>
+                  </span>
+                </OverlayTrigger>
               </div>
 
               {/* Register link */}
