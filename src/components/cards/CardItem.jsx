@@ -40,6 +40,11 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
             onDelete && onDelete(id)
           }}
           title="Eliminar tarea"
+          style={{
+            background: `${tag?.textColor}15`,
+            borderColor: `${tag?.textColor}30`,
+            color: tag?.textColor
+          }}
         >
           🗑️
         </button>
@@ -71,14 +76,14 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
       <div className="card-footer">
         <button 
           className="ai-assist-btn"
-          style={getButtonStyle()}
           onClick={(e) => {
             e.stopPropagation()
             onAiAssist && onAiAssist(id)
           }}
+          title="Mejorar con IA"
         >
           <span>✨</span>
-          <span>Mejorar con IA</span>
+          <span>IA</span>
         </button>
         <label className="checkbox-wrapper" onClick={(e) => e.stopPropagation()}>
           <input
