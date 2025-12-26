@@ -151,6 +151,18 @@ const Dashboard = () => {
       }
     })
 
+  // Get unique tags and priorities from current cards
+  const availableTagIds = [...new Set(activeCards.map(card => card.tagId).filter(Boolean))]
+  const availableTags = tags.filter(tag => availableTagIds.includes(tag.id))
+  
+  const availablePriorities = [...new Set(activeCards.map(card => card.priority).filter(Boolean))]
+  const hasExpiredCards = activeCards.some(card => isCardExpired(card))
+  const availablePriorityOptions = priorityOptions.filter(opt => {
+    if (opt.value === 'all') return true // Always show "Todas"
+    if (opt.value === 'expirado') return hasExpiredCards // Only show if there are expired cards
+    return availablePriorities.includes(opt.value) // Only show if priority exists in cards
+  })
+
   const selectedFilterTag = filterTagId !== 'all' ? getTagById(filterTagId) : null
   const selectedPriority = priorityOptions.find(p => p.value === filterPriority)
 
@@ -223,7 +235,7 @@ const Dashboard = () => {
                     >
                       Todas las etiquetas
                     </button>
-                    {tags.map(tag => {
+                    {availableTags.map(tag => {
                       const tagStyle = darkMode ? {
                         backgroundColor: 'var(--bg-tertiary)',
                         color: tag.textColor
@@ -272,7 +284,7 @@ const Dashboard = () => {
                 </button>
                 {showPriorityMenu && (
                   <div className="action-dropdown">
-                    {priorityOptions.map(opt => {
+                    {availablePriorityOptions.map(opt => {
                       const priorityStyle = opt.color ? (darkMode ? {
                         backgroundColor: opt.value === 'alta' ? 'rgba(239, 68, 68, 0.15)' :
                                          opt.value === 'media' ? 'rgba(249, 115, 22, 0.15)' :
