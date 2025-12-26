@@ -101,10 +101,19 @@ const Dashboard = () => {
 
   // Priority order for sorting (expired first, then alta, media, baja)
   // Lower number = higher priority in sort
+  // Expired status adds a penalty that makes expired cards appear first
   const getPriorityOrder = (card) => {
-    if (isCardExpired(card)) return 0 // Expired cards go first (highest priority)
-    const priorityOrder = { alta: 1, media: 2, baja: 3 }
-    return priorityOrder[card.priority] ?? 4 // Unknown priority goes last
+    const priorityOrder = { alta: 0, media: 1, baja: 2 }
+    const basePriority = priorityOrder[card.priority] ?? 3 // Unknown priority goes last
+    
+    // If expired, subtract 10 to ensure they appear before non-expired cards
+    // This way expired alta (0-10=-10) < expired media (1-10=-9) < expired baja (2-10=-8)
+    // And all expired cards appear before non-expired (alta=0, media=1, baja=2)
+    if (isCardExpired(card)) {
+      return basePriority - 10
+    }
+    
+    return basePriority
   }
 
   // Filter and sort cards
