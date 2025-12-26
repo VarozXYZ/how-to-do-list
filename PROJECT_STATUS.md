@@ -356,6 +356,11 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
    - El botón de notificaciones (🔔) no funciona
    - Implementar sistema completo de notificaciones
 
+5. **Arreglar modo oscuro**
+   - Revisar consistencia de colores en dark mode
+   - Algunos componentes no usan CSS variables correctamente
+   - AI Assistant box y otros elementos necesitan ajustes
+
 ### 🟢 Baja prioridad
 5. **Efectos de sonido**
    - Añadir sonidos para acciones (crear, completar, eliminar)

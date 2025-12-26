@@ -4,6 +4,7 @@ import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useCards } from '../../context/CardsContext'
+import { generateContent } from '../../services/ai'
 import './CardDetail.css'
 
 registerLocale('es', es)
@@ -23,6 +24,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const [newTagName, setNewTagName] = useState('')
   const [newTagColor, setNewTagColor] = useState('#eff6ff')
   const [saving, setSaving] = useState(false)
+  const [aiLoading, setAiLoading] = useState(false)
+  const [aiError, setAiError] = useState(null)
   
   const priorityOptions = [
     { value: 'alta', label: 'Alta', color: '#dc2626', bgColor: '#fef2f2' },
@@ -35,6 +38,9 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
 
   // Set defaults when modal opens
   useEffect(() => {
+    if (show) {
+      setAiError(null) // Clear any previous AI errors
+    }
     if (show && !editCard) {
       // New card: set default date/time to now + 2 hours
       const now = new Date()
@@ -94,6 +100,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     setShowNewTagForm(false)
     setNewTagName('')
     setNewTagColor('#eff6ff')
+    setAiError(null)
     onHide()
   }
 
@@ -162,6 +169,37 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     }
   }
 
+  const handleAiGenerate = async () => {
+    if (!title.trim()) {
+      setAiError('Añade un título primero para generar contenido con IA')
+      return
+    }
+
+    setAiLoading(true)
+    setAiError(null)
+
+    try {
+      const result = await generateContent(
+        title.trim(),
+        description.trim(),
+        aiPrompt.trim(),
+        editCard?.id || null
+      )
+      
+      // Set the generated content as the description
+      setDescription(result.content)
+      setAiError(null)
+    } catch (error) {
+      console.error('AI Generation error:', error)
+      const errorMessage = error.response?.data?.reason || 
+                          error.response?.data?.error || 
+                          'Error al generar contenido. Inténtalo de nuevo.'
+      setAiError(errorMessage)
+    } finally {
+      setAiLoading(false)
+    }
+  }
+
   const selectedTag = tags.find(t => t.id === selectedTagId) || tags[0]
 
   return (
@@ -217,14 +255,30 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                   placeholder="Ej: 'Generar checklist para lanzamiento de producto'..."
                   value={aiPrompt}
                   onChange={(e) => setAiPrompt(e.target.value)}
+                  disabled={aiLoading}
                 />
               </div>
-              <button className="ai-generate-btn">
-                <span>⚡</span> Generar
+              <button 
+                className={`ai-generate-btn ${aiLoading ? 'loading' : ''}`}
+                onClick={handleAiGenerate}
+                disabled={aiLoading}
+              >
+                {aiLoading ? (
+                  <>
+                    <span className="ai-spinner"></span> Generando...
+                  </>
+                ) : (
+                  <>
+                    <span>⚡</span> Generar
+                  </>
+                )}
               </button>
             </div>
+            {aiError && (
+              <p className="ai-error-text">{aiError}</p>
+            )}
             <p className="ai-helper-text">
-              La IA completará la descripción y sugerirá etiquetas automáticamente.
+              La IA generará una descripción útil basada en el título y tus instrucciones.
             </p>
           </div>
         </div>
