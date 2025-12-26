@@ -320,60 +320,68 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 
 ## 🚧 Pending Work
 
-### 🔴 Alta prioridad - AI Integration (IN PROGRESS)
+### 🔴 Alta prioridad
 
-#### Phase 1: Backend Setup
-- [ ] **Step 1:** Create AI service configuration (DeepSeek via OpenAI SDK)
-- [ ] **Step 2:** Create AI controller with endpoints:
-  - `POST /api/ai/moderate` - Content moderation check
-  - `POST /api/ai/generate` - Generate task content
-- [ ] **Step 3:** Update database schema:
-  - Add `aiUsageCount` to users
-  - Add `aiLogs` collection (userId, cardId, prompt, filterResponse, generationResponse, timestamp)
-- [ ] **Step 4:** Create AI routes with auth middleware
+1. **Mejoras de IA**
+   - [ ] Mostrar descripción con formato Markdown en el textarea/preview
+   - [ ] Dar funcionalidad al botón "IA" en las tarjetas (CardItem)
+   - [ ] Conectar configuración del usuario (creatividad/formalidad) a las generaciones
+   - [ ] Limitar cantidad de generaciones por usuario
+   - [ ] (OPCIONAL) Crear cuestionario con IA para mejorar prompts
 
-#### Phase 2: Frontend Integration
-- [ ] **Step 5:** Connect "Generar" button in CardDetail modal
-- [ ] **Step 6:** Handle loading/error states during AI calls
-- [ ] **Step 7:** Display generated content in description field
-- [ ] **Step 8:** Show AI usage count in Settings page
+2. **Sistema de borradores**
+   - [ ] Guardar borradores para evitar perder contenido generado no guardado
+   - [ ] Pedir confirmación si se cierra una tarjeta sin guardar
 
-#### Phase 3: Testing & Polish
-- [ ] **Step 9:** Test moderation filter with various inputs
-- [ ] **Step 10:** Error handling for API failures, rate limits
+3. **Pantalla de preview de tarjetas**
+   - [ ] Crear vista de preview donde el texto sea más fácil de leer
+   - [ ] Botones de eliminar/editar aparecen en hover y dentro del preview
 
-### ✅ Completado - Sistema de prioridad
-- ~~Añadir campo de prioridad a las tarjetas (Alta, Media, Baja)~~
-- ~~Añadir filtro por prioridad en el Dashboard~~
-- ~~Añadir opción de ordenar por prioridad~~
+4. **Arreglar errores**
+   - [ ] Fix nodemon port conflict error (desarrollo)
+   - [ ] Arreglar modo oscuro (consistencia de colores)
 
 ### 🟡 Media prioridad
-3. **Rediseño del FAB (Floating Action Button)**
-   - El botón actual de "Nueva tarea" es feo y sticky
-   - Mejorar diseño y comportamiento
 
-4. **Sistema de notificaciones**
-   - El botón de notificaciones (🔔) no funciona
-   - Implementar sistema completo de notificaciones
+5. **Mejoras de UX**
+   - [ ] Cambiar prioridad por defecto a "Baja"
+   - [ ] Fecha por defecto en blanco, seleccionar actual al hacer clic
+   - [ ] Rediseño del FAB (Floating Action Button)
 
-5. **Arreglar modo oscuro**
-   - Revisar consistencia de colores en dark mode
-   - Algunos componentes no usan CSS variables correctamente
-   - AI Assistant box y otros elementos necesitan ajustes
+6. **Sistema de notificaciones**
+   - [ ] El botón de notificaciones (🔔) no funciona
+   - [ ] Implementar sistema completo de notificaciones
+
+7. **Internacionalización**
+   - [ ] Traducir la aplicación
+   - [ ] Opción para cambiar idioma (ES/EN)
 
 ### 🟢 Baja prioridad
-5. **Efectos de sonido**
-   - Añadir sonidos para acciones (crear, completar, eliminar)
-   - Opción para activar/desactivar en Settings
 
-6. **Otras mejoras**
-   - Profile photo upload functionality
-   - Search improvements
+8. **Sistema de sonidos**
+   - [ ] Añadir sonidos para acciones (crear, completar, eliminar)
+   - [ ] Opción para activar/desactivar en Settings
+
+9. **Otras mejoras**
+   - [ ] Profile photo upload functionality
+   - [ ] Search improvements
+
+### ✅ Completado
+
+- ~~Sistema de prioridad~~ → Campo, filtro y ordenación implementados
+- ~~AI Integration básica~~ → Backend DeepSeek, generación, moderación, tracking
+- ~~Blur-out animation~~ → Animación al eliminar/completar tarjetas
 
 ---
 
-## ✅ Recently Completed (Previously Pending)
+## ✅ Recently Completed (Session 4 - December 26, 2025)
 
+- ~~AI Integration~~ → DeepSeek backend, moderation, generation, usage tracking
+- ~~Sistema de prioridad~~ → Alta/Media/Baja con filtros y ordenación
+- ~~Blur-out animation~~ → Animación al eliminar/completar tarjetas
+- ~~AI usage count~~ → Visible en Settings page
+
+### Previously Completed
 - ~~Rediseño de controles de tarjeta~~ → Delete button added, three-dots removed
 - ~~Mejora visual de etiquetas~~ → Tags now have distinct styling
 - ~~Logout accesible~~ → Added in sidebar with icon
@@ -425,7 +433,10 @@ npm run dev
 3. ✅ Cards and tags are persisted to `server/data.json`
 4. ✅ Dark mode fully functional with CSS variables and localStorage
 5. ✅ Settings page connected (username, bio persist)
-6. The AI "IA" button currently only logs to console - needs DeepSeek integration
-7. The `.env` file must be in the `server/` folder (not project root) for JWT to work
-8. User data is isolated - each user only sees their own cards and custom tags
-9. Default tags are shared across all users (defined in `server/config/db.js`)
+6. ✅ AI "Generar" button works - generates descriptions via DeepSeek
+7. ✅ AI usage tracking - count visible in Settings
+8. The `.env` file must be in the `server/` folder with `JWT_SECRET` and `DEEPSEEK_API_KEY`
+9. User data is isolated - each user only sees their own cards and custom tags
+10. Default tags are shared across all users (defined in `server/config/db.js`)
+11. AI logs stored in `data.json` under `aiLogs` array
+12. Nodemon may show port conflict errors - this is normal, the original server keeps running
