@@ -1092,7 +1092,7 @@
 }
 
 .dark-mode .tag-option {
-  background: var(--bg-tertiary) !important;
+  /* Background color is set inline based on tag.borderColor - don't override */
   color: var(--text-primary);
 }
 
@@ -1142,11 +1142,26 @@
   color: var(--text-muted);
 }
 
-.dark-mode .color-preset-btn {
-  /* Don't override inline background-color - let inline styles take precedence */
-  background-color: unset !important;
+/* Ensure color preset buttons show their colors in dark mode */
+.dark-mode .new-tag-colors .color-preset-btn {
   /* Make border more visible in dark mode */
   border-width: 2.5px;
+  /* The backgroundColor from inline style (preset.color) should show through */
+  /* If colors are too light in dark mode, we can add a subtle dark overlay */
+  position: relative;
+}
+
+/* Add a subtle overlay for very light colors in dark mode to improve visibility */
+.dark-mode .new-tag-colors .color-preset-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.15);
+  pointer-events: none;
 }
 
 .dark-mode .color-preset-btn.selected {
