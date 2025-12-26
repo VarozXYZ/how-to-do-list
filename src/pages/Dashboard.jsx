@@ -99,8 +99,13 @@ const Dashboard = () => {
     setEditingCard(null)
   }
 
-  // Priority order for sorting (alta first)
-  const priorityOrder = { alta: 0, media: 1, baja: 2 }
+  // Priority order for sorting (expired first, then alta, media, baja)
+  // Lower number = higher priority in sort
+  const getPriorityOrder = (card) => {
+    if (isCardExpired(card)) return 0 // Expired cards go first (highest priority)
+    const priorityOrder = { alta: 1, media: 2, baja: 3 }
+    return priorityOrder[card.priority] ?? 4 // Unknown priority goes last
+  }
 
   // Filter and sort cards
   const filteredCards = activeCards
@@ -127,7 +132,7 @@ const Dashboard = () => {
         case 'newest':
           return b.id - a.id
         case 'priority':
-          return (priorityOrder[a.priority] || 1) - (priorityOrder[b.priority] || 1)
+          return getPriorityOrder(a) - getPriorityOrder(b)
         case 'a-z':
           return a.title.localeCompare(b.title)
         case 'z-a':
