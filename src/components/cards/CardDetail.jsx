@@ -5,12 +5,12 @@ import es from 'date-fns/locale/es'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useCards } from '../../context/CardsContext'
 import { useTheme } from '../../context/ThemeContext'
-import { generateContent } from '../../services/ai'
+import { generateContent, generateBasicContent, generateAdvancedContent, generateContextQuestions } from '../../services/ai'
 import './CardDetail.css'
 
 registerLocale('es', es)
 
-const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = false }) => {
+const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const { tags, addTag, deleteTag, toggleFavoriteTag, getFavoriteTag } = useCards()
   const { darkMode } = useTheme()
   
@@ -28,6 +28,10 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = fal
   const [saving, setSaving] = useState(false)
   const [aiLoading, setAiLoading] = useState(false)
   const [aiError, setAiError] = useState(null)
+  const [aiMode, setAiMode] = useState('basic') // 'basic' or 'advanced'
+  const [showQuestionsModal, setShowQuestionsModal] = useState(false)
+  const [aiQuestions, setAiQuestions] = useState([])
+  const [aiAnswers, setAiAnswers] = useState({})
   
   const priorityOptions = [
     { value: 'alta', label: 'Alta', color: '#dc2626', bgColor: '#fef2f2' },
@@ -61,97 +65,6 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = fal
     }
   }, [show, editCard, tags, getFavoriteTag])
 
-  // Activate AI assistant when activateAi prop is true
-  useEffect(() => {
-    if (show && activateAi && editCard) {
-      // Generate AI prompt suggestions based on card content
-      const generateAiPrompt = () => {
-        const cardTitle = editCard.title || ''
-        const cardDescription = editCard.description || ''
-        const cardTag = tags.find(t => t.id === editCard.tagId)
-        const cardPriority = editCard.priority || 'baja'
-        const hasDate = !!(editCard.dueDate || editCard.dueTime)
-        
-        // Build context-aware prompt
-        let prompt = ''
-        
-        if (cardDescription.trim()) {
-          // If there's already a description, focus on improving it
-          prompt = `Mejora y amplía la descripción de "${cardTitle}"`
-          
-          // Add specific improvements based on context
-          const improvements = []
-          
-          if (cardTag) {
-            improvements.push(`enfoque de ${cardTag.name.toLowerCase()}`)
-          }
-          
-          if (cardPriority === 'alta') {
-            improvements.push('con urgencia y prioridad')
-          }
-          
-          if (hasDate) {
-            improvements.push('con pasos de acción concretos y un plan de ejecución')
-          } else {
-            improvements.push('con pasos de acción concretos')
-          }
-          
-          if (improvements.length > 0) {
-            prompt += `, ${improvements.join(', ')}`
-          }
-          
-          // Add description preview if it's short enough
-          if (cardDescription.length < 100) {
-            prompt += `. La descripción actual es: "${cardDescription}"`
-          }
-        } else {
-          // If no description, generate one from scratch
-          prompt = `Genera una descripción detallada y útil para "${cardTitle}"`
-          
-          // Add context-specific instructions
-          const instructions = []
-          
-          if (cardTag) {
-            instructions.push(`enfoque de ${cardTag.name.toLowerCase()}`)
-          }
-          
-          if (cardPriority === 'alta') {
-            instructions.push('con urgencia y prioridad')
-          }
-          
-          if (hasDate) {
-            instructions.push('con pasos de acción concretos, un plan de ejecución y consideraciones de tiempo')
-          } else {
-            instructions.push('con pasos de acción concretos y prácticos')
-          }
-          
-          if (instructions.length > 0) {
-            prompt += `, con ${instructions.join(', ')}`
-          }
-        }
-        
-        return prompt
-      }
-      
-      const suggestedPrompt = generateAiPrompt()
-      setAiPrompt(suggestedPrompt)
-      
-      // Scroll to AI section after a short delay to ensure modal is fully rendered
-      setTimeout(() => {
-        const aiSection = document.querySelector('.ai-assistant-box')
-        if (aiSection) {
-          aiSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-          // Focus on the AI input field
-          const aiInput = document.querySelector('.ai-input')
-          if (aiInput) {
-            aiInput.focus()
-            // Select the text so user can easily replace it
-            aiInput.select()
-          }
-        }
-      }, 300)
-    }
-  }, [show, activateAi, editCard])
 
   // Ensure selectedTagId is valid when tags change
   // Only update if the selected tag doesn't exist (don't override valid selections)
@@ -209,6 +122,11 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = fal
     setDueDate(null)
     setDueTime(null)
     setShowTagPicker(false)
+    setAiMode('basic')
+    setAiError(null)
+    setAiQuestions([])
+    setAiAnswers({})
+    setShowQuestionsModal(false)
     setShowNewTagForm(false)
     setNewTagName('')
     setNewTagColor('#eff6ff')
@@ -298,16 +216,72 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = fal
     setAiError(null)
 
     try {
-      const result = await generateContent(
+      if (aiMode === 'basic') {
+        // Basic mode: only title + description
+        const result = await generateBasicContent(
+          title.trim(),
+          description.trim(),
+          editCard?.id || null
+        )
+        setDescription(result.content)
+        setAiError(null)
+        setAiLoading(false)
+      } else {
+        // Advanced mode: generate questions first
+        const questionsResult = await generateContextQuestions(
+          title.trim(),
+          description.trim(),
+          aiPrompt.trim()
+        )
+        
+        if (questionsResult.questions && questionsResult.questions.length > 0) {
+          // Show questions modal
+          setAiQuestions(questionsResult.questions)
+          setShowQuestionsModal(true)
+          setAiLoading(false)
+        } else {
+          // No questions, proceed with generation
+          const result = await generateAdvancedContent(
+            title.trim(),
+            description.trim(),
+            aiPrompt.trim(),
+            {},
+            editCard?.id || null
+          )
+          setDescription(result.content)
+          setAiError(null)
+          setAiLoading(false)
+        }
+      }
+    } catch (error) {
+      console.error('AI Generation error:', error)
+      const errorMessage = error.response?.data?.reason || 
+                          error.response?.data?.error || 
+                          'Error al generar contenido. Inténtalo de nuevo.'
+      setAiError(errorMessage)
+      setAiLoading(false)
+    }
+  }
+
+  const handleSubmitAnswers = async () => {
+    setAiLoading(true)
+    setAiError(null)
+
+    try {
+      const result = await generateAdvancedContent(
         title.trim(),
         description.trim(),
         aiPrompt.trim(),
+        aiAnswers,
         editCard?.id || null
       )
       
-      // Set the generated content as the description
       setDescription(result.content)
       setAiError(null)
+      setShowQuestionsModal(false)
+      setAiAnswers({})
+      setAiQuestions([])
+      setAiLoading(false)
     } catch (error) {
       console.error('AI Generation error:', error)
       const errorMessage = error.response?.data?.reason || 
@@ -322,6 +296,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = fal
   const selectedTag = tags.find(t => t.id === selectedTagId) || tags[0]
 
   return (
+    <>
     <Modal 
       show={show} 
       onHide={handleClose} 
@@ -361,26 +336,49 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = fal
 
         {/* AI Assistant Section */}
         <div className="ai-assistant-box">
-          <span className="ai-assistant-label">
-            <span>✨</span> Asistente IA
-          </span>
+          <div className="ai-assistant-header">
+            <span className="ai-assistant-label">
+              <span>✨</span> Asistente IA
+            </span>
+            {/* Mode Toggle */}
+            <div className="ai-mode-toggle">
+              <button
+                className={`ai-mode-btn ${aiMode === 'basic' ? 'active' : ''}`}
+                onClick={() => setAiMode('basic')}
+                disabled={aiLoading}
+              >
+                Básico
+              </button>
+              <button
+                className={`ai-mode-btn ${aiMode === 'advanced' ? 'active' : ''}`}
+                onClick={() => setAiMode('advanced')}
+                disabled={aiLoading}
+              >
+                Avanzado
+              </button>
+            </div>
+          </div>
           <div className="ai-assistant-content">
-            <div className="ai-input-row">
-              <div className="ai-input-wrapper">
-                <span className="ai-input-icon">🪄</span>
-                <input
-                  type="text"
-                  className="ai-input"
-                  placeholder="Ej: 'Generar checklist para lanzamiento de producto'..."
-                  value={aiPrompt}
-                  onChange={(e) => setAiPrompt(e.target.value)}
-                  disabled={aiLoading}
-                />
+            {aiMode === 'advanced' && (
+              <div className="ai-input-row">
+                <div className="ai-input-wrapper">
+                  <span className="ai-input-icon">🪄</span>
+                  <input
+                    type="text"
+                    className="ai-input"
+                    placeholder="Instrucciones adicionales (opcional)..."
+                    value={aiPrompt}
+                    onChange={(e) => setAiPrompt(e.target.value)}
+                    disabled={aiLoading}
+                  />
+                </div>
               </div>
+            )}
+            <div className="ai-generate-row">
               <button 
                 className={`ai-generate-btn ${aiLoading ? 'loading' : ''}`}
                 onClick={handleAiGenerate}
-                disabled={aiLoading}
+                disabled={aiLoading || !title.trim()}
               >
                 {aiLoading ? (
                   <>
@@ -397,7 +395,9 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = fal
               <p className="ai-error-text">{aiError}</p>
             )}
             <p className="ai-helper-text">
-              La IA generará una descripción útil basada en el título y tus instrucciones.
+              {aiMode === 'basic' 
+                ? 'La IA generará una descripción útil basada solo en el título y descripción actual.'
+                : 'La IA generará preguntas para entender mejor tu tarea y crear una descripción más precisa.'}
             </p>
           </div>
         </div>
@@ -652,6 +652,78 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = fal
         </button>
       </div>
     </Modal>
+
+    {/* Questions Modal */}
+    <Modal 
+      show={showQuestionsModal} 
+      onHide={() => {
+        setShowQuestionsModal(false)
+        setAiAnswers({})
+        setAiQuestions([])
+      }}
+      centered 
+      size="md"
+      className="questions-modal"
+    >
+      <div className="modal-header-custom">
+        <div className="modal-header-left">
+          <div className="modal-icon">
+            <span>❓</span>
+          </div>
+          <div className="modal-header-text">
+            <h2 className="modal-title-custom">Preguntas de contexto</h2>
+            <p className="modal-subtitle">Responde estas preguntas para mejorar la generación</p>
+          </div>
+        </div>
+        <button 
+          className="modal-close-btn" 
+          onClick={() => {
+            setShowQuestionsModal(false)
+            setAiAnswers({})
+            setAiQuestions([])
+          }}
+        >
+          <span>✕</span>
+        </button>
+      </div>
+
+      <div className="modal-body-custom">
+        {aiQuestions.map((question, index) => (
+          <div key={index} className="question-item">
+            <label className="question-label">{question}</label>
+            <textarea
+              className="question-input"
+              placeholder="Tu respuesta..."
+              value={aiAnswers[index] || ''}
+              onChange={(e) => setAiAnswers({ ...aiAnswers, [index]: e.target.value })}
+              rows={3}
+            />
+          </div>
+        ))}
+
+        <div className="questions-actions">
+          <button
+            className="btn-secondary"
+            onClick={() => {
+              setShowQuestionsModal(false)
+              setAiAnswers({})
+              setAiQuestions([])
+            }}
+            disabled={aiLoading}
+          >
+            Cancelar
+          </button>
+          <button
+            className="btn-primary"
+            onClick={handleSubmitAnswers}
+            disabled={aiLoading}
+          >
+            {aiLoading ? 'Generando...' : 'Continuar'}
+          </button>
+        </div>
+      </div>
+    </Modal>
+    </>
   )
 }
 

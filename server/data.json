@@ -7,16 +7,43 @@
       "password": "$2a$10$q0yiBKevdpdbSxyKdh37feB66IBb1noKwl9QraIhLYetfFakfYoey",
       "bio": "",
       "createdAt": "2025-12-23T16:59:24.849Z",
-      "aiUsageCount": 2
+      "aiUsageCount": 5,
+      "favoriteTagId": "design"
     }
   ],
   "cards": [
+    {
+      "id": 12,
+      "userId": 1,
+      "title": "2",
+      "description": "",
+      "tagId": "crypto-1766509597521",
+      "priority": "baja",
+      "completed": false,
+      "aiPrompt": "",
+      "dueDate": null,
+      "dueTime": null,
+      "createdAt": "2025-12-26T20:37:32.139Z"
+    },
+    {
+      "id": 11,
+      "userId": 1,
+      "title": "Entrenamiento de hombros y brazos",
+      "description": "Entrenamiento de hombros y brazos para principiantes enfocado en hipertrofia (desarrollo muscular), utilizando exclusivamente ejercicios con peso corporal. Diseñado para una sesión de aproximadamente 90 minutos.\n\n**Objetivo:** Construir fuerza y masa muscular en los grupos de los hombros (deltoides) y brazos (bíceps y tríceps) de manera accesible, sin necesidad de equipo.\n\n**Enfoque del entrenamiento:**\n*   **Nivel:** Principiante. Los ejercicios priorizan la técnica correcta y la adaptación progresiva.\n*   **Método:** Solo peso corporal. Aprenderás a usar tu propio cuerpo como resistencia principal.\n*   **Meta:** Hipertrofia. La rutina está estructurada para estimular el crecimiento muscular mediante repeticiones y series adecuadas.\n\n**Estructura sugerida para la sesión de 90 minutos:**\n1.  **Calentamiento (10 mins):** Movilidad articular de hombros, codos y muñecas. Activación con ejercicios como círculos de brazos y planchas estáticas cortas.\n2.  **Entrenamiento Principal (70 mins):**\n    *   **Hombros:** Incluirá variaciones de *pike push-ups* (flexiones en pica), *handstand holds* (sostener en posición de pino contra la pared) y *shoulder taps* (toques de hombros en plancha).\n    *   **Brazos (Bíceps/Tríceps):** Se centrará en *dips* en silla o banco para tríceps y variaciones de *chin-ups* (dominadas supinas) asistidas o isométricas para bíceps. Si no hay barra disponible, se usarán ejercicios como *bodyweight curls* (curls con toalla o bajo una mesa) e *extensiones de tríceps* en el suelo.\n    *   **Esquema:** Realizar 3-4 series de 8-15 repeticiones por ejercicio, descansando 60-90 segundos entre series. Prioriza el control del movimiento.\n3.  **Enfriamiento (10 mins):** Estiramientos estáticos suaves para los músculos",
+      "tagId": "personal",
+      "priority": "baja",
+      "completed": false,
+      "aiPrompt": "",
+      "dueDate": "2025-12-31",
+      "dueTime": "23:45",
+      "createdAt": "2025-12-26T20:37:20.792Z"
+    },
     {
       "id": 10,
       "userId": 1,
       "title": "reparar la luz trasera del coche",
       "description": "Reemplazar la bombilla fundida de la luz trasera en un Citroën Picasso.\n\n**Pasos recomendados:**\n1.  **Preparación:** Asegúrate de que el vehículo esté en una superficie plana, con el freno de mano puesto y las luces apagadas. Consigue la bombilla de recambio correcta (consulta el manual del propietario).\n2.  **Acceso:** Abre el maletero. Localiza los paneles de tapicería que cubren la parte trasera de los faros. Por lo general, se quitan con clips de presión o tornillos.\n3.  **Retirar la bombilla:** Una vez expuesta la parte trasera del faro, localiza el portalámparas de la luz trasera (posición de marcha atrás, freno o intermitente). Gíralo suavemente en sentido contrario a las agujas del reloj y sácalo. Extrae la bombilla fundida del portalámparas.\n4.  **Instalación:** Sin tocar el cristal de la nueva bombilla con los dedos (usa un paño o guantes), insértala en el portalámparas. Vuelve a colocar el portalámparas en su alojamiento en el faro y gíralo para fijarlo.\n5.  **Prueba:** Antes de volver a montar los paneles, pide a alguien que verifique que la nueva luz funciona correctamente (encendido, freno, intermitentes).\n6.  **Finalización:** Vuelve a colocar los paneles de tapicería en su sitio.\n\n**Nota:** Si no te sientes cómodo realizando este procedimiento, consulta con un taller mecánico o un electricista automotriz.",
-      "tagId": "personal",
+      "tagId": "marketing",
       "priority": "media",
       "completed": false,
       "aiPrompt": "Se trata de un citroen picasso",
@@ -42,7 +69,7 @@
       "userId": 1,
       "title": "Menu Lunes",
       "description": "",
-      "tagId": "novia-1766514918918",
+      "tagId": "marketing",
       "completed": true,
       "aiPrompt": "",
       "dueDate": "2025-12-26",
@@ -54,7 +81,7 @@
       "userId": 1,
       "title": "Dar bicitos",
       "description": "En la frente",
-      "tagId": "novia-1766514918918",
+      "tagId": "novia-1766782105020",
       "completed": false,
       "aiPrompt": "",
       "dueDate": "2025-12-23",
@@ -78,7 +105,8 @@
       "color": "#faf5ff",
       "borderColor": "#e9d5ff",
       "textColor": "#7c3aed",
-      "isDefault": true
+      "isDefault": true,
+      "isFavorite": false
     },
     {
       "id": "design",
@@ -86,7 +114,8 @@
       "color": "#fff7ed",
       "borderColor": "#fed7aa",
       "textColor": "#c2410c",
-      "isDefault": true
+      "isDefault": true,
+      "isFavorite": false
     },
     {
       "id": "work",
@@ -94,7 +123,8 @@
       "color": "#f0fdf4",
       "borderColor": "#bbf7d0",
       "textColor": "#15803d",
-      "isDefault": true
+      "isDefault": true,
+      "isFavorite": false
     },
     {
       "id": "research",
@@ -102,7 +132,8 @@
       "color": "#fdf2f8",
       "borderColor": "#fbcfe8",
       "textColor": "#be185d",
-      "isDefault": true
+      "isDefault": true,
+      "isFavorite": true
     },
     {
       "id": "crypto-1766509597521",
@@ -114,17 +145,35 @@
       "isDefault": false
     },
     {
-      "id": "novia-1766514918918",
+      "id": "novia-1766782105020",
       "userId": 1,
       "name": "Novia",
       "color": "#fdf2f8",
       "borderColor": "#fbcfe8",
       "textColor": "#be185d",
       "isDefault": false
+    },
+    {
+      "id": "3-1766782151888",
+      "userId": 1,
+      "name": "3",
+      "color": "#eff6ff",
+      "borderColor": "#bfdbfe",
+      "textColor": "#1d4ed8",
+      "isDefault": false
+    },
+    {
+      "id": "entrenamiento-1766787583433",
+      "userId": 1,
+      "name": "Entrenamiento",
+      "color": "#fff7ed",
+      "borderColor": "#fed7aa",
+      "textColor": "#c2410c",
+      "isDefault": false
     }
   ],
   "nextUserId": 2,
-  "nextCardId": 11,
+  "nextCardId": 13,
   "aiLogs": [
     {
       "id": 1766770097835,
@@ -181,6 +230,98 @@
       },
       "output": "Reemplazar la bombilla fundida de la luz trasera en un Citroën Picasso.\n\n**Pasos recomendados:**\n1.  **Preparación:** Asegúrate de que el vehículo esté en una superficie plana, con el freno de mano puesto y las luces apagadas. Consigue la bombilla de recambio correcta (consulta el manual del propietario).\n2.  **Acceso:** Abre el maletero. Localiza los paneles de tapicería que cubren la parte trasera de los faros. Por lo general, se quitan con clips de presión o tornillos.\n3.  **Retirar la bombilla:** Una vez expuesta la parte trasera del faro, localiza el portalámparas de la luz trasera (posición de marcha atrás, freno o intermitente). Gíralo suavemente en sentido contrario a las agujas del reloj y sácalo. Extrae la bombilla fundida del portalámparas.\n4.  **Instalación:** Sin tocar el cristal de la nueva bombilla con los dedos (usa un paño o guantes), insértala en el portalámparas. Vuelve a colocar el portalámparas en su alojamiento en el faro y gíralo para fijarlo.\n5.  **Prueba:** Antes de volver a montar los paneles, pide a alguien que verifique que la nueva luz funciona correctamente (encendido, freno, intermitentes).\n6.  **Finalización:** Vuelve a colocar los paneles de tapicería en su sitio.\n\n**Nota:** Si no te sientes cómodo realizando este procedimiento, consulta con un taller mecánico o un electricista automotriz.",
       "timestamp": "2025-12-26T17:33:30.837Z"
+    },
+    {
+      "id": 1766787599623,
+      "userId": 1,
+      "cardId": 11,
+      "type": "moderation",
+      "input": {
+        "title": "Entrenamiento de hombros y brazos",
+        "description": "",
+        "userPrompt": "Genera una descripción detallada y útil para \"Entrenamiento de hombros y brazos\", con enfoque de personal, con pasos de acción concretos, un plan de ejecución y consideraciones de tiempo"
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-26T22:19:59.623Z"
+    },
+    {
+      "id": 1766787615082,
+      "userId": 1,
+      "cardId": 11,
+      "type": "generation",
+      "input": {
+        "title": "Entrenamiento de hombros y brazos",
+        "description": "",
+        "userPrompt": "Genera una descripción detallada y útil para \"Entrenamiento de hombros y brazos\", con enfoque de personal, con pasos de acción concretos, un plan de ejecución y consideraciones de tiempo"
+      },
+      "output": "**Entrenamiento de hombros y brazos - Sesión personal**\n\n**Objetivo:** Fortalecer y definir los músculos del hombro (deltoides) y del brazo (bíceps y tríceps), mejorando la fuerza funcional y la estética muscular.\n\n**Plan de ejecución (Duración total: ~60 minutos):**\n\n1.  **Calentamiento (10 minutos):** Movilidad articular de hombros, codos y muñecas. 5 minutos de cardio ligero (cinta, elíptica). Series de calentamiento con peso muy ligero o banda elástica.\n\n2.  **Bloque Principal - Fuerza (40 minutos):**\n    *   **Hombros (Deltoides):**\n        *   **Press Militar con Mancuernas (3 series de 8-12 repeticiones):** Trabajo principal para el deltoides anterior y medio.\n        *   **Elevaciones Laterales (3 series de 12-15 repeticiones):** Aislamiento para el deltoides medio (anchura).\n        *   **Face Pulls con Cuerda (3 series de 15 repeticiones):** Crítico para el deltoides posterior y salud postural.\n    *   **Brazos:**\n        *   **Bíceps:** Curl de Bíceps con Barra Z o Mancuernas (3 series de 10-12 repeticiones).\n        *   **Tríceps:** Extensiones de Tríceps en Polea Alta con Cuerda (3 series de 12-15 repeticiones).\n\n3.  **Enfriamiento (10 minutos):** Estiramientos estáticos manteniendo 30 segundos por grupo muscular trabajado. Enfócate en pectoral, hombros, bíceps y tríceps.\n\n**Consideraciones clave:**\n*   **Enfoque en la técnica:** Prioriza el movimiento controlado sobre el peso levantado para maximizar resultados y prevenir lesiones.\n*   **Progresión:** Aumenta el peso, las repeticiones o las series gradualmente cada semana para seguir desafiando a los músculos.\n*   **Descanso:** Respeta 60-90 segundos de descanso entre series. Programa este",
+      "timestamp": "2025-12-26T22:20:15.081Z"
+    },
+    {
+      "id": 1766788678089,
+      "userId": 1,
+      "cardId": 11,
+      "type": "moderation",
+      "input": {
+        "title": "Entrenamiento de hombros y brazos",
+        "description": "",
+        "userPrompt": ""
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-26T22:37:58.089Z"
+    },
+    {
+      "id": 1766788688337,
+      "userId": 1,
+      "cardId": 11,
+      "type": "generation",
+      "mode": "basic",
+      "input": {
+        "title": "Entrenamiento de hombros y brazos",
+        "description": ""
+      },
+      "output": "Entrenamiento de hombros y brazos para desarrollar fuerza, definición muscular y mejorar la funcionalidad general de la parte superior del cuerpo.\n\n**Objetivo:** Fortalecer los músculos deltoides (hombros), bíceps, tríceps y antebrazos mediante una rutina estructurada.\n\n**Rutina sugerida (ejemplo):**\n1.  **Calentamiento (5-10 min):** Rotaciones de hombros, estiramientos dinámicos de brazos y cardio ligero.\n2.  **Ejercicios principales (3-4 series cada uno):**\n    *   **Hombros:** Press militar con mancuernas o barra, elevaciones laterales, face pulls.\n    *   **Bíceps:** Curl de bíceps con barra o mancuernas, curl martillo.\n    *   **Tríceps:** Fondos en paralelas o extensión de tríceps con polea.\n3.  **Enfriamiento:** Estiramientos estáticos para los grupos musculares trabajados, manteniendo cada posición 20-30 segundos.\n\n**Recomendaciones:**\n*   Enfócate en la técnica antes que en el peso levantado.\n*   Mantén una hidratación constante durante la sesión.\n*   Incluye días de descanso para permitir la recuperación muscular.\n*   Ajusta la intensidad, series y repeticiones según tu nivel de condición física.",
+      "timestamp": "2025-12-26T22:38:08.336Z"
+    },
+    {
+      "id": 1766788947529,
+      "userId": 1,
+      "cardId": 11,
+      "type": "moderation",
+      "input": {
+        "title": "Entrenamiento de hombros y brazos",
+        "description": "",
+        "userPrompt": ""
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-26T22:42:27.529Z"
+    },
+    {
+      "id": 1766788963272,
+      "userId": 1,
+      "cardId": 11,
+      "type": "generation",
+      "mode": "advanced",
+      "input": {
+        "title": "Entrenamiento de hombros y brazos",
+        "description": "",
+        "userPrompt": "",
+        "answers": {
+          "0": "Principiante",
+          "1": "Solo peso corporal",
+          "2": "Hipertrofia",
+          "3": "90 minutos",
+          "4": ""
+        }
+      },
+      "output": "Entrenamiento de hombros y brazos para principiantes enfocado en hipertrofia (desarrollo muscular), utilizando exclusivamente ejercicios con peso corporal. Diseñado para una sesión de aproximadamente 90 minutos.\n\n**Objetivo:** Construir fuerza y masa muscular en los grupos de los hombros (deltoides) y brazos (bíceps y tríceps) de manera accesible, sin necesidad de equipo.\n\n**Enfoque del entrenamiento:**\n*   **Nivel:** Principiante. Los ejercicios priorizan la técnica correcta y la adaptación progresiva.\n*   **Método:** Solo peso corporal. Aprenderás a usar tu propio cuerpo como resistencia principal.\n*   **Meta:** Hipertrofia. La rutina está estructurada para estimular el crecimiento muscular mediante repeticiones y series adecuadas.\n\n**Estructura sugerida para la sesión de 90 minutos:**\n1.  **Calentamiento (10 mins):** Movilidad articular de hombros, codos y muñecas. Activación con ejercicios como círculos de brazos y planchas estáticas cortas.\n2.  **Entrenamiento Principal (70 mins):**\n    *   **Hombros:** Incluirá variaciones de *pike push-ups* (flexiones en pica), *handstand holds* (sostener en posición de pino contra la pared) y *shoulder taps* (toques de hombros en plancha).\n    *   **Brazos (Bíceps/Tríceps):** Se centrará en *dips* en silla o banco para tríceps y variaciones de *chin-ups* (dominadas supinas) asistidas o isométricas para bíceps. Si no hay barra disponible, se usarán ejercicios como *bodyweight curls* (curls con toalla o bajo una mesa) e *extensiones de tríceps* en el suelo.\n    *   **Esquema:** Realizar 3-4 series de 8-15 repeticiones por ejercicio, descansando 60-90 segundos entre series. Prioriza el control del movimiento.\n3.  **Enfriamiento (10 mins):** Estiramientos estáticos suaves para los músculos",
+      "timestamp": "2025-12-26T22:42:43.271Z"
     }
   ]
 }

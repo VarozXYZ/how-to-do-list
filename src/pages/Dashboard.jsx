@@ -13,7 +13,6 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [editingCard, setEditingCard] = useState(null)
-  const [activateAi, setActivateAi] = useState(false)
   const [filterTagId, setFilterTagId] = useState('all')
   const [filterPriority, setFilterPriority] = useState('all')
   const [sortBy, setSortBy] = useState('newest')
@@ -88,25 +87,17 @@ const Dashboard = () => {
   ]
 
   const handleAiAssist = (id) => {
-    // Find the card by id
-    const card = activeCards.find(c => c.id === id)
-    if (card) {
-      setEditingCard(card)
-      setActivateAi(true) // Activate AI assistant when modal opens
-      setShowModal(true)
-    }
+    console.log('AI Assist clicked for card:', id)
   }
 
   const handleEdit = (card) => {
     setEditingCard(card)
-    setActivateAi(false) // Don't activate AI for normal edit
     setShowModal(true)
   }
 
   const handleCloseModal = () => {
     setShowModal(false)
     setEditingCard(null)
-    setActivateAi(false)
   }
 
   // Priority order for sorting (expired first, then alta, media, baja)
@@ -384,10 +375,7 @@ const Dashboard = () => {
         </div>
 
         {/* FAB Button */}
-        <button className="fab-button" title="Nueva tarea" onClick={() => {
-          setActivateAi(false)
-          setShowModal(true)
-        }}>
+        <button className="fab-button" title="Nueva tarea" onClick={() => setShowModal(true)}>
           +
         </button>
 
@@ -398,7 +386,6 @@ const Dashboard = () => {
           onSave={addCard}
           onUpdate={updateCard}
           editCard={editingCard}
-          activateAi={activateAi}
         />
       </main>
     </div>
