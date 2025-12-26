@@ -2,9 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/diycpogap/image/upload/v1766779088/dark-icon_hgacxb.png" id="favicon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>how-to-do-list</title>
+    <script>
+      // Set favicon based on system theme before React loads
+      (function() {
+        const savedPrefs = localStorage.getItem('userPreferences');
+        let isDark = false;
+        
+        if (savedPrefs) {
+          try {
+            const prefs = JSON.parse(savedPrefs);
+            isDark = prefs.darkMode ?? false;
+          } catch (e) {
+            // Fallback to system preference
+            isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          }
+        } else {
+          isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        
+        const favicon = document.getElementById('favicon');
+        if (favicon) {
+          if (isDark) {
+            favicon.href = 'https://res.cloudinary.com/diycpogap/image/upload/v1766779021/white-icon_gb5uwc.png';
+          } else {
+            favicon.href = 'https://res.cloudinary.com/diycpogap/image/upload/v1766779088/dark-icon_hgacxb.png';
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

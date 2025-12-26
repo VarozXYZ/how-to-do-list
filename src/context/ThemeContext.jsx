@@ -14,12 +14,28 @@ export const ThemeProvider = ({ children }) => {
     return window.matchMedia('(prefers-color-scheme: dark)').matches
   })
 
-  // Apply dark mode class to body
+  // Apply dark mode class to body and update favicon
   useEffect(() => {
+    // Update favicon immediately based on initial theme
+    const updateFavicon = (isDark) => {
+      const favicon = document.getElementById('favicon')
+      if (favicon) {
+        if (isDark) {
+          // Dark theme → white icon
+          favicon.href = 'https://res.cloudinary.com/diycpogap/image/upload/v1766779021/white-icon_gb5uwc.png'
+        } else {
+          // Light theme → dark icon
+          favicon.href = 'https://res.cloudinary.com/diycpogap/image/upload/v1766779088/dark-icon_hgacxb.png'
+        }
+      }
+    }
+
     if (darkMode) {
       document.body.classList.add('dark-mode')
+      updateFavicon(true)
     } else {
       document.body.classList.remove('dark-mode')
+      updateFavicon(false)
     }
   }, [darkMode])
 
