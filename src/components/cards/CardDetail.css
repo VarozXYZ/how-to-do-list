@@ -962,7 +962,6 @@
 /* Clear button */
 .react-datepicker__close-icon {
   right: 4px;
-  padding: 0;
 }
 
 .react-datepicker__close-icon::after {
@@ -971,6 +970,7 @@
   width: 18px;
   height: 18px;
   line-height: 1;
+  padding: 0 0 3.5px 0px;
 }
 
 .react-datepicker__close-icon:hover::after {
