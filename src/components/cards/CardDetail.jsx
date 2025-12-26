@@ -161,11 +161,15 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     
     try {
       const newTagId = await addTag(newTag)
+      // Update selected tag immediately after creation
       setSelectedTagId(newTagId)
       setNewTagName('')
       setNewTagColor('#eff6ff')
       setShowNewTagForm(false)
-      setShowTagPicker(false)
+      // Keep tag picker open briefly to show the new tag is selected, then close
+      setTimeout(() => {
+        setShowTagPicker(false)
+      }, 100)
     } catch (error) {
       console.error('Error creating tag:', error)
       alert('Error al crear la etiqueta')
