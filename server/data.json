@@ -7,7 +7,7 @@
       "password": "$2a$10$q0yiBKevdpdbSxyKdh37feB66IBb1noKwl9QraIhLYetfFakfYoey",
       "bio": "",
       "createdAt": "2025-12-23T16:59:24.849Z",
-      "aiUsageCount": 9,
+      "aiUsageCount": 10,
       "favoriteTagId": "design"
     }
   ],
@@ -508,6 +508,34 @@
       },
       "output": "Comienza por repasar los conceptos básicos sobre triángulos, enfocándote en las razones trigonométricas (seno, coseno, tangente) y el teorema de Pitágoras. Realiza ejercicios prácticos de identificación de lados y ángulos en triángulos rectángulos. Dedica tiempo a resolver problemas de aplicación directa, como calcular lados desconocidos o ángulos usando las funciones. Prioriza la práctica con ejercicios tipo examen para familiarizarte con el formato y gestionar el tiempo. Como el examen es mañana, concéntrate en los temas centrales, haz un resumen de fórmulas clave y descansa bien para llegar con la mente fresca.",
       "timestamp": "2025-12-26T23:01:18.027Z"
+    },
+    {
+      "id": 1766790630944,
+      "userId": 1,
+      "cardId": 12,
+      "type": "moderation",
+      "input": {
+        "title": "Tarta de manzana",
+        "description": "",
+        "userPrompt": ""
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-26T23:10:30.944Z"
+    },
+    {
+      "id": 1766790672788,
+      "userId": 1,
+      "cardId": 12,
+      "type": "generation",
+      "mode": "basic",
+      "input": {
+        "title": "Tarta de manzana",
+        "description": ""
+      },
+      "output": "**Tarea: Preparar una Tarta de Manzana Casera Clásica**\n\n**Descripción:**\nEl objetivo de esta tarea es preparar una tarta de manzana tradicional, casera y deliciosa, con una base de masa quebrada u hojaldre y un relleno de manzanas aromatizadas. Esta receta es perfecta para postres familiares, ocasiones especiales o simplemente para disfrutar de un clásico de repostería. Asegúrate de contar con todos los ingredientes y utensilios necesarios antes de comenzar.\n\n**Ingredientes necesarios:**\n\n*   **Para la masa (o una masa prehecha de 250-300g):**\n    *   250g de harina de trigo común\n    *   125g de mantequilla fría, en cubos\n    *   1 pizca de sal\n    *   1 cucharada de azúcar (opcional, para masa más dulce)\n    *   1 huevo (o 4-6 cucharadas de agua muy fría)\n\n*   **Para el relleno:**\n    *   1 kg de manzanas (variedades como Granny Smith, Golden o Reineta, que aguanten bien la cocción)\n    *   80-100g de azúcar blanco (ajustar al gusto y acidez de las manzanas)\n    *   1 cucharadita de canela en polvo\n    *   Ralladura de medio limón (opcional, para evitar la oxidación y añadir frescor)\n    *   20g de mantequilla\n    *   1 cucharada de harina o maicena (para espesar el jugo)\n\n*   **Para el acabado:**\n    *   1 yema de huevo batida o un poco de leche (para pintar)\n    *   Azúcar para espolvorear (normal o moreno)\n\n**Utensilios necesarios:**\n*   Bol grande para mezclar\n*   Rodillo\n*   Molde para tarta (redondo, de unos 22-24 cm de diámetro, desmontable preferiblemente)\n*   Papel de horno\n*   Cuchillo afilado y pelador\n*   Cuenco para el relleno\n*   Pincel de cocina (opcional)\n*   Horno precalentado\n\n**Pasos detallados:**\n\n**1. Preparar la masa (si es casera):**\n   *   En un bol grande, mezcla la harina con la sal (y el azúcar si usas).\n   *   Añade los cubos de mantequilla fría y, con las yemas de los dedos, un tenedor o un cortador de masas, trabaja la mezcla hasta obtener una textura similar a arena gruesa.\n   *   Añade el huevo batido (o el agua muy fría poco a poco) y mezcla rápidamente hasta que se forme una bola. No amases en exceso.\n   *   Envuelve la masa en film transparente y déjala reposar en la nevera durante al menos 30 minutos.\n\n**2. Preparar el relleno:**\n   *   Pela las manzanas, quítales el corazón y córtalas en láminas o gajos finos y regulares (aproximadamente ½ cm de grosor).\n   *   Colócalas en un bol y mézclalas con el azúcar, la canela, la ralladura de limón y la harina o maicena. Reserva.\n\n**3. Montar la tarta:**\n   *   Precalienta el horno a 180°C (350°F), con calor arriba y abajo.\n   *   Estira la masa sobre una superficie enharinada con un rodillo, formando un círculo unos 5 cm más grande que el diámetro de tu molde.\n   *   Forra el molde (preferiblemente engrasado o con papel de horno en la base) con la masa, presionando suavemente el fondo y los laterales. Corta el exceso de masa.\n   *   Con un tenedor, pincha la base varias veces para evitar que se hinche al hornear.\n   *   Vierte el relleno de manzana en el molde, distribuyéndolo de manera uniforme. Opcionalmente, puedes colocar algunos trozos de mantequilla repartidos por encima.\n\n**4. Acabado y horneado:**\n   *   Si deseas una tarta cubierta, puedes hacer tiras con el exceso de masa y crear un enrejado sobre las manzanas, o simplemente colocar otro disco de masa encima, sellando los bordes y haciendo unos pequeños cortes en el centro para que salga el vapor.\n   *   Pinta la superficie de la masa con la yema batida o leche usando un pincel, y espolvorea generosamente con azúcar.\n   *   Hornea en el centro del horno precalentado durante aproximadamente 40-50 minutos, o hasta que la masa esté dorada y las manzanas burbujeen.\n   *   **Consejo:** Coloca el molde sobre una bandeja de horno por si hay derrames de jugo.\n\n**5. Enfriado y servicio:**\n   *   Saca la tarta del horno y déjala enfriar dentro del molde sobre una rejilla durante al menos 15-20 minutos antes de desmoldarla. Esto permite que el relleno se asiente.\n   *   Para el mejor resultado y un corte limpio, se recomienda esperar a que esté completamente tibia o a temperatura ambiente.\n   *   Sirve sola o acompañada de nata montada, helado de vainilla o una bola de crema inglesa.\n\n**Notas y variaciones:**\n*   Para ahorrar tiempo, puedes usar masa de hojaldre o quebrada ya preparada.\n*   Puedes añadir pasas remojadas en ron o nueces picadas al relleno.\n*   Si prefieres una textura más homogénea, puedes precocinar ligeramente las manzanas en una sartén con la mantequilla, el azúcar y la canela durante 5-7 minutos antes de colocarlas en la masa.\n*   La tarta se conserva cubierta a temperatura ambiente 1-2 días, o refrigerada hasta 4 días.",
+      "timestamp": "2025-12-26T23:11:12.787Z"
     }
   ]
 }

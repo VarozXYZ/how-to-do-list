@@ -35,11 +35,12 @@ Respond ONLY with a JSON object:
 
 Cuando el usuario te proporcione información sobre una tarea (título, descripción actual, y/o instrucciones adicionales), debes:
 
-1. Generar una descripción clara, concisa y útil para la tarea
-2. Incluir pasos accionables si es apropiado
-3. Mantener un tono profesional pero amigable
-4. Responder siempre en español
-5. No exceder 300 palabras
+1. Generar una descripción DETALLADA, completa y útil para la tarea
+2. Incluir pasos accionables específicos y concretos
+3. Proporcionar información suficiente para que el usuario pueda completar la tarea sin dudas
+4. Mantener un tono profesional pero amigable
+5. Responder siempre en español
+6. Sé exhaustivo y detallado - no te limites a respuestas cortas
 
 Tu respuesta debe ser SOLO el texto de la descripción mejorada, sin explicaciones adicionales ni formato especial.`,
 
@@ -71,18 +72,26 @@ NO escribas: "Preparar una tarta de manzana casera, apta para 5 personas, sin az
 ESCRIBE: "Receta para 5 personas. Usar endulzantes naturales como canela o puré de manzana. Pasos: preparar masa, cortar manzanas, condimentar, armar y hornear a 180°C por 45 minutos."
 
 Debes:
-1. Generar una descripción clara, concisa y útil que explique cómo realizar la tarea
+1. Generar una descripción DETALLADA, completa y exhaustiva que explique cómo realizar la tarea paso a paso
 2. Incorporar la información proporcionada de forma natural, sin repetirla literalmente
-3. Incluir pasos accionables concretos
-4. Mantener un tono profesional pero amigable
-5. Responder siempre en español
-6. No exceder 300 palabras
+3. Incluir pasos accionables específicos, concretos y detallados
+4. Proporcionar suficiente contexto y detalles para que el usuario pueda completar la tarea sin dudas
+5. Mantener un tono profesional pero amigable
+6. Responder siempre en español
+7. Sé exhaustivo - proporciona todos los detalles necesarios, no te limites a respuestas cortas
 
 Tu respuesta debe ser ÚNICAMENTE el texto de la descripción generada, sin explicaciones adicionales, sin formato especial, sin repetir el título ni las instrucciones.`
 }
 
+// Convert creativity (0-100) to temperature (0-1.5)
+const creativityToTemperature = (creativity) => {
+  // Map 0-100 to 0-1.5 (DeepSeek's full range)
+  // 0 = 0 (more precise), 100 = 1.5 (more creative)
+  return (creativity / 100) * 1.5
+}
+
 // AI generation function
-const generateTaskContent = async (title, currentDescription, userPrompt) => {
+const generateTaskContent = async (title, currentDescription, userPrompt, temperature = 0.8) => {
   if (!openai) {
     throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
   }
@@ -100,7 +109,7 @@ Por favor, genera una descripción mejorada y útil para esta tarea.`
       { role: 'system', content: SYSTEM_PROMPTS.generation },
       { role: 'user', content: userMessage }
     ],
-    temperature: 0.7
+    temperature: temperature
   })
 
   return completion.choices[0].message.content
@@ -158,7 +167,7 @@ Genera entre 2 y 5 preguntas relevantes para entender mejor esta tarea y poder g
       { role: 'system', content: SYSTEM_PROMPTS.questions },
       { role: 'user', content: userMessage }
     ],
-    temperature: 0.7,
+    temperature: 0.8,
     max_tokens: 300
   })
 
@@ -180,7 +189,7 @@ Genera entre 2 y 5 preguntas relevantes para entender mejor esta tarea y poder g
 }
 
 // Generate basic content (title + description only)
-const generateBasicTaskContent = async (title, description) => {
+const generateBasicTaskContent = async (title, description, temperature = 0.8) => {
   if (!openai) {
     throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
   }
@@ -197,14 +206,15 @@ Por favor, genera una descripción mejorada y útil para esta tarea basándote s
       { role: 'system', content: SYSTEM_PROMPTS.generation },
       { role: 'user', content: userMessage }
     ],
-    temperature: 0.7
+    temperature: temperature,
+    extra_body: { thinking: { type: "enabled" } }
   })
 
   return completion.choices[0].message.content
 }
 
 // Generate advanced content (with questions answered)
-const generateAdvancedTaskContent = async (title, description, userPrompt, answers) => {
+const generateAdvancedTaskContent = async (title, description, userPrompt, answers, temperature = 0.8) => {
   if (!openai) {
     throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
   }
@@ -228,7 +238,8 @@ IMPORTANTE: Genera una descripción nueva que explique CÓMO realizar esta tarea
       { role: 'system', content: SYSTEM_PROMPTS.advancedGeneration },
       { role: 'user', content: userMessage }
     ],
-    temperature: 0.7
+    temperature: temperature,
+    extra_body: { thinking: { type: "enabled" } }
   })
 
   return completion.choices[0].message.content
@@ -245,6 +256,7 @@ module.exports = {
   generateContextQuestions,
   moderateContent,
   isAiAvailable,
+  creativityToTemperature,
   SYSTEM_PROMPTS
 }
 

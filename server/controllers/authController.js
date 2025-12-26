@@ -34,6 +34,7 @@ const register = async (req, res) => {
       email,
       password: hashedPassword,
       bio: '',
+      creativity: 50, // Default creativity level
       createdAt: new Date().toISOString()
     }
 
@@ -108,7 +109,8 @@ const login = async (req, res) => {
         id: user.id, 
         username: user.username, 
         email: user.email,
-        bio: user.bio 
+        bio: user.bio,
+        creativity: user.creativity || 50
       }
     })
   } catch (error) {
@@ -137,6 +139,7 @@ const getMe = (req, res) => {
       username: user.username,
       email: user.email,
       bio: user.bio,
+      creativity: user.creativity || 50,
       createdAt: user.createdAt
     })
   } catch (error) {
@@ -148,7 +151,7 @@ const getMe = (req, res) => {
 // Update user profile
 const updateProfile = async (req, res) => {
   try {
-    const { username, bio } = req.body
+    const { username, bio, creativity } = req.body
     const db = getDB()
     
     const userIndex = db.users.findIndex(u => u.id === req.user.id)
@@ -168,6 +171,11 @@ const updateProfile = async (req, res) => {
       db.users[userIndex].bio = bio
     }
 
+    if (creativity !== undefined) {
+      // Ensure creativity is between 0 and 100
+      db.users[userIndex].creativity = Math.max(0, Math.min(100, Number(creativity)))
+    }
+
     saveDB(db)
 
     const user = db.users[userIndex]
@@ -175,7 +183,8 @@ const updateProfile = async (req, res) => {
       id: user.id,
       username: user.username,
       email: user.email,
-      bio: user.bio
+      bio: user.bio,
+      creativity: user.creativity || 50
     })
   } catch (error) {
     console.error('UpdateProfile error:', error)

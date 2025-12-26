@@ -5,7 +5,8 @@ const {
   generateAdvancedTaskContent,
   generateContextQuestions,
   moderateContent, 
-  isAiAvailable 
+  isAiAvailable,
+  creativityToTemperature
 } = require('../config/ai')
 
 // Generate AI content for a task
@@ -233,8 +234,13 @@ const generateBasic = async (req, res) => {
       })
     }
 
-    // Step 2: Generate content
-    const generatedContent = await generateBasicTaskContent(title, description)
+    // Step 2: Get user's creativity and convert to temperature
+    const user = db.users.find(u => u.id === userId)
+    const userCreativity = user?.creativity || 50
+    const temperature = creativityToTemperature(userCreativity)
+
+    // Step 3: Generate content
+    const generatedContent = await generateBasicTaskContent(title, description, temperature)
 
     // Log the generation
     const generationLog = {
@@ -320,8 +326,13 @@ const generateAdvanced = async (req, res) => {
       })
     }
 
-    // Step 2: Generate content with answers
-    const generatedContent = await generateAdvancedTaskContent(title, description, userPrompt, answers || {})
+    // Step 2: Get user's creativity and convert to temperature
+    const user = db.users.find(u => u.id === userId)
+    const userCreativity = user?.creativity || 50
+    const temperature = creativityToTemperature(userCreativity)
+
+    // Step 3: Generate content with answers
+    const generatedContent = await generateAdvancedTaskContent(title, description, userPrompt, answers || {}, temperature)
 
     // Log the generation
     const generationLog = {
