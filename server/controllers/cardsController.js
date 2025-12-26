@@ -36,7 +36,7 @@ const createCard = (req, res) => {
       title,
       description: description || '',
       tagId: tagId || 'marketing',
-      priority: priority || 'media', // alta, media, baja
+      priority: priority || 'baja', // alta, media, baja
       completed: false,
       aiPrompt: aiPrompt || '',
       dueDate: dueDate || null,
