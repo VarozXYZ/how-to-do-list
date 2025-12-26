@@ -1125,6 +1125,53 @@
   background: rgba(239, 68, 68, 0.3);
 }
 
+/* Dark Mode New Tag Form */
+.dark-mode .new-tag-input {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.dark-mode .new-tag-input:focus {
+  border-color: var(--accent-primary);
+  background: var(--bg-secondary);
+}
+
+.dark-mode .new-tag-input::placeholder {
+  color: var(--text-muted);
+}
+
+.dark-mode .color-preset-btn.selected {
+  box-shadow: 0 0 0 2px var(--accent-primary), 0 0 0 4px rgba(65, 152, 238, 0.2);
+}
+
+.dark-mode .new-tag-cancel {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.dark-mode .new-tag-cancel:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-light);
+}
+
+.dark-mode .new-tag-save {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.dark-mode .new-tag-save:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.dark-mode .new-tag-save:disabled {
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 /* React DatePicker Dark Mode */
 .dark-mode .react-datepicker {
   background: var(--bg-secondary) !important;
