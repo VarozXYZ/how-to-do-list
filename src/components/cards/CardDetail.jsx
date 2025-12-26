@@ -323,7 +323,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                   isClearable
                 />
               </div>
-              <div className="datetime-input-wrapper">
+              <div className="datetime-input-wrapper time-wrapper">
                 <span className="datetime-icon">🕐</span>
                 <DatePicker
                   selected={dueTime}
