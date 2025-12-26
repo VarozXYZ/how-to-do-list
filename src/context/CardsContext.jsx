@@ -127,6 +127,27 @@ export const CardsProvider = ({ children }) => {
     return tags.find(tag => tag.id === tagId) || tags[0]
   }
 
+  // Toggle favorite tag
+  const toggleFavoriteTag = async (tagId) => {
+    try {
+      const result = await tagsService.toggleFavoriteTag(tagId)
+      // Update tags to reflect the new favorite status
+      setTags(tags.map(tag => ({
+        ...tag,
+        isFavorite: tag.id === result.tagId ? result.isFavorite : false
+      })))
+      return result
+    } catch (err) {
+      console.error('Error toggling favorite tag:', err)
+      throw err
+    }
+  }
+
+  // Get favorite tag (for default selection)
+  const getFavoriteTag = () => {
+    return tags.find(tag => tag.isFavorite) || tags[0]
+  }
+
   // Computed values
   const activeCards = cards.filter(card => !card.completed)
   const completedCards = cards.filter(card => card.completed)
@@ -144,6 +165,8 @@ export const CardsProvider = ({ children }) => {
     toggleComplete,
     addTag,
     deleteTag,
+    toggleFavoriteTag,
+    getFavoriteTag,
     isDefaultTag,
     getTagById
   }

@@ -18,3 +18,9 @@ export const deleteTag = async (id) => {
   return response.data
 }
 
+// Toggle favorite tag
+export const toggleFavoriteTag = async (id) => {
+  const response = await api.patch(`/tags/${id}/favorite`)
+  return response.data
+}
+

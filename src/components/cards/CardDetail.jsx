@@ -11,13 +11,13 @@ import './CardDetail.css'
 registerLocale('es', es)
 
 const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
-  const { tags, addTag, deleteTag } = useCards()
+  const { tags, addTag, deleteTag, toggleFavoriteTag, getFavoriteTag } = useCards()
   const { darkMode } = useTheme()
   
   const [title, setTitle] = useState('')
   const [aiPrompt, setAiPrompt] = useState('')
   const [description, setDescription] = useState('')
-  const [selectedTagId, setSelectedTagId] = useState(tags[0]?.id || '')
+  const [selectedTagId, setSelectedTagId] = useState('')
   const [priority, setPriority] = useState('baja')
   const [dueDate, setDueDate] = useState(null)
   const [dueTime, setDueTime] = useState(null)
@@ -44,20 +44,22 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       setAiError(null) // Clear any previous AI errors
     }
     if (show && !editCard) {
-      // New card: leave date/time blank
+      // New card: use favorite tag or first available tag
+      const favoriteTag = getFavoriteTag()
+      setSelectedTagId(favoriteTag?.id || tags[0]?.id || '')
       setDueDate(null)
       setDueTime(null)
     } else if (editCard) {
       // Editing: populate with existing data
       setTitle(editCard.title || '')
       setDescription(editCard.description || '')
-      setSelectedTagId(editCard.tagId || tags[0]?.id || '')
+      setSelectedTagId(editCard.tagId || getFavoriteTag()?.id || tags[0]?.id || '')
       setPriority(editCard.priority || 'baja')
       setAiPrompt(editCard.aiPrompt || '')
       setDueDate(editCard.dueDate ? new Date(editCard.dueDate) : null)
       setDueTime(editCard.dueTime ? new Date(`2000-01-01T${editCard.dueTime}`) : null)
     }
-  }, [show, editCard, tags])
+  }, [show, editCard, tags, getFavoriteTag])
 
   // Close tag picker when clicking outside
   useEffect(() => {
@@ -92,7 +94,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     setTitle('')
     setAiPrompt('')
     setDescription('')
-    setSelectedTagId(tags[0]?.id || '')
+    const favoriteTag = getFavoriteTag()
+    setSelectedTagId(favoriteTag?.id || tags[0]?.id || '')
     setPriority('baja')
     setDueDate(null)
     setDueTime(null)
@@ -396,6 +399,20 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                           }}
                         >
                           {tag.name}
+                        </button>
+                        <button
+                          className="tag-favorite-btn"
+                          onClick={async (e) => {
+                            e.stopPropagation()
+                            try {
+                              await toggleFavoriteTag(tag.id)
+                            } catch (error) {
+                              console.error('Error toggling favorite:', error)
+                            }
+                          }}
+                          title={tag.isFavorite ? "Quitar de favoritos" : "Marcar como favorita"}
+                        >
+                          {tag.isFavorite ? '⭐' : '☆'}
                         </button>
                         <button
                           className="tag-delete-btn"
