@@ -48,10 +48,22 @@ export const CardsProvider = ({ children }) => {
   // Delete a card
   const deleteCard = async (id) => {
     try {
-      await cardsService.deleteCard(id)
-      setCards(cards.filter(card => card.id !== id))
+      // Ensure id is a number if it's coming as a string
+      const cardId = typeof id === 'string' ? parseInt(id, 10) : id
+      await cardsService.deleteCard(cardId)
+      setCards(cards.filter(card => {
+        // Handle both string and number IDs
+        const currentCardId = typeof card.id === 'string' ? parseInt(card.id, 10) : card.id
+        return currentCardId !== cardId
+      }))
     } catch (err) {
       console.error('Error deleting card:', err)
+      // Show user-friendly error message
+      if (err.response?.data?.error) {
+        alert(err.response.data.error)
+      } else {
+        alert('Error al eliminar la tarea. Por favor, intenta de nuevo.')
+      }
       throw err
     }
   }

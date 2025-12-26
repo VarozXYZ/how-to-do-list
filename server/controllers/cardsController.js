@@ -94,10 +94,22 @@ const updateCard = (req, res) => {
 const deleteCard = (req, res) => {
   try {
     const { id } = req.params
+    const cardId = parseInt(id, 10)
+    
+    if (isNaN(cardId)) {
+      return res.status(400).json({ error: 'ID de tarea inválido.' })
+    }
+
     const db = getDB()
 
-    const cardIndex = db.cards.findIndex(c => c.id === parseInt(id) && c.userId === req.user.id)
+    const cardIndex = db.cards.findIndex(c => {
+      const cId = typeof c.id === 'string' ? parseInt(c.id, 10) : c.id
+      return cId === cardId && c.userId === req.user.id
+    })
+    
     if (cardIndex === -1) {
+      console.error(`Card not found: id=${cardId}, userId=${req.user.id}`)
+      console.error('Available cards:', db.cards.filter(c => c.userId === req.user.id).map(c => ({ id: c.id, userId: c.userId })))
       return res.status(404).json({ error: 'Tarea no encontrada.' })
     }
 

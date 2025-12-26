@@ -119,10 +119,10 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       if (isEditing) {
         const updatedData = {
           title: title.trim(),
-          description: description.trim(),
+          description: description ? description.trim() : '',
           tagId: selectedTagId,
           priority,
-          aiPrompt: aiPrompt.trim(),
+          aiPrompt: aiPrompt ? aiPrompt.trim() : '',
           dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null,
           dueTime: dueTime ? dueTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : null
         }
