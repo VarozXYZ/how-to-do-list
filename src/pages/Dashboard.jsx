@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Sidebar from '../components/layout/Sidebar'
 import CardItem from '../components/cards/CardItem'
 import CardDetail from '../components/cards/CardDetail'
+import ThemeToggle from '../components/common/ThemeToggle'
 import { useCards } from '../context/CardsContext'
 import { useTheme } from '../context/ThemeContext'
 import './Dashboard.css'
@@ -190,6 +191,7 @@ const Dashboard = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
+            <ThemeToggle />
             <button className="notification-btn">
               <span>🔔</span>
               <span className="notification-dot"></span>

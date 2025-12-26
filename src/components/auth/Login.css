@@ -1,6 +1,14 @@
 .login-background {
   min-height: 100vh;
   background: linear-gradient(135deg, #f0f7ff 0%, #e0eef8 50%, #d5e8f5 100%);
+  position: relative;
+}
+
+.auth-theme-toggle-wrapper {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
 }
 
 .login-card {

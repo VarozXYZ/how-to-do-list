@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Container, Card, Form, InputGroup, Button, OverlayTrigger, Tooltip, Alert } from 'react-bootstrap'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
+import ThemeToggle from '../common/ThemeToggle'
 import './Login.css'
 
 const LOGO_LIGHT = 'https://res.cloudinary.com/diycpogap/image/upload/v1766521088/logo-white_p2msnm.png'
@@ -58,6 +59,9 @@ const Login = () => {
 
   return (
     <div className="login-background">
+      <div className="auth-theme-toggle-wrapper">
+        <ThemeToggle />
+      </div>
       <Container className="d-flex justify-content-center align-items-center min-vh-100">
         <Card className="login-card">
           <Card.Body>
