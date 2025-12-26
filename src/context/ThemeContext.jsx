@@ -3,16 +3,60 @@ import { createContext, useState, useContext, useEffect } from 'react'
 const ThemeContext = createContext(null)
 
 export const ThemeProvider = ({ children }) => {
+  // Check if user has manually set a preference
+  const hasManualPreference = () => {
+    const savedPrefs = localStorage.getItem('userPreferences')
+    if (savedPrefs) {
+      const prefs = JSON.parse(savedPrefs)
+      return prefs.darkMode !== undefined
+    }
+    return false
+  }
+
   const [darkMode, setDarkMode] = useState(() => {
     // Check localStorage first
     const savedPrefs = localStorage.getItem('userPreferences')
     if (savedPrefs) {
       const prefs = JSON.parse(savedPrefs)
-      return prefs.darkMode ?? false
+      if (prefs.darkMode !== undefined) {
+        return prefs.darkMode
+      }
     }
-    // Check system preference
+    // Check system preference if no manual preference
     return window.matchMedia('(prefers-color-scheme: dark)').matches
   })
+
+  // Listen to system theme changes and update if no manual preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    
+    const handleChange = (e) => {
+      // Only update if user hasn't manually set a preference
+      const savedPrefs = localStorage.getItem('userPreferences')
+      const hasManualPref = savedPrefs && JSON.parse(savedPrefs).darkMode !== undefined
+      
+      if (!hasManualPref) {
+        setDarkMode(e.matches)
+      }
+    }
+
+    // Check initial state - only listen if no manual preference
+    const savedPrefs = localStorage.getItem('userPreferences')
+    const hasManualPref = savedPrefs && JSON.parse(savedPrefs).darkMode !== undefined
+    
+    if (!hasManualPref) {
+      // Modern browsers
+      if (mediaQuery.addEventListener) {
+        mediaQuery.addEventListener('change', handleChange)
+        return () => mediaQuery.removeEventListener('change', handleChange)
+      } 
+      // Fallback for older browsers
+      else if (mediaQuery.addListener) {
+        mediaQuery.addListener(handleChange)
+        return () => mediaQuery.removeListener(handleChange)
+      }
+    }
+  }, []) // Only set up listener once on mount
 
   // Apply dark mode class to body and update favicon
   useEffect(() => {
@@ -43,7 +87,7 @@ export const ThemeProvider = ({ children }) => {
     const newValue = typeof value === 'boolean' ? value : !darkMode
     setDarkMode(newValue)
     
-    // Update localStorage
+    // Update localStorage - mark as manual preference
     const savedPrefs = localStorage.getItem('userPreferences')
     const prefs = savedPrefs ? JSON.parse(savedPrefs) : {}
     prefs.darkMode = newValue
