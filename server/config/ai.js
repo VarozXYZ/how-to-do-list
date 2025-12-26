@@ -44,25 +44,37 @@ Cuando el usuario te proporcione información sobre una tarea (título, descripc
 
 Tu respuesta debe ser SOLO el texto de la descripción mejorada, sin explicaciones adicionales ni formato especial.`,
 
+  // Basic generation prompt - balanced: useful but concise for quick responses
+  basicGenerationBase: `Eres un asistente de productividad experto. Tu trabajo es generar una descripción útil y práctica para una tarea.
+
+IMPORTANTE - MODO BÁSICO (EQUILIBRADO):
+- Sé CONCISO pero COMPLETO - proporciona información útil sin ser excesivo
+- Incluye 4-7 pasos accionables claros y específicos
+- Proporciona detalles prácticos necesarios para completar la tarea
+- Incluye información relevante como tiempos, cantidades, o consideraciones importantes cuando sea apropiado
+- Responde siempre en español
+- Balance: más rápido que el modo avanzado, pero lo suficientemente detallado para ser útil
+
+Tu respuesta debe ser SOLO el texto de la descripción, sin explicaciones adicionales ni formato especial.`,
+
   questions: `Eres un asistente de productividad experto. Tu trabajo es generar preguntas relevantes para entender mejor una tarea y poder generar una descripción más precisa.
 
 IMPORTANTE:
-- Solo genera preguntas que sean realmente necesarias y de alta calidad
-- NO generes preguntas sobre información que ya está proporcionada en el contexto
-- NO fuerces un número específico de preguntas - genera solo las que sean útiles
-- Si el contexto ya es suficiente, puedes generar menos preguntas o incluso ninguna
-- Evita preguntas redundantes o que repitan información ya dada
+- Genera entre 2 y 5 preguntas útiles que ayuden a mejorar la descripción de la tarea
+- NO generes preguntas sobre información que ya está claramente proporcionada en el título o descripción
+- Si el usuario proporcionó contexto adicional, úsalo para evitar preguntas redundantes, pero aún así genera preguntas complementarias útiles
+- Las preguntas deben ayudar a obtener información adicional que mejore la calidad de la descripción final
 
 Basándote en el título, descripción y contexto proporcionado, genera preguntas que ayuden a:
-- Entender el contexto y objetivos de la tarea (solo si no está claro)
-- Identificar requisitos específicos (solo si faltan detalles importantes)
-- Conocer limitaciones o consideraciones importantes (solo si son relevantes)
-- Definir el alcance y prioridades (solo si es necesario)
+- Entender mejor el contexto y objetivos específicos de la tarea
+- Identificar requisitos, preferencias o detalles importantes
+- Conocer limitaciones, restricciones o consideraciones relevantes
+- Definir el alcance, prioridades o resultados esperados
 
 Responde SOLO con un array JSON de strings, cada string es una pregunta. Ejemplo:
-["¿Cuál es el objetivo principal de esta tarea?", "¿Hay alguna fecha límite o restricción de tiempo?"]
+["¿Cuál es el objetivo principal de esta tarea?", "¿Hay alguna fecha límite o restricción de tiempo?", "¿Qué resultado específico esperas obtener?"]
 
-Genera solo las preguntas necesarias (pueden ser 0, 1, 2, 3, 4 o 5), siempre en español.`,
+Genera entre 2 y 5 preguntas útiles, siempre en español. Si ya hay mucho contexto, genera al menos 2 preguntas complementarias.`,
 
   advancedGenerationBase: `Eres un asistente de productividad experto. Tu trabajo es GENERAR una descripción nueva y útil para una tarea.
 
@@ -257,13 +269,13 @@ ${description ? `Descripción actual: ${description}` : ''}
 ${userPrompt ? `Contexto adicional proporcionado por el usuario: ${userPrompt}` : ''}
 
 IMPORTANTE: 
-- Revisa cuidadosamente el contexto proporcionado antes de generar preguntas
-- NO generes preguntas sobre información que ya está en el título, descripción o contexto adicional
-- Solo genera preguntas que sean realmente necesarias para mejorar la descripción
-- Si el contexto ya es suficiente, genera menos preguntas o ninguna
-- Evita preguntas redundantes o que repitan información ya proporcionada
+- Genera entre 2 y 5 preguntas útiles que complementen la información proporcionada
+- NO generes preguntas sobre información que ya está claramente en el título o descripción
+- Si hay contexto adicional del usuario, úsalo para evitar redundancias, pero genera preguntas complementarias
+- Las preguntas deben ayudar a obtener detalles adicionales que mejoren la descripción final
+- Si ya hay mucho contexto, genera al menos 2 preguntas complementarias o de profundización
 
-Genera solo las preguntas necesarias (pueden ser 0, 1, 2, 3, 4 o 5) que ayuden a entender mejor esta tarea y poder generar una descripción más precisa.`
+Genera entre 2 y 5 preguntas útiles que ayuden a entender mejor esta tarea y poder generar una descripción más precisa.`
 
   const completion = await openai.chat.completions.create({
     model: 'deepseek-chat',
@@ -292,19 +304,42 @@ Genera solo las preguntas necesarias (pueden ser 0, 1, 2, 3, 4 o 5) que ayuden a
   }
 }
 
-// Generate basic content (title + description only)
-const generateBasicTaskContent = async (title, description, temperature = 0.8, personality = 'professional', username = null) => {
+// Generate basic content (title + description only) - SIMPLE and FAST
+const generateBasicTaskContent = async (title, description, temperature = 0.6, personality = 'professional', username = null) => {
   if (!openai) {
     throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
   }
 
-  const systemPrompt = getGenerationPrompt(personality, username)
+  // Use simpler prompt for basic mode
+  const basePrompt = SYSTEM_PROMPTS.basicGenerationBase
+  
+  let personalityInstructions = ''
+  
+  switch (personality) {
+    case 'friendly':
+      personalityInstructions = `
+TONO (Amigable): Tono cálido y motivador. Puedes usar emojis moderadamente.`
+      break
+      
+    case 'analytical':
+      personalityInstructions = `
+TONO (Analítico): Sé preciso y estructurado, pero mantén la brevedad.`
+      break
+      
+    case 'professional':
+    default:
+      personalityInstructions = `
+TONO (Profesional): Conciso, directo y enfocado.`
+      break
+  }
+  
+  const systemPrompt = basePrompt + personalityInstructions
 
   const userMessage = `
 Título de la tarea: ${title}
 ${description ? `Descripción actual: ${description}` : ''}
 
-Por favor, genera una descripción mejorada y útil para esta tarea basándote solo en el título y la descripción actual.`
+Genera una descripción útil y práctica para esta tarea. Incluye pasos claros y detalles relevantes, pero mantén un equilibrio entre concisión y utilidad.`
 
   const completion = await openai.chat.completions.create({
     model: 'deepseek-chat',

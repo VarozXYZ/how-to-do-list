@@ -10,7 +10,10 @@ router.use(auth)
 router.post('/generate', generate)
 
 // POST /api/ai/generate-basic - Generate basic AI content (title + description only)
-router.post('/generate-basic', generateBasic)
+router.post('/generate-basic', (req, res, next) => {
+  console.log('🟢 Route /generate-basic hit - Middleware')
+  next()
+}, generateBasic)
 
 // POST /api/ai/generate-advanced - Generate advanced AI content (with questions answered)
 router.post('/generate-advanced', generateAdvanced)
