@@ -10,7 +10,7 @@ import './CardDetail.css'
 
 registerLocale('es', es)
 
-const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
+const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = false }) => {
   const { tags, addTag, deleteTag, toggleFavoriteTag, getFavoriteTag } = useCards()
   const { darkMode } = useTheme()
   
@@ -60,6 +60,56 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       setDueTime(editCard.dueTime ? new Date(`2000-01-01T${editCard.dueTime}`) : null)
     }
   }, [show, editCard, tags, getFavoriteTag])
+
+  // Activate AI assistant when activateAi prop is true
+  useEffect(() => {
+    if (show && activateAi && editCard) {
+      // Generate AI prompt suggestions based on card content
+      const generateAiPrompt = () => {
+        const suggestions = []
+        
+        if (editCard.title) {
+          suggestions.push(`Mejora la descripción de "${editCard.title}"`)
+        }
+        
+        if (editCard.description) {
+          suggestions.push(`Amplía y mejora: ${editCard.description.substring(0, 50)}${editCard.description.length > 50 ? '...' : ''}`)
+        } else {
+          suggestions.push('Genera una descripción detallada y útil')
+        }
+        
+        // Add context-based suggestions
+        if (editCard.dueDate || editCard.dueTime) {
+          suggestions.push('Incluye pasos de acción concretos')
+        }
+        
+        // Return a smart default prompt
+        if (editCard.description) {
+          return `Mejora y amplía la descripción de esta tarea con pasos de acción concretos y útiles`
+        } else {
+          return `Genera una descripción detallada y útil para esta tarea con pasos de acción concretos`
+        }
+      }
+      
+      const suggestedPrompt = generateAiPrompt()
+      setAiPrompt(suggestedPrompt)
+      
+      // Scroll to AI section after a short delay to ensure modal is fully rendered
+      setTimeout(() => {
+        const aiSection = document.querySelector('.ai-assistant-box')
+        if (aiSection) {
+          aiSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+          // Focus on the AI input field
+          const aiInput = document.querySelector('.ai-input')
+          if (aiInput) {
+            aiInput.focus()
+            // Select the text so user can easily replace it
+            aiInput.select()
+          }
+        }
+      }, 300)
+    }
+  }, [show, activateAi, editCard])
 
   // Ensure selectedTagId is valid when tags change
   // Only update if the selected tag doesn't exist (don't override valid selections)
