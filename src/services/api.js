@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:3001/api'
+// Use relative URL in development (Vite proxy) or absolute in production
+const API_URL = import.meta.env.DEV ? '/api' : 'http://localhost:3001/api'
 
 const api = axios.create({
   baseURL: API_URL

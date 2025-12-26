@@ -35,7 +35,22 @@ const Login = () => {
       await login(email, password)
       navigate('/dashboard')
     } catch (err) {
-      setError(err.response?.data?.error || 'Error al iniciar sesión. Inténtalo de nuevo.')
+      console.error('Login error details:', err)
+      let errorMessage = 'Error al iniciar sesión. Inténtalo de nuevo.'
+      
+      if (err.code === 'ERR_NETWORK' || err.message === 'Network Error') {
+        errorMessage = 'No se puede conectar al servidor. Asegúrate de que el servidor esté ejecutándose en http://localhost:3001'
+      } else if (err.response?.data?.error) {
+        errorMessage = err.response.data.error
+        // Show details in development mode
+        if (err.response.data.details && import.meta.env.DEV) {
+          console.error('Server error details:', err.response.data.details)
+        }
+      } else if (err.message) {
+        errorMessage = err.message
+      }
+      
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

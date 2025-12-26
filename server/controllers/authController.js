@@ -70,16 +70,28 @@ const login = async (req, res) => {
 
     const db = getDB()
 
-    // Find user
-    const user = db.users.find(u => u.email === email)
+    // Find user (case-insensitive email comparison)
+    const user = db.users.find(u => u.email && u.email.toLowerCase() === email.toLowerCase())
     if (!user) {
       return res.status(401).json({ error: 'Credenciales inválidas.' })
+    }
+
+    // Validate user has required properties
+    if (!user.password) {
+      console.error('User found but missing password field:', user)
+      return res.status(500).json({ error: 'Error en la base de datos del usuario.' })
     }
 
     // Check password
     const validPassword = await bcrypt.compare(password, user.password)
     if (!validPassword) {
       return res.status(401).json({ error: 'Credenciales inválidas.' })
+    }
+
+    // Validate JWT_SECRET
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is not set!')
+      return res.status(500).json({ error: 'Error de configuración del servidor.' })
     }
 
     // Generate token
@@ -101,7 +113,14 @@ const login = async (req, res) => {
     })
   } catch (error) {
     console.error('Login error:', error)
-    res.status(500).json({ error: 'Error al iniciar sesión.' })
+    console.error('Error stack:', error.stack)
+    const errorMessage = process.env.NODE_ENV === 'development' 
+      ? `Error al iniciar sesión: ${error.message}` 
+      : 'Error al iniciar sesión.'
+    res.status(500).json({ 
+      error: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    })
   }
 }
 

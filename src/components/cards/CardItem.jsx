@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useCards } from '../../context/CardsContext'
 import { useTheme } from '../../context/ThemeContext'
 import './CardItem.css'
@@ -6,6 +7,7 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
   const { id, title, description, tagId, completed, dueDate, dueTime } = card
   const { getTagById } = useCards()
   const { darkMode } = useTheme()
+  const [isAnimating, setIsAnimating] = useState(false)
 
   const tag = getTagById(tagId)
 
@@ -18,9 +20,27 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
     }
   }
 
+  const handleDelete = (e) => {
+    e.stopPropagation()
+    if (isAnimating) return
+    setIsAnimating(true)
+    setTimeout(() => {
+      onDelete && onDelete(id)
+    }, 400) // Match animation duration
+  }
+
+  const handleToggleComplete = () => {
+    if (isAnimating) return
+    setIsAnimating(true)
+    setTimeout(() => {
+      onToggleComplete && onToggleComplete(id)
+      setIsAnimating(false)
+    }, 400) // Match animation duration
+  }
+
   return (
     <div 
-      className="card-item"
+      className={`card-item ${isAnimating ? 'blur-out' : ''}`}
       style={getCardStyle()}
     >
       {/* Header */}
@@ -37,10 +57,7 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
         </span>
         <button 
           className="card-delete-btn"
-          onClick={(e) => {
-            e.stopPropagation()
-            onDelete && onDelete(id)
-          }}
+          onClick={handleDelete}
           title="Eliminar tarea"
           style={{
             background: `${tag?.textColor}${darkMode ? '30' : '15'}`,
@@ -91,7 +108,7 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
           <input
             type="checkbox"
             checked={completed}
-            onChange={() => onToggleComplete && onToggleComplete(id)}
+            onChange={handleToggleComplete}
           />
           <span className="checkmark"></span>
         </label>

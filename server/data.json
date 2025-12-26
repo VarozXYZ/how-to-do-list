@@ -11,52 +11,16 @@
   ],
   "cards": [
     {
-      "id": 6,
+      "id": 8,
       "userId": 1,
-      "title": "4",
+      "title": "Menu Lunes",
       "description": "",
-      "tagId": "work",
-      "completed": false,
+      "tagId": "novia-1766514918918",
+      "completed": true,
       "aiPrompt": "",
-      "dueDate": "2025-12-23",
-      "dueTime": "21:58",
-      "createdAt": "2025-12-23T18:58:18.532Z"
-    },
-    {
-      "id": 5,
-      "userId": 1,
-      "title": "3",
-      "description": "",
-      "tagId": "design",
-      "completed": false,
-      "aiPrompt": "",
-      "dueDate": "2025-12-23",
-      "dueTime": "21:57",
-      "createdAt": "2025-12-23T18:58:07.382Z"
-    },
-    {
-      "id": 4,
-      "userId": 1,
-      "title": "Test2",
-      "description": "",
-      "tagId": "personal",
-      "completed": false,
-      "aiPrompt": "",
-      "dueDate": "2025-12-23",
-      "dueTime": "21:57",
-      "createdAt": "2025-12-23T18:57:57.500Z"
-    },
-    {
-      "id": 3,
-      "userId": 1,
-      "title": "Test1",
-      "description": "",
-      "tagId": "marketing",
-      "completed": false,
-      "aiPrompt": "",
-      "dueDate": "2025-12-23",
-      "dueTime": "21:57",
-      "createdAt": "2025-12-23T18:57:47.953Z"
+      "dueDate": "2025-12-26",
+      "dueTime": "18:15",
+      "createdAt": "2025-12-26T15:15:55.893Z"
     },
     {
       "id": 2,
@@ -64,23 +28,11 @@
       "title": "Dar bicitos",
       "description": "En la frente",
       "tagId": "novia-1766514918918",
-      "completed": true,
+      "completed": false,
       "aiPrompt": "",
       "dueDate": "2025-12-23",
       "dueTime": "19:35",
       "createdAt": "2025-12-23T18:35:29.069Z"
-    },
-    {
-      "id": 1,
-      "userId": 1,
-      "title": "test",
-      "description": "",
-      "tagId": "crypto-1766509597521",
-      "completed": false,
-      "aiPrompt": "hazme una receta de pastel de manzana",
-      "dueDate": "2025-12-23",
-      "dueTime": "20:06",
-      "createdAt": "2025-12-23T17:06:38.547Z"
     }
   ],
   "tags": [
@@ -144,5 +96,5 @@
     }
   ],
   "nextUserId": 2,
-  "nextCardId": 8
+  "nextCardId": 9
 }

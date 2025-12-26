@@ -168,3 +168,17 @@
 .checkbox-wrapper input:checked ~ .checkmark::after {
   opacity: 1;
 }
+
+.blur-out {
+  animation: blur-out 0.4s linear both;
+}
+
+@keyframes blur-out {
+  0% {
+    filter: blur(.01px);
+  }
+  100% {
+    filter: blur(12px);
+    opacity: 0;
+  }
+}
