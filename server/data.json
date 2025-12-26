@@ -7,17 +7,30 @@
       "password": "$2a$10$q0yiBKevdpdbSxyKdh37feB66IBb1noKwl9QraIhLYetfFakfYoey",
       "bio": "",
       "createdAt": "2025-12-23T16:59:24.849Z",
-      "aiUsageCount": 6,
+      "aiUsageCount": 9,
       "favoriteTagId": "design"
     }
   ],
   "cards": [
     {
+      "id": 13,
+      "userId": 1,
+      "title": "Estudiar trigonometría",
+      "description": "Comienza por repasar los conceptos básicos sobre triángulos, enfocándote en las razones trigonométricas (seno, coseno, tangente) y el teorema de Pitágoras. Realiza ejercicios prácticos de identificación de lados y ángulos en triángulos rectángulos. Dedica tiempo a resolver problemas de aplicación directa, como calcular lados desconocidos o ángulos usando las funciones. Prioriza la práctica con ejercicios tipo examen para familiarizarte con el formato y gestionar el tiempo. Como el examen es mañana, concéntrate en los temas centrales, haz un resumen de fórmulas clave y descansa bien para llegar con la mente fresca.",
+      "tagId": "design",
+      "priority": "baja",
+      "completed": false,
+      "aiPrompt": "",
+      "dueDate": null,
+      "dueTime": null,
+      "createdAt": "2025-12-26T23:01:44.821Z"
+    },
+    {
       "id": 12,
       "userId": 1,
-      "title": "2",
-      "description": "",
-      "tagId": "crypto-1766509597521",
+      "title": "Tarta de manzana",
+      "description": "Receta tradicional para 5 personas, ideal para principiantes. Para una versión baja en azúcar, sustituye el azúcar refinada por endulzantes naturales como canela en polvo, un chorrito de miel o un puré de dátiles. Primero, prepara una masa quebrada sencilla con harina, mantequilla fría y un poco de agua. Estírala y colócala en un molde. Luego, pela y corta en láminas finas unas 4-5 manzanas, mézclalas con la canela y el endulzante elegido. Dispón las manzanas sobre la masa en forma de espiral. Hornea a 180°C (350°F) durante aproximadamente 40-45 minutos, hasta que la masa esté dorada y las manzanas tiernas. Deja enfriar antes de servir.",
+      "tagId": "personal",
       "priority": "baja",
       "completed": false,
       "aiPrompt": "",
@@ -173,7 +186,7 @@
     }
   ],
   "nextUserId": 2,
-  "nextCardId": 13,
+  "nextCardId": 14,
   "aiLogs": [
     {
       "id": 1766770097835,
@@ -357,6 +370,144 @@
       },
       "output": "Preparar una tarta de manzana casera, apta para 5 personas. La receta debe ser fácil de seguir y no incluir azúcar añadido entre sus ingredientes. Es importante completar esta tarea hoy. Se recomienda buscar o utilizar una receta que emplee endulzantes naturales alternativos, como canela, puré de manzana sin azúcar o edulcorantes aptos para hornear, para mantener el sabor dulce sin utilizar azúcar refinada. Pasos sugeridos: reunir los ingredientes (manzanas, masa, canela, etc.), preparar el relleno de manzana condimentado, armar la tarta y hornear hasta que esté dorada.",
       "timestamp": "2025-12-26T22:47:40.152Z"
+    },
+    {
+      "id": 1766789598153,
+      "userId": 1,
+      "cardId": 12,
+      "type": "moderation",
+      "input": {
+        "title": "Hacer tarta de manzana",
+        "description": "",
+        "userPrompt": ""
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-26T22:53:18.153Z"
+    },
+    {
+      "id": 1766789605126,
+      "userId": 1,
+      "cardId": 12,
+      "type": "generation",
+      "mode": "advanced",
+      "input": {
+        "title": "Hacer tarta de manzana",
+        "description": "",
+        "userPrompt": "",
+        "answers": {
+          "0": "4",
+          "2": "sin azucar refinada",
+          "3": "esta tarde",
+          "4": "un cumpleaños"
+        }
+      },
+      "output": "Receta para 4 personas, ideal para celebrar un cumpleaños esta tarde. Para endulzar sin azúcar refinada, puedes utilizar dátiles triturados, puré de manzana concentrado o un chorrito de miel. Comienza preparando una masa quebrada y déjala enfriar. Pela y corta finamente 4-5 manzanas, mézclalas con canela y el endulzante elegido. Extiende la masa en un molde, coloca el relleno de manzana y decora con tiras de masa en forma de rejilla. Hornea a 180°C durante aproximadamente 40 minutos, hasta que esté dorada. Deja enfriar antes de servir.",
+      "timestamp": "2025-12-26T22:53:25.125Z"
+    },
+    {
+      "id": 1766789873584,
+      "userId": 1,
+      "cardId": 12,
+      "type": "moderation",
+      "input": {
+        "title": "Tarta de manzana",
+        "description": "",
+        "userPrompt": ""
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-26T22:57:53.584Z"
+    },
+    {
+      "id": 1766789880893,
+      "userId": 1,
+      "cardId": 12,
+      "type": "generation",
+      "mode": "advanced",
+      "input": {
+        "title": "Tarta de manzana",
+        "description": "",
+        "userPrompt": "",
+        "answers": {
+          "0": "5",
+          "1": "Tradicional",
+          "2": "Principiante",
+          "4": "Baja en azucar o sin azucar refinada"
+        }
+      },
+      "output": "Receta tradicional para 5 personas, ideal para principiantes. Para una versión baja en azúcar, sustituye el azúcar refinada por endulzantes naturales como canela en polvo, un chorrito de miel o un puré de dátiles. Primero, prepara una masa quebrada sencilla con harina, mantequilla fría y un poco de agua. Estírala y colócala en un molde. Luego, pela y corta en láminas finas unas 4-5 manzanas, mézclalas con la canela y el endulzante elegido. Dispón las manzanas sobre la masa en forma de espiral. Hornea a 180°C (350°F) durante aproximadamente 40-45 minutos, hasta que la masa esté dorada y las manzanas tiernas. Deja enfriar antes de servir.",
+      "timestamp": "2025-12-26T22:58:00.892Z"
+    },
+    {
+      "id": 1766789931787,
+      "userId": 1,
+      "cardId": null,
+      "type": "moderation",
+      "input": {
+        "title": "Matar amigo",
+        "description": "",
+        "userPrompt": ""
+      },
+      "output": {
+        "approved": false,
+        "reason": "Contenido que promueve o describe violencia extrema."
+      },
+      "timestamp": "2025-12-26T22:58:51.787Z"
+    },
+    {
+      "id": 1766789943209,
+      "userId": 1,
+      "cardId": null,
+      "type": "moderation",
+      "input": {
+        "title": "Insultar a amigo",
+        "description": "",
+        "userPrompt": ""
+      },
+      "output": {
+        "approved": false,
+        "reason": "El contenido promueve el acoso o ataque personal."
+      },
+      "timestamp": "2025-12-26T22:59:03.209Z"
+    },
+    {
+      "id": 1766790072026,
+      "userId": 1,
+      "cardId": null,
+      "type": "moderation",
+      "input": {
+        "title": "Estudiar trigonometría",
+        "description": "",
+        "userPrompt": ""
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-26T23:01:12.026Z"
+    },
+    {
+      "id": 1766790078027,
+      "userId": 1,
+      "cardId": null,
+      "type": "generation",
+      "mode": "advanced",
+      "input": {
+        "title": "Estudiar trigonometría",
+        "description": "",
+        "userPrompt": "",
+        "answers": {
+          "0": "principiante",
+          "1": "prepararme un examen",
+          "2": "triangulos",
+          "3": "Mañana es el examen",
+          "4": "Ejercicios prácticos"
+        }
+      },
+      "output": "Comienza por repasar los conceptos básicos sobre triángulos, enfocándote en las razones trigonométricas (seno, coseno, tangente) y el teorema de Pitágoras. Realiza ejercicios prácticos de identificación de lados y ángulos en triángulos rectángulos. Dedica tiempo a resolver problemas de aplicación directa, como calcular lados desconocidos o ángulos usando las funciones. Prioriza la práctica con ejercicios tipo examen para familiarizarte con el formato y gestionar el tiempo. Como el examen es mañana, concéntrate en los temas centrales, haz un resumen de fórmulas clave y descansa bien para llegar con la mente fresca.",
+      "timestamp": "2025-12-26T23:01:18.027Z"
     }
   ]
 }

@@ -662,7 +662,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         setAiQuestions([])
       }}
       centered 
-      size="md"
+      size="lg"
       className="questions-modal"
     >
       <div className="modal-header-custom">

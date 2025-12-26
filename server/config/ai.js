@@ -56,22 +56,29 @@ Responde SOLO con un array JSON de strings, cada string es una pregunta. Ejemplo
 
 Genera entre 2 y 5 preguntas, siempre en español.`,
 
-  advancedGeneration: `Eres un asistente de productividad experto. Tu trabajo es generar una descripción detallada y útil para una tarea basándote en:
+  advancedGeneration: `Eres un asistente de productividad experto. Tu trabajo es GENERAR una descripción nueva y útil para una tarea.
 
-1. El título de la tarea
-2. La descripción actual (si existe)
-3. Instrucciones adicionales del usuario (si existen)
-4. Las respuestas del usuario a preguntas de contexto
+REGLAS CRÍTICAS:
+- NO repitas el título de la tarea en tu respuesta
+- NO repitas las instrucciones o el contexto proporcionado literalmente
+- NO uses frases como "Preparar una tarta..." si eso ya está en el título
+- GENERA contenido nuevo que explique CÓMO realizar la tarea, no QUÉ es la tarea
+- La descripción debe ser útil para completar la tarea, con pasos accionables
+
+Ejemplo:
+Si el título es "Preparar una tarta de manzana" y el usuario dice "apta para 5 personas, sin azúcar", 
+NO escribas: "Preparar una tarta de manzana casera, apta para 5 personas, sin azúcar..."
+ESCRIBE: "Receta para 5 personas. Usar endulzantes naturales como canela o puré de manzana. Pasos: preparar masa, cortar manzanas, condimentar, armar y hornear a 180°C por 45 minutos."
 
 Debes:
-1. Generar una descripción clara, concisa y útil
-2. Incorporar toda la información proporcionada
-3. Incluir pasos accionables si es apropiado
+1. Generar una descripción clara, concisa y útil que explique cómo realizar la tarea
+2. Incorporar la información proporcionada de forma natural, sin repetirla literalmente
+3. Incluir pasos accionables concretos
 4. Mantener un tono profesional pero amigable
 5. Responder siempre en español
 6. No exceder 300 palabras
 
-Tu respuesta debe ser SOLO el texto de la descripción mejorada, sin explicaciones adicionales ni formato especial.`
+Tu respuesta debe ser ÚNICAMENTE el texto de la descripción generada, sin explicaciones adicionales, sin formato especial, sin repetir el título ni las instrucciones.`
 }
 
 // AI generation function
@@ -93,8 +100,7 @@ Por favor, genera una descripción mejorada y útil para esta tarea.`
       { role: 'system', content: SYSTEM_PROMPTS.generation },
       { role: 'user', content: userMessage }
     ],
-    temperature: 0.7,
-    max_tokens: 500
+    temperature: 0.7
   })
 
   return completion.choices[0].message.content
@@ -191,8 +197,7 @@ Por favor, genera una descripción mejorada y útil para esta tarea basándote s
       { role: 'system', content: SYSTEM_PROMPTS.generation },
       { role: 'user', content: userMessage }
     ],
-    temperature: 0.7,
-    max_tokens: 500
+    temperature: 0.7
   })
 
   return completion.choices[0].message.content
@@ -208,13 +213,14 @@ const generateAdvancedTaskContent = async (title, description, userPrompt, answe
     .map(([index, answer]) => `Respuesta ${parseInt(index) + 1}: ${answer}`)
     .join('\n')
 
-  const userMessage = `
-Título de la tarea: ${title}
-${description ? `Descripción actual: ${description}` : ''}
-${userPrompt ? `Instrucciones adicionales: ${userPrompt}` : ''}
-${Object.keys(answers).length > 0 ? `\nRespuestas del usuario:\n${answersText}` : ''}
+  const userMessage = `Basándote en la siguiente información, GENERA una descripción nueva y útil para esta tarea:
 
-Por favor, genera una descripción mejorada y útil para esta tarea incorporando toda la información proporcionada.`
+Título: ${title}
+${description ? `Descripción actual: ${description}` : ''}
+${userPrompt ? `Contexto adicional: ${userPrompt}` : ''}
+${Object.keys(answers).length > 0 ? `\nInformación adicional del usuario:\n${answersText}` : ''}
+
+IMPORTANTE: Genera una descripción nueva que explique CÓMO realizar esta tarea. NO repitas el título ni las instrucciones. Crea contenido útil y accionable.`
 
   const completion = await openai.chat.completions.create({
     model: 'deepseek-chat',
@@ -222,8 +228,7 @@ Por favor, genera una descripción mejorada y útil para esta tarea incorporando
       { role: 'system', content: SYSTEM_PROMPTS.advancedGeneration },
       { role: 'user', content: userMessage }
     ],
-    temperature: 0.7,
-    max_tokens: 500
+    temperature: 0.7
   })
 
   return completion.choices[0].message.content
