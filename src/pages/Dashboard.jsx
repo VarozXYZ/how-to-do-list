@@ -27,8 +27,32 @@ const Dashboard = () => {
     { value: 'all', label: 'Todas', color: null, bgColor: null },
     { value: 'alta', label: 'Alta', color: '#dc2626', bgColor: '#fef2f2' },
     { value: 'media', label: 'Media', color: '#d97706', bgColor: '#fffbeb' },
-    { value: 'baja', label: 'Baja', color: '#16a34a', bgColor: '#f0fdf4' }
+    { value: 'baja', label: 'Baja', color: '#16a34a', bgColor: '#f0fdf4' },
+    { value: 'expirado', label: 'Expirado', color: '#dc2626', bgColor: '#fef2f2' }
   ]
+
+  // Helper function to check if a card is expired
+  const isCardExpired = (card) => {
+    if (!card.dueDate && !card.dueTime) return false
+    if (card.completed) return false
+    
+    const now = new Date()
+    let cardDateTime = null
+    
+    if (card.dueDate && card.dueTime) {
+      const dateStr = card.dueDate.split('T')[0]
+      cardDateTime = new Date(`${dateStr}T${card.dueTime}`)
+    } else if (card.dueDate) {
+      cardDateTime = new Date(card.dueDate)
+      cardDateTime.setHours(23, 59, 59, 999)
+    } else if (card.dueTime) {
+      const today = new Date()
+      const [hours, minutes] = card.dueTime.split(':')
+      cardDateTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), parseInt(hours), parseInt(minutes))
+    }
+    
+    return cardDateTime && cardDateTime < now
+  }
 
   // Close menus when clicking outside
   useEffect(() => {
@@ -89,7 +113,11 @@ const Dashboard = () => {
         (tag?.name || '').toLowerCase().includes(query)
       )
       const matchesTag = filterTagId === 'all' || card.tagId === filterTagId
-      const matchesPriority = filterPriority === 'all' || card.priority === filterPriority
+      const matchesPriority = filterPriority === 'all' 
+        ? true 
+        : filterPriority === 'expirado' 
+          ? isCardExpired(card)
+          : card.priority === filterPriority
       return matchesSearch && matchesTag && matchesPriority
     })
     .sort((a, b) => {
@@ -217,7 +245,7 @@ const Dashboard = () => {
                     setShowSortMenu(false)
                   }}
                   style={selectedPriority?.color ? (darkMode ? {
-                    backgroundColor: 'var(--bg-tertiary)',
+                    backgroundColor: selectedPriority.value === 'expirado' ? 'rgba(239, 68, 68, 0.15)' : 'var(--bg-tertiary)',
                     borderColor: selectedPriority.color + '40',
                     color: selectedPriority.color
                   } : {
@@ -226,7 +254,7 @@ const Dashboard = () => {
                     color: selectedPriority.color
                   }) : {}}
                 >
-                  <span>⚡</span> {selectedPriority?.value !== 'all' ? selectedPriority.label : 'Prioridad'}
+                  <span>⚡</span> {selectedPriority?.value !== 'all' ? (selectedPriority.value === 'expirado' ? '🕐 ' : '') + selectedPriority.label : 'Prioridad'}
                 </button>
                 {showPriorityMenu && (
                   <div className="action-dropdown">
@@ -234,7 +262,8 @@ const Dashboard = () => {
                       const priorityStyle = opt.color ? (darkMode ? {
                         backgroundColor: opt.value === 'alta' ? 'rgba(239, 68, 68, 0.15)' :
                                          opt.value === 'media' ? 'rgba(249, 115, 22, 0.15)' :
-                                         'rgba(34, 197, 94, 0.15)',
+                                         opt.value === 'baja' ? 'rgba(34, 197, 94, 0.15)' :
+                                         'rgba(239, 68, 68, 0.15)', // expirado
                         color: opt.color
                       } : {
                         backgroundColor: opt.bgColor,
@@ -250,7 +279,7 @@ const Dashboard = () => {
                             setShowPriorityMenu(false)
                           }}
                         >
-                          {opt.label}
+                          {opt.value === 'expirado' ? '🕐 ' : ''}{opt.label}
                         </button>
                       )
                     })}
