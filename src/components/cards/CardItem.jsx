@@ -83,10 +83,17 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
     }, 400) // Match animation duration
   }
 
+  const handleCardClick = () => {
+    if (!isAnimating && onEdit) {
+      onEdit(card)
+    }
+  }
+
   return (
     <div 
       className={`card-item ${isAnimating ? 'blur-out' : ''}`}
-      style={getCardStyle()}
+      style={{ ...getCardStyle(), cursor: 'pointer' }}
+      onClick={handleCardClick}
     >
       {/* Header */}
       <div className="card-header">
@@ -140,11 +147,7 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
       </div>
 
       {/* Content */}
-      <div 
-        className="card-content"
-        onClick={() => onEdit && onEdit(card)}
-        style={{ cursor: 'pointer' }}
-      >
+      <div className="card-content">
         <h4 className="card-title">{title}</h4>
         <p className="card-description">{description}</p>
         
