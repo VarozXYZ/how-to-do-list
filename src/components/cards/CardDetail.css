@@ -799,7 +799,8 @@
   border-radius: 50%;
   border: 2px solid;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* Don't set background-color here - let inline styles handle it */
 }
 
 .color-preset-btn:hover {
@@ -1139,6 +1140,13 @@
 
 .dark-mode .new-tag-input::placeholder {
   color: var(--text-muted);
+}
+
+.dark-mode .color-preset-btn {
+  /* Don't override inline background-color - let inline styles take precedence */
+  background-color: unset !important;
+  /* Make border more visible in dark mode */
+  border-width: 2.5px;
 }
 
 .dark-mode .color-preset-btn.selected {
