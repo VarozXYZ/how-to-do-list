@@ -11,12 +11,22 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false)
   const [editingCard, setEditingCard] = useState(null)
   const [filterTagId, setFilterTagId] = useState('all')
+  const [filterPriority, setFilterPriority] = useState('all')
   const [sortBy, setSortBy] = useState('newest')
   const [showFilterMenu, setShowFilterMenu] = useState(false)
+  const [showPriorityMenu, setShowPriorityMenu] = useState(false)
   const [showSortMenu, setShowSortMenu] = useState(false)
   
   const filterRef = useRef(null)
+  const priorityRef = useRef(null)
   const sortRef = useRef(null)
+  
+  const priorityOptions = [
+    { value: 'all', label: 'Todas', color: null, bgColor: null },
+    { value: 'alta', label: 'Alta', color: '#dc2626', bgColor: '#fef2f2' },
+    { value: 'media', label: 'Media', color: '#d97706', bgColor: '#fffbeb' },
+    { value: 'baja', label: 'Baja', color: '#16a34a', bgColor: '#f0fdf4' }
+  ]
 
   // Close menus when clicking outside
   useEffect(() => {
@@ -24,23 +34,27 @@ const Dashboard = () => {
       if (filterRef.current && !filterRef.current.contains(event.target)) {
         setShowFilterMenu(false)
       }
+      if (priorityRef.current && !priorityRef.current.contains(event.target)) {
+        setShowPriorityMenu(false)
+      }
       if (sortRef.current && !sortRef.current.contains(event.target)) {
         setShowSortMenu(false)
       }
     }
 
-    if (showFilterMenu || showSortMenu) {
+    if (showFilterMenu || showPriorityMenu || showSortMenu) {
       document.addEventListener('mousedown', handleClickOutside)
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [showFilterMenu, showSortMenu])
+  }, [showFilterMenu, showPriorityMenu, showSortMenu])
 
   const sortOptions = [
     { value: 'newest', label: 'Más recientes' },
     { value: 'oldest', label: 'Más antiguos' },
+    { value: 'priority', label: 'Por prioridad' },
     { value: 'a-z', label: 'A-Z' },
     { value: 'z-a', label: 'Z-A' }
   ]
@@ -59,6 +73,9 @@ const Dashboard = () => {
     setEditingCard(null)
   }
 
+  // Priority order for sorting (alta first)
+  const priorityOrder = { alta: 0, media: 1, baja: 2 }
+
   // Filter and sort cards
   const filteredCards = activeCards
     .filter(card => {
@@ -70,7 +87,8 @@ const Dashboard = () => {
         (tag?.name || '').toLowerCase().includes(query)
       )
       const matchesTag = filterTagId === 'all' || card.tagId === filterTagId
-      return matchesSearch && matchesTag
+      const matchesPriority = filterPriority === 'all' || card.priority === filterPriority
+      return matchesSearch && matchesTag && matchesPriority
     })
     .sort((a, b) => {
       switch (sortBy) {
@@ -78,6 +96,8 @@ const Dashboard = () => {
           return a.id - b.id
         case 'newest':
           return b.id - a.id
+        case 'priority':
+          return (priorityOrder[a.priority] || 1) - (priorityOrder[b.priority] || 1)
         case 'a-z':
           return a.title.localeCompare(b.title)
         case 'z-a':
@@ -88,6 +108,7 @@ const Dashboard = () => {
     })
 
   const selectedFilterTag = filterTagId !== 'all' ? getTagById(filterTagId) : null
+  const selectedPriority = priorityOptions.find(p => p.value === filterPriority)
 
   return (
     <div className="dashboard-wrapper">
@@ -132,6 +153,7 @@ const Dashboard = () => {
                   className={`action-btn ${filterTagId !== 'all' ? 'active' : ''}`}
                   onClick={() => {
                     setShowFilterMenu(!showFilterMenu)
+                    setShowPriorityMenu(false)
                     setShowSortMenu(false)
                   }}
                   style={selectedFilterTag ? {
@@ -140,7 +162,7 @@ const Dashboard = () => {
                     color: selectedFilterTag.textColor
                   } : {}}
                 >
-                  <span>☰</span> {selectedFilterTag ? selectedFilterTag.name : 'Filtrar'}
+                  <span>🏷️</span> {selectedFilterTag ? selectedFilterTag.name : 'Etiqueta'}
                 </button>
                 {showFilterMenu && (
                   <div className="action-dropdown">
@@ -173,6 +195,45 @@ const Dashboard = () => {
                 )}
               </div>
 
+              {/* Priority Filter Button */}
+              <div className="action-wrapper" ref={priorityRef}>
+                <button 
+                  className={`action-btn ${filterPriority !== 'all' ? 'active' : ''}`}
+                  onClick={() => {
+                    setShowPriorityMenu(!showPriorityMenu)
+                    setShowFilterMenu(false)
+                    setShowSortMenu(false)
+                  }}
+                  style={selectedPriority?.color ? {
+                    backgroundColor: selectedPriority.bgColor,
+                    borderColor: selectedPriority.color,
+                    color: selectedPriority.color
+                  } : {}}
+                >
+                  <span>⚡</span> {selectedPriority?.value !== 'all' ? selectedPriority.label : 'Prioridad'}
+                </button>
+                {showPriorityMenu && (
+                  <div className="action-dropdown">
+                    {priorityOptions.map(opt => (
+                      <button
+                        key={opt.value}
+                        className={`dropdown-option ${filterPriority === opt.value ? 'selected' : ''}`}
+                        style={opt.color ? {
+                          backgroundColor: opt.bgColor,
+                          color: opt.color
+                        } : {}}
+                        onClick={() => {
+                          setFilterPriority(opt.value)
+                          setShowPriorityMenu(false)
+                        }}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               {/* Sort Button */}
               <div className="action-wrapper" ref={sortRef}>
                 <button 
@@ -180,9 +241,10 @@ const Dashboard = () => {
                   onClick={() => {
                     setShowSortMenu(!showSortMenu)
                     setShowFilterMenu(false)
+                    setShowPriorityMenu(false)
                   }}
                 >
-                  <span>↕</span> Ordenar
+                  <span>↕️</span> Ordenar
                 </button>
                 {showSortMenu && (
                   <div className="action-dropdown">

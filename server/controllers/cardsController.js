@@ -22,7 +22,7 @@ const getCards = (req, res) => {
 // Create new card
 const createCard = (req, res) => {
   try {
-    const { title, description, tagId, aiPrompt, dueDate, dueTime } = req.body
+    const { title, description, tagId, aiPrompt, dueDate, dueTime, priority } = req.body
 
     if (!title) {
       return res.status(400).json({ error: 'El título es obligatorio.' })
@@ -36,6 +36,7 @@ const createCard = (req, res) => {
       title,
       description: description || '',
       tagId: tagId || 'marketing',
+      priority: priority || 'media', // alta, media, baja
       completed: false,
       aiPrompt: aiPrompt || '',
       dueDate: dueDate || null,
@@ -59,7 +60,7 @@ const createCard = (req, res) => {
 const updateCard = (req, res) => {
   try {
     const { id } = req.params
-    const { title, description, tagId, completed, aiPrompt, dueDate, dueTime } = req.body
+    const { title, description, tagId, completed, aiPrompt, dueDate, dueTime, priority } = req.body
 
     const db = getDB()
     const cardIndex = db.cards.findIndex(c => c.id === parseInt(id) && c.userId === req.user.id)
@@ -76,6 +77,7 @@ const updateCard = (req, res) => {
     if (aiPrompt !== undefined) db.cards[cardIndex].aiPrompt = aiPrompt
     if (dueDate !== undefined) db.cards[cardIndex].dueDate = dueDate
     if (dueTime !== undefined) db.cards[cardIndex].dueTime = dueTime
+    if (priority !== undefined) db.cards[cardIndex].priority = priority
 
     saveDB(db)
 

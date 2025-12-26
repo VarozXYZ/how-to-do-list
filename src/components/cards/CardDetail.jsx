@@ -15,6 +15,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const [aiPrompt, setAiPrompt] = useState('')
   const [description, setDescription] = useState('')
   const [selectedTagId, setSelectedTagId] = useState(tags[0]?.id || '')
+  const [priority, setPriority] = useState('media')
   const [dueDate, setDueDate] = useState(null)
   const [dueTime, setDueTime] = useState(null)
   const [showTagPicker, setShowTagPicker] = useState(false)
@@ -22,6 +23,12 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const [newTagName, setNewTagName] = useState('')
   const [newTagColor, setNewTagColor] = useState('#eff6ff')
   const [saving, setSaving] = useState(false)
+  
+  const priorityOptions = [
+    { value: 'alta', label: 'Alta', color: '#dc2626', bgColor: '#fef2f2' },
+    { value: 'media', label: 'Media', color: '#d97706', bgColor: '#fffbeb' },
+    { value: 'baja', label: 'Baja', color: '#16a34a', bgColor: '#f0fdf4' }
+  ]
   
   const tagPickerRef = useRef(null)
   const isEditing = !!editCard
@@ -39,6 +46,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       setTitle(editCard.title || '')
       setDescription(editCard.description || '')
       setSelectedTagId(editCard.tagId || tags[0]?.id || '')
+      setPriority(editCard.priority || 'media')
       setAiPrompt(editCard.aiPrompt || '')
       setDueDate(editCard.dueDate ? new Date(editCard.dueDate) : null)
       setDueTime(editCard.dueTime ? new Date(`2000-01-01T${editCard.dueTime}`) : null)
@@ -79,6 +87,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     setAiPrompt('')
     setDescription('')
     setSelectedTagId(tags[0]?.id || '')
+    setPriority('media')
     setDueDate(null)
     setDueTime(null)
     setShowTagPicker(false)
@@ -102,6 +111,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
           title: title.trim(),
           description: description.trim(),
           tagId: selectedTagId,
+          priority,
           aiPrompt: aiPrompt.trim(),
           dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null,
           dueTime: dueTime ? dueTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : null
@@ -112,6 +122,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
           title: title.trim(),
           description: description.trim(),
           tagId: selectedTagId,
+          priority,
           aiPrompt: aiPrompt.trim(),
           dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null,
           dueTime: dueTime ? dueTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : null
@@ -378,6 +389,27 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                   )}
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Priority Selection */}
+          <div className="metadata-section">
+            <label className="form-label-modal">Prioridad</label>
+            <div className="priority-selector">
+              {priorityOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  className={`priority-btn ${priority === opt.value ? 'selected' : ''}`}
+                  style={{
+                    backgroundColor: priority === opt.value ? opt.bgColor : 'transparent',
+                    borderColor: priority === opt.value ? opt.color : 'var(--border-color)',
+                    color: priority === opt.value ? opt.color : 'var(--text-secondary)'
+                  }}
+                  onClick={() => setPriority(opt.value)}
+                >
+                  {opt.label}
+                </button>
+              ))}
             </div>
           </div>
         </div>

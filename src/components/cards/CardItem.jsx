@@ -4,12 +4,20 @@ import { useTheme } from '../../context/ThemeContext'
 import './CardItem.css'
 
 const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
-  const { id, title, description, tagId, completed, dueDate, dueTime } = card
+  const { id, title, description, tagId, completed, dueDate, dueTime, priority } = card
   const { getTagById } = useCards()
   const { darkMode } = useTheme()
   const [isAnimating, setIsAnimating] = useState(false)
 
   const tag = getTagById(tagId)
+  
+  const priorityConfig = {
+    alta: { label: 'Alta', color: '#dc2626', bgColor: '#fef2f2' },
+    media: { label: 'Media', color: '#d97706', bgColor: '#fffbeb' },
+    baja: { label: 'Baja', color: '#16a34a', bgColor: '#f0fdf4' }
+  }
+  
+  const currentPriority = priorityConfig[priority] || priorityConfig.media
 
   const getCardStyle = () => {
     if (!tag) return {}
@@ -45,16 +53,28 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
     >
       {/* Header */}
       <div className="card-header">
-        <span 
-          className="card-category"
-          style={{
-            backgroundColor: tag?.textColor,
-            color: '#ffffff',
-            border: 'none'
-          }}
-        >
-          {tag?.name || 'Sin etiqueta'}
-        </span>
+        <div className="card-badges">
+          <span 
+            className="card-category"
+            style={{
+              backgroundColor: tag?.textColor,
+              color: '#ffffff',
+              border: 'none'
+            }}
+          >
+            {tag?.name || 'Sin etiqueta'}
+          </span>
+          <span 
+            className="card-priority"
+            style={{
+              backgroundColor: darkMode ? `${currentPriority.color}20` : currentPriority.bgColor,
+              color: currentPriority.color,
+              borderColor: currentPriority.color
+            }}
+          >
+            {currentPriority.label}
+          </span>
+        </div>
         <button 
           className="card-delete-btn"
           onClick={handleDelete}

@@ -913,3 +913,30 @@
   display: none;
 }
 
+/* Priority Selector */
+.priority-selector {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.priority-btn {
+  flex: 1;
+  padding: 0.625rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.priority-btn:hover {
+  transform: translateY(-1px);
+}
+
+.priority-btn.selected {
+  font-weight: 700;
+}
+
