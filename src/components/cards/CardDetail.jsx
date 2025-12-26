@@ -454,8 +454,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                       />
                       <div className="new-tag-colors">
                         {colorPresets.map((preset, idx) => {
-                          // In dark mode, show borderColor (more visible), in light mode show color
-                          const displayColor = darkMode ? preset.borderColor : preset.color
+                          // In dark mode, show textColor (font color), in light mode show color
+                          const displayColor = darkMode ? preset.textColor : preset.color
                           return (
                             <button
                               key={idx}
