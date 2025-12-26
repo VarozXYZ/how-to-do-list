@@ -59,17 +59,19 @@ const deleteTag = (req, res) => {
     }
 
     const tag = db.tags[tagIndex]
-    if (tag.isDefault) {
-      return res.status(400).json({ error: 'No se pueden eliminar las etiquetas por defecto.' })
-    }
-    if (tag.userId !== req.user.id) {
+    // Allow deleting default tags, but only if user owns cards with that tag or it's their own tag
+    if (!tag.isDefault && tag.userId !== req.user.id) {
       return res.status(403).json({ error: 'No tienes permiso para eliminar esta etiqueta.' })
     }
 
-    // Update cards using this tag to use the first default tag
+    // Find first available tag to use as fallback
+    const fallbackTag = db.tags.find(t => t.id !== id)
+    const fallbackTagId = fallbackTag?.id || 'marketing'
+    
+    // Update cards using this tag to use the fallback tag
     db.cards.forEach((card, index) => {
       if (card.tagId === id && card.userId === req.user.id) {
-        db.cards[index].tagId = 'marketing'
+        db.cards[index].tagId = fallbackTagId
       }
     })
 

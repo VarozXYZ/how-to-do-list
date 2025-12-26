@@ -98,15 +98,15 @@ export const CardsProvider = ({ children }) => {
   // Delete a tag
   const deleteTag = async (tagId) => {
     try {
-      // Check if it's a default tag
-      const tag = tags.find(t => t.id === tagId)
-      if (tag?.isDefault) return false
-
       await tagsService.deleteTag(tagId)
       
-      // Update local state
+      // Find first available tag to use as fallback
+      const fallbackTag = tags.find(t => t.id !== tagId) || tags[0]
+      const fallbackTagId = fallbackTag?.id || 'marketing'
+      
+      // Update local state - assign cards to fallback tag
       setCards(cards.map(card => 
-        card.tagId === tagId ? { ...card, tagId: 'marketing' } : card
+        card.tagId === tagId ? { ...card, tagId: fallbackTagId } : card
       ))
       setTags(tags.filter(tag => tag.id !== tagId))
       return true

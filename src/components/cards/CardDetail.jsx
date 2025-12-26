@@ -11,7 +11,7 @@ import './CardDetail.css'
 registerLocale('es', es)
 
 const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
-  const { tags, addTag, deleteTag, isDefaultTag } = useCards()
+  const { tags, addTag, deleteTag } = useCards()
   const { darkMode } = useTheme()
   
   const [title, setTitle] = useState('')
@@ -397,13 +397,14 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                         >
                           {tag.name}
                         </button>
-                      {!isDefaultTag(tag.id) && (
                         <button
                           className="tag-delete-btn"
                           onClick={(e) => {
                             e.stopPropagation()
                             if (selectedTagId === tag.id) {
-                              setSelectedTagId(tags[0]?.id || '')
+                              // Find first available tag that's not the one being deleted
+                              const fallbackTag = tags.find(t => t.id !== tag.id) || tags[0]
+                              setSelectedTagId(fallbackTag?.id || '')
                             }
                             deleteTag(tag.id)
                           }}
@@ -411,7 +412,6 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                         >
                           ×
                         </button>
-                      )}
                     </div>
                     )
                   })}
