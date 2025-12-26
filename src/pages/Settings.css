@@ -368,6 +368,55 @@
 }
 
 /* AI Settings */
+/* AI Usage Stats */
+.ai-usage-stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(43, 140, 238, 0.1), rgba(168, 85, 247, 0.1));
+  border-radius: 12px;
+  border: 1px solid rgba(43, 140, 238, 0.2);
+}
+
+.ai-usage-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #2b8cee 0%, #a855f7 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.ai-usage-info {
+  flex: 1;
+}
+
+.ai-usage-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.25rem 0;
+}
+
+.ai-usage-count {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  background: linear-gradient(135deg, #2b8cee 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ai-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 1.5rem 0;
+}
+
 .ai-setting {
   margin-bottom: 2rem;
 }

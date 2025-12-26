@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Sidebar from '../components/layout/Sidebar'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
+import { getAiStats } from '../services/ai'
 import './Settings.css'
 
 const Settings = () => {
@@ -21,6 +22,9 @@ const Settings = () => {
   const [sounds, setSounds] = useState(true)
   const [creativity, setCreativity] = useState(50)
   const [personality, setPersonality] = useState('professional')
+  
+  // AI Usage stats
+  const [aiUsageCount, setAiUsageCount] = useState(0)
 
   // Load user data and preferences on mount
   useEffect(() => {
@@ -39,6 +43,17 @@ const Settings = () => {
       setCreativity(prefs.creativity ?? 50)
       setPersonality(prefs.personality ?? 'professional')
     }
+    
+    // Fetch AI usage stats
+    const fetchAiStats = async () => {
+      try {
+        const stats = await getAiStats()
+        setAiUsageCount(stats.aiUsageCount || 0)
+      } catch (error) {
+        console.error('Error fetching AI stats:', error)
+      }
+    }
+    fetchAiStats()
   }, [user])
 
   const getCreativityLabel = (value) => {
@@ -236,6 +251,17 @@ const Settings = () => {
               <h3>Configuración de IA</h3>
             </div>
             <div className="section-card">
+              {/* AI Usage Stats */}
+              <div className="ai-usage-stats">
+                <div className="ai-usage-icon">🤖</div>
+                <div className="ai-usage-info">
+                  <p className="ai-usage-label">Generaciones de IA utilizadas</p>
+                  <p className="ai-usage-count">{aiUsageCount}</p>
+                </div>
+              </div>
+              
+              <div className="ai-divider"></div>
+              
               {/* Creativity Slider */}
               <div className="ai-setting">
                 <div className="slider-header">
