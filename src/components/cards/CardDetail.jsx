@@ -44,11 +44,9 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       setAiError(null) // Clear any previous AI errors
     }
     if (show && !editCard) {
-      // New card: set default date/time to now + 2 hours
-      const now = new Date()
-      const twoHoursLater = new Date(now.getTime() + 2 * 60 * 60 * 1000)
-      setDueDate(now)
-      setDueTime(twoHoursLater)
+      // New card: leave date/time blank
+      setDueDate(null)
+      setDueTime(null)
     } else if (editCard) {
       // Editing: populate with existing data
       setTitle(editCard.title || '')
@@ -311,6 +309,11 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                 <DatePicker
                   selected={dueDate}
                   onChange={(date) => setDueDate(date)}
+                  onFocus={() => {
+                    if (!dueDate) {
+                      setDueDate(new Date())
+                    }
+                  }}
                   dateFormat="dd/MM/yyyy"
                   locale="es"
                   placeholderText="Fecha"
@@ -325,6 +328,11 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                 <DatePicker
                   selected={dueTime}
                   onChange={(time) => setDueTime(time)}
+                  onFocus={() => {
+                    if (!dueTime) {
+                      setDueTime(new Date())
+                    }
+                  }}
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={15}

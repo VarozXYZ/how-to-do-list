@@ -344,15 +344,25 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 ### 🟡 Media prioridad
 
 5. **Mejoras de UX**
-   - [ ] Cambiar prioridad por defecto a "Baja"
-   - [ ] Fecha por defecto en blanco, seleccionar actual al hacer clic
+   - [ ] ~~Cambiar prioridad por defecto a "Baja"~~ ✅
+   - [ ] ~~Fecha por defecto en blanco, seleccionar actual al hacer clic~~ ✅
+   - [ ] Crear el estado "Expirado" para tarjetas cuya fecha ya pasó (mostrar emoji de reloj 🕐)
    - [ ] Rediseño del FAB (Floating Action Button)
 
-6. **Sistema de notificaciones**
+6. **Sistema de etiquetas**
+   - [ ] Hacer las etiquetas por defecto eliminables
+   - [ ] Permitir marcar una etiqueta como favorita para elegirla por defecto siempre
+   - [ ] Arreglar el botón de eliminar de las etiquetas para que se vea simétrico
+
+7. **Filtros y ordenación**
+   - [ ] En los filtros, incluir solo las etiquetas y prioridades que existen en las tarjetas actuales
+   - [ ] Arreglar el ordenador por prioridad para que funcione correctamente
+
+8. **Sistema de notificaciones**
    - [ ] El botón de notificaciones (🔔) no funciona
    - [ ] Implementar sistema completo de notificaciones
 
-7. **Internacionalización**
+9. **Internacionalización**
    - [ ] Traducir la aplicación
    - [ ] Opción para cambiar idioma (ES/EN)
 
