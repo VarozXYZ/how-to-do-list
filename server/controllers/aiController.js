@@ -1,9 +1,17 @@
 const { getDB, saveDB } = require('../config/db')
-const { generateTaskContent, moderateContent } = require('../config/ai')
+const { generateTaskContent, moderateContent, isAiAvailable } = require('../config/ai')
 
 // Generate AI content for a task
 const generate = async (req, res) => {
   try {
+    // Check if AI is available
+    if (!isAiAvailable()) {
+      return res.status(503).json({ 
+        error: 'Servicio de IA no disponible.',
+        reason: 'El servicio de IA no está configurado. Contacta al administrador.'
+      })
+    }
+
     const { title, description, userPrompt, cardId } = req.body
     const userId = req.user.id
 

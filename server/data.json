@@ -7,10 +7,36 @@
       "password": "$2a$10$q0yiBKevdpdbSxyKdh37feB66IBb1noKwl9QraIhLYetfFakfYoey",
       "bio": "",
       "createdAt": "2025-12-23T16:59:24.849Z",
-      "aiUsageCount": 0
+      "aiUsageCount": 2
     }
   ],
   "cards": [
+    {
+      "id": 10,
+      "userId": 1,
+      "title": "reparar la luz trasera del coche",
+      "description": "Reemplazar la bombilla fundida de la luz trasera en un Citroën Picasso.\n\n**Pasos recomendados:**\n1.  **Preparación:** Asegúrate de que el vehículo esté en una superficie plana, con el freno de mano puesto y las luces apagadas. Consigue la bombilla de recambio correcta (consulta el manual del propietario).\n2.  **Acceso:** Abre el maletero. Localiza los paneles de tapicería que cubren la parte trasera de los faros. Por lo general, se quitan con clips de presión o tornillos.\n3.  **Retirar la bombilla:** Una vez expuesta la parte trasera del faro, localiza el portalámparas de la luz trasera (posición de marcha atrás, freno o intermitente). Gíralo suavemente en sentido contrario a las agujas del reloj y sácalo. Extrae la bombilla fundida del portalámparas.\n4.  **Instalación:** Sin tocar el cristal de la nueva bombilla con los dedos (usa un paño o guantes), insértala en el portalámparas. Vuelve a colocar el portalámparas en su alojamiento en el faro y gíralo para fijarlo.\n5.  **Prueba:** Antes de volver a montar los paneles, pide a alguien que verifique que la nueva luz funciona correctamente (encendido, freno, intermitentes).\n6.  **Finalización:** Vuelve a colocar los paneles de tapicería en su sitio.\n\n**Nota:** Si no te sientes cómodo realizando este procedimiento, consulta con un taller mecánico o un electricista automotriz.",
+      "tagId": "personal",
+      "priority": "media",
+      "completed": false,
+      "aiPrompt": "Se trata de un citroen picasso",
+      "dueDate": null,
+      "dueTime": null,
+      "createdAt": "2025-12-26T17:34:07.854Z"
+    },
+    {
+      "id": 9,
+      "userId": 1,
+      "title": "Hacer tarta de manzana",
+      "description": "Preparar una tarta de manzana casera, saludable y apta para 4 personas, sin utilizar azúcar añadido. El objetivo es obtener un postre delicioso que resalte el dulzor natural de la fruta.\n\n**Ingredientes principales:**\n*   Para la masa: 250g de harina, 125g de mantequilla fría, un huevo, una pizca de sal.\n*   Para el relleno: 4-5 manzanas (preferiblemente variedades como Golden o Reineta), canela en polvo al gusto, el zumo de medio limón y opcionalmente una cucharada de miel o sirope de agave (para quienes deseen un endulzante natural alternativo).\n\n**Pasos a seguir:**\n1.  Precalentar el horno a 180°C.\n2.  Preparar la masa: Mezclar la harina con la mantequilla en trozos hasta obtener una textura arenosa. Añadir el huevo y amasar hasta formar una bola homogénea. Enfriar en la nevera 30 minutos.\n3.  Preparar el relleno: Pelar y cortar las manzanas en láminas finas. Mezclarlas en un bol con el zumo de limón y la canela.\n4.  Montar la tarta: Estirar la masa y forrar un molde. Dispón las manzanas sobre la base.\n5.  Hornear durante 35-40 minutos, hasta que el borde de la masa esté dorado.\n6.  Dejar enfriar antes de servir. Se puede acompañar con un yogur natural sin azúcar.",
+      "tagId": "marketing",
+      "priority": "media",
+      "completed": false,
+      "aiPrompt": "Sin azucar y para 4 personas",
+      "dueDate": "2025-12-26",
+      "dueTime": "20:27",
+      "createdAt": "2025-12-26T17:30:46.655Z"
+    },
     {
       "id": 8,
       "userId": 1,
@@ -98,6 +124,63 @@
     }
   ],
   "nextUserId": 2,
-  "nextCardId": 9,
-  "aiLogs": []
+  "nextCardId": 11,
+  "aiLogs": [
+    {
+      "id": 1766770097835,
+      "userId": 1,
+      "cardId": null,
+      "type": "moderation",
+      "input": {
+        "title": "Hacer tarta de manzana",
+        "description": "",
+        "userPrompt": "Sin azucar y para 4 personas"
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-26T17:28:17.835Z"
+    },
+    {
+      "id": 1766770109642,
+      "userId": 1,
+      "cardId": null,
+      "type": "generation",
+      "input": {
+        "title": "Hacer tarta de manzana",
+        "description": "",
+        "userPrompt": "Sin azucar y para 4 personas"
+      },
+      "output": "Preparar una tarta de manzana casera, saludable y apta para 4 personas, sin utilizar azúcar añadido. El objetivo es obtener un postre delicioso que resalte el dulzor natural de la fruta.\n\n**Ingredientes principales:**\n*   Para la masa: 250g de harina, 125g de mantequilla fría, un huevo, una pizca de sal.\n*   Para el relleno: 4-5 manzanas (preferiblemente variedades como Golden o Reineta), canela en polvo al gusto, el zumo de medio limón y opcionalmente una cucharada de miel o sirope de agave (para quienes deseen un endulzante natural alternativo).\n\n**Pasos a seguir:**\n1.  Precalentar el horno a 180°C.\n2.  Preparar la masa: Mezclar la harina con la mantequilla en trozos hasta obtener una textura arenosa. Añadir el huevo y amasar hasta formar una bola homogénea. Enfriar en la nevera 30 minutos.\n3.  Preparar el relleno: Pelar y cortar las manzanas en láminas finas. Mezclarlas en un bol con el zumo de limón y la canela.\n4.  Montar la tarta: Estirar la masa y forrar un molde. Dispón las manzanas sobre la base.\n5.  Hornear durante 35-40 minutos, hasta que el borde de la masa esté dorado.\n6.  Dejar enfriar antes de servir. Se puede acompañar con un yogur natural sin azúcar.",
+      "timestamp": "2025-12-26T17:28:29.641Z"
+    },
+    {
+      "id": 1766770398083,
+      "userId": 1,
+      "cardId": null,
+      "type": "moderation",
+      "input": {
+        "title": "reparar la luz trasera del coche",
+        "description": "",
+        "userPrompt": "Se trata de un citroen picasso"
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-26T17:33:18.083Z"
+    },
+    {
+      "id": 1766770410838,
+      "userId": 1,
+      "cardId": null,
+      "type": "generation",
+      "input": {
+        "title": "reparar la luz trasera del coche",
+        "description": "",
+        "userPrompt": "Se trata de un citroen picasso"
+      },
+      "output": "Reemplazar la bombilla fundida de la luz trasera en un Citroën Picasso.\n\n**Pasos recomendados:**\n1.  **Preparación:** Asegúrate de que el vehículo esté en una superficie plana, con el freno de mano puesto y las luces apagadas. Consigue la bombilla de recambio correcta (consulta el manual del propietario).\n2.  **Acceso:** Abre el maletero. Localiza los paneles de tapicería que cubren la parte trasera de los faros. Por lo general, se quitan con clips de presión o tornillos.\n3.  **Retirar la bombilla:** Una vez expuesta la parte trasera del faro, localiza el portalámparas de la luz trasera (posición de marcha atrás, freno o intermitente). Gíralo suavemente en sentido contrario a las agujas del reloj y sácalo. Extrae la bombilla fundida del portalámparas.\n4.  **Instalación:** Sin tocar el cristal de la nueva bombilla con los dedos (usa un paño o guantes), insértala en el portalámparas. Vuelve a colocar el portalámparas en su alojamiento en el faro y gíralo para fijarlo.\n5.  **Prueba:** Antes de volver a montar los paneles, pide a alguien que verifique que la nueva luz funciona correctamente (encendido, freno, intermitentes).\n6.  **Finalización:** Vuelve a colocar los paneles de tapicería en su sitio.\n\n**Nota:** Si no te sientes cómodo realizando este procedimiento, consulta con un taller mecánico o un electricista automotriz.",
+      "timestamp": "2025-12-26T17:33:30.837Z"
+    }
+  ]
 }

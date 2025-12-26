@@ -59,7 +59,21 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Algo salió mal.' })
 })
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`)
+})
+
+// Handle port conflicts gracefully
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\n❌ Port ${PORT} is already in use!`)
+    console.error('   Please stop the other server instance or kill the process:')
+    console.error(`   On Windows: netstat -ano | findstr :${PORT}`)
+    console.error(`   Then: taskkill /F /PID <PID>`)
+    console.error('\n   Or simply press Ctrl+C in the other terminal and restart.\n')
+    process.exit(1)
+  } else {
+    throw err
+  }
 })
 

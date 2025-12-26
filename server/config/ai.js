@@ -1,10 +1,14 @@
 const OpenAI = require('openai')
 
 // Initialize OpenAI client with DeepSeek configuration
-const openai = new OpenAI({
-  baseURL: 'https://api.deepseek.com',
-  apiKey: process.env.DEEPSEEK_API_KEY
-})
+// Only initialize if API key is present
+let openai = null
+if (process.env.DEEPSEEK_API_KEY) {
+  openai = new OpenAI({
+    baseURL: 'https://api.deepseek.com',
+    apiKey: process.env.DEEPSEEK_API_KEY
+  })
+}
 
 // System prompts
 const SYSTEM_PROMPTS = {
@@ -42,6 +46,10 @@ Tu respuesta debe ser SOLO el texto de la descripción mejorada, sin explicacion
 
 // AI generation function
 const generateTaskContent = async (title, currentDescription, userPrompt) => {
+  if (!openai) {
+    throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
+  }
+
   const userMessage = `
 Título de la tarea: ${title}
 ${currentDescription ? `Descripción actual: ${currentDescription}` : ''}
@@ -64,6 +72,10 @@ Por favor, genera una descripción mejorada y útil para esta tarea.`
 
 // Content moderation function
 const moderateContent = async (title, description, userPrompt) => {
+  if (!openai) {
+    throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
+  }
+
   const contentToCheck = `Title: ${title}\nDescription: ${description || ''}\nUser prompt: ${userPrompt || ''}`
 
   const completion = await openai.chat.completions.create({
@@ -91,10 +103,14 @@ const moderateContent = async (title, description, userPrompt) => {
   }
 }
 
+// Check if AI is available
+const isAiAvailable = () => !!openai
+
 module.exports = {
   openai,
   generateTaskContent,
   moderateContent,
+  isAiAvailable,
   SYSTEM_PROMPTS
 }
 
