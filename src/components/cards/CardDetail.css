@@ -1092,7 +1092,7 @@
 }
 
 .dark-mode .tag-option {
-  /* Background color is set inline based on tag.borderColor - don't override */
+  background: var(--bg-tertiary) !important;
   color: var(--text-primary);
 }
 

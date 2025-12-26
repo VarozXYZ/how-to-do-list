@@ -376,11 +376,11 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
               {showTagPicker && (
                 <div className="tag-picker-dropdown">
                   {tags.map((tag) => {
-                    // Dark mode: use tag's borderColor with full opacity for background
+                    // Dark mode: use dark background with colored text
                     // Light mode: use tag's original colors
                     const tagStyle = darkMode ? {
-                      backgroundColor: tag.borderColor || 'var(--bg-tertiary)',
-                      borderColor: tag.borderColor || 'transparent',
+                      backgroundColor: 'var(--bg-tertiary)',
+                      borderColor: 'transparent',
                       color: tag.textColor
                     } : {
                       backgroundColor: tag.color,
