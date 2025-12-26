@@ -6,7 +6,8 @@
       "email": "alvaro@gmail.com",
       "password": "$2a$10$q0yiBKevdpdbSxyKdh37feB66IBb1noKwl9QraIhLYetfFakfYoey",
       "bio": "",
-      "createdAt": "2025-12-23T16:59:24.849Z"
+      "createdAt": "2025-12-23T16:59:24.849Z",
+      "aiUsageCount": 0
     }
   ],
   "cards": [
@@ -97,5 +98,6 @@
     }
   ],
   "nextUserId": 2,
-  "nextCardId": 9
+  "nextCardId": 9,
+  "aiLogs": []
 }

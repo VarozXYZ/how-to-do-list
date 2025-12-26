@@ -80,10 +80,13 @@ server/
 - RESTful API endpoints for auth, cards, and tags
 - Frontend fully connected to backend API
 
-### Phase 5: AI Integration (PENDING)
+### Phase 5: AI Integration (IN PROGRESS)
 - DeepSeek API integration via OpenAI SDK
 - Task improvement suggestions
 - Auto-generate descriptions
+- Content moderation filter
+- AI usage tracking per user
+- AI logs stored in database
 
 ---
 
@@ -317,16 +320,32 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 
 ## 🚧 Pending Work
 
-### 🔴 Alta prioridad
-1. **AI Integration**
-   - Setup DeepSeek API connection via OpenAI SDK
-   - Implement "IA" button functionality
-   - Auto-generate/improve task descriptions
+### 🔴 Alta prioridad - AI Integration (IN PROGRESS)
 
-2. **Sistema de prioridad**
-   - Añadir campo de prioridad a las tarjetas (Alta, Media, Baja)
-   - Añadir filtro por prioridad en el Dashboard
-   - Añadir opción de ordenar por prioridad
+#### Phase 1: Backend Setup
+- [ ] **Step 1:** Create AI service configuration (DeepSeek via OpenAI SDK)
+- [ ] **Step 2:** Create AI controller with endpoints:
+  - `POST /api/ai/moderate` - Content moderation check
+  - `POST /api/ai/generate` - Generate task content
+- [ ] **Step 3:** Update database schema:
+  - Add `aiUsageCount` to users
+  - Add `aiLogs` collection (userId, cardId, prompt, filterResponse, generationResponse, timestamp)
+- [ ] **Step 4:** Create AI routes with auth middleware
+
+#### Phase 2: Frontend Integration
+- [ ] **Step 5:** Connect "Generar" button in CardDetail modal
+- [ ] **Step 6:** Handle loading/error states during AI calls
+- [ ] **Step 7:** Display generated content in description field
+- [ ] **Step 8:** Show AI usage count in Settings page
+
+#### Phase 3: Testing & Polish
+- [ ] **Step 9:** Test moderation filter with various inputs
+- [ ] **Step 10:** Error handling for API failures, rate limits
+
+### ✅ Completado - Sistema de prioridad
+- ~~Añadir campo de prioridad a las tarjetas (Alta, Media, Baja)~~
+- ~~Añadir filtro por prioridad en el Dashboard~~
+- ~~Añadir opción de ordenar por prioridad~~
 
 ### 🟡 Media prioridad
 3. **Rediseño del FAB (Floating Action Button)**

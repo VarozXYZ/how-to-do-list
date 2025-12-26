@@ -17,12 +17,20 @@ if (!process.env.JWT_SECRET) {
   process.env.JWT_SECRET = 'fallback-dev-secret-not-for-production'
 }
 
+// Check DEEPSEEK_API_KEY
+if (!process.env.DEEPSEEK_API_KEY) {
+  console.error('⚠️  WARNING: DEEPSEEK_API_KEY is not set in .env file!')
+  console.error('   AI features will not work without it.')
+  console.error('   Add to .env: DEEPSEEK_API_KEY=your-api-key')
+}
+
 // Initialize database
 require('./config/db')
 
 const authRoutes = require('./routes/auth')
 const cardsRoutes = require('./routes/cards')
 const tagsRoutes = require('./routes/tags')
+const aiRoutes = require('./routes/ai')
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -38,6 +46,7 @@ app.use(express.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/cards', cardsRoutes)
 app.use('/api/tags', tagsRoutes)
+app.use('/api/ai', aiRoutes)
 
 // Health check
 app.get('/api/health', (req, res) => {
