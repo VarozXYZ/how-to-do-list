@@ -66,29 +66,71 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard, activateAi = fal
     if (show && activateAi && editCard) {
       // Generate AI prompt suggestions based on card content
       const generateAiPrompt = () => {
-        const suggestions = []
+        const cardTitle = editCard.title || ''
+        const cardDescription = editCard.description || ''
+        const cardTag = tags.find(t => t.id === editCard.tagId)
+        const cardPriority = editCard.priority || 'baja'
+        const hasDate = !!(editCard.dueDate || editCard.dueTime)
         
-        if (editCard.title) {
-          suggestions.push(`Mejora la descripción de "${editCard.title}"`)
-        }
+        // Build context-aware prompt
+        let prompt = ''
         
-        if (editCard.description) {
-          suggestions.push(`Amplía y mejora: ${editCard.description.substring(0, 50)}${editCard.description.length > 50 ? '...' : ''}`)
+        if (cardDescription.trim()) {
+          // If there's already a description, focus on improving it
+          prompt = `Mejora y amplía la descripción de "${cardTitle}"`
+          
+          // Add specific improvements based on context
+          const improvements = []
+          
+          if (cardTag) {
+            improvements.push(`enfoque de ${cardTag.name.toLowerCase()}`)
+          }
+          
+          if (cardPriority === 'alta') {
+            improvements.push('con urgencia y prioridad')
+          }
+          
+          if (hasDate) {
+            improvements.push('con pasos de acción concretos y un plan de ejecución')
+          } else {
+            improvements.push('con pasos de acción concretos')
+          }
+          
+          if (improvements.length > 0) {
+            prompt += `, ${improvements.join(', ')}`
+          }
+          
+          // Add description preview if it's short enough
+          if (cardDescription.length < 100) {
+            prompt += `. La descripción actual es: "${cardDescription}"`
+          }
         } else {
-          suggestions.push('Genera una descripción detallada y útil')
+          // If no description, generate one from scratch
+          prompt = `Genera una descripción detallada y útil para "${cardTitle}"`
+          
+          // Add context-specific instructions
+          const instructions = []
+          
+          if (cardTag) {
+            instructions.push(`enfoque de ${cardTag.name.toLowerCase()}`)
+          }
+          
+          if (cardPriority === 'alta') {
+            instructions.push('con urgencia y prioridad')
+          }
+          
+          if (hasDate) {
+            instructions.push('con pasos de acción concretos, un plan de ejecución y consideraciones de tiempo')
+          } else {
+            instructions.push('con pasos de acción concretos y prácticos')
+          }
+          
+          if (instructions.length > 0) {
+            prompt += `, con ${instructions.join(', ')}`
+          }
         }
         
-        // Add context-based suggestions
-        if (editCard.dueDate || editCard.dueTime) {
-          suggestions.push('Incluye pasos de acción concretos')
-        }
-        
-        // Return a smart default prompt
-        if (editCard.description) {
-          return `Mejora y amplía la descripción de esta tarea con pasos de acción concretos y útiles`
-        } else {
-          return `Genera una descripción detallada y útil para esta tarea con pasos de acción concretos`
-        }
+        return prompt
       }
       
       const suggestedPrompt = generateAiPrompt()
