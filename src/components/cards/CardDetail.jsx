@@ -61,6 +61,23 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     }
   }, [show, editCard, tags, getFavoriteTag])
 
+  // Ensure selectedTagId is valid when tags change
+  // Only update if the selected tag doesn't exist (don't override valid selections)
+  useEffect(() => {
+    if (selectedTagId && tags.length > 0) {
+      const tagExists = tags.find(t => t.id === selectedTagId)
+      if (!tagExists) {
+        // If selected tag doesn't exist anymore, select first available
+        if (tags[0]) {
+          setSelectedTagId(tags[0].id)
+        }
+      }
+    } else if (!selectedTagId && tags.length > 0) {
+      // If no tag is selected, select the first one
+      setSelectedTagId(tags[0].id)
+    }
+  }, [tags])
+
   // Close tag picker when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -161,15 +178,18 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     
     try {
       const newTagId = await addTag(newTag)
-      // Update selected tag immediately after creation
-      setSelectedTagId(newTagId)
-      setNewTagName('')
-      setNewTagColor('#eff6ff')
-      setShowNewTagForm(false)
-      // Keep tag picker open briefly to show the new tag is selected, then close
+      // Wait for React to update the tags state, then set selected tag
+      // Use a small delay to ensure tags array has been updated
       setTimeout(() => {
-        setShowTagPicker(false)
-      }, 100)
+        setSelectedTagId(newTagId)
+        setNewTagName('')
+        setNewTagColor('#eff6ff')
+        setShowNewTagForm(false)
+        // Close tag picker after a brief delay to show selection
+        setTimeout(() => {
+          setShowTagPicker(false)
+        }, 25)
+      }, 10)
     } catch (error) {
       console.error('Error creating tag:', error)
       alert('Error al crear la etiqueta')
