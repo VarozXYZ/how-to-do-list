@@ -453,14 +453,21 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                         autoFocus
                       />
                       <div className="new-tag-colors">
-                        {colorPresets.map((preset, idx) => (
-                          <button
-                            key={idx}
-                            className={`color-preset-btn ${newTagColor === preset.color ? 'selected' : ''}`}
-                            style={{ backgroundColor: preset.color, borderColor: preset.borderColor }}
-                            onClick={() => setNewTagColor(preset.color)}
-                          />
-                        ))}
+                        {colorPresets.map((preset, idx) => {
+                          // In dark mode, show borderColor (more visible), in light mode show color
+                          const displayColor = darkMode ? preset.borderColor : preset.color
+                          return (
+                            <button
+                              key={idx}
+                              className={`color-preset-btn ${newTagColor === preset.color ? 'selected' : ''}`}
+                              style={{ 
+                                backgroundColor: displayColor, 
+                                borderColor: preset.borderColor 
+                              }}
+                              onClick={() => setNewTagColor(preset.color)}
+                            />
+                          )
+                        })}
                       </div>
                       <div className="new-tag-actions">
                         <button 
