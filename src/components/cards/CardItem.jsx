@@ -19,6 +19,34 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
   
   const currentPriority = priorityConfig[priority] || priorityConfig.media
 
+  // Check if card is expired
+  const isExpired = () => {
+    if (!dueDate && !dueTime) return false
+    if (completed) return false // Completed cards are not expired
+    
+    const now = new Date()
+    let cardDateTime = null
+    
+    if (dueDate && dueTime) {
+      // Combine date and time
+      const dateStr = dueDate.split('T')[0] // Get YYYY-MM-DD
+      cardDateTime = new Date(`${dateStr}T${dueTime}`)
+    } else if (dueDate) {
+      // Only date, use end of day
+      cardDateTime = new Date(dueDate)
+      cardDateTime.setHours(23, 59, 59, 999)
+    } else if (dueTime) {
+      // Only time, use today
+      const today = new Date()
+      const [hours, minutes] = dueTime.split(':')
+      cardDateTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), parseInt(hours), parseInt(minutes))
+    }
+    
+    return cardDateTime && cardDateTime < now
+  }
+
+  const expired = isExpired()
+
   const getCardStyle = () => {
     if (!tag) return {}
     if (darkMode) {
@@ -83,6 +111,19 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
           >
             {currentPriority.label}
           </span>
+          {expired && (
+            <span 
+              className="card-priority"
+              style={{
+                backgroundColor: darkMode ? 'rgba(239, 68, 68, 0.2)' : '#fef2f2',
+                color: '#dc2626',
+                borderColor: '#dc2626'
+              }}
+              title="Expirado"
+            >
+              🕐 Expirado
+            </span>
+          )}
         </div>
         <button 
           className="card-delete-btn"
