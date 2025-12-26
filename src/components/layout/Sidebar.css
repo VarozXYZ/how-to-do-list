@@ -61,9 +61,13 @@
 }
 
 .nav-item.active {
-  background: rgba(61, 151, 239, 0.15);
+  background: rgba(59, 130, 246, 0.15);
   color: var(--accent-primary);
   font-weight: 700;
+}
+
+.dark-mode .nav-item.active {
+  background: rgba(59, 130, 246, 0.2);
 }
 
 .nav-icon {
@@ -116,6 +120,10 @@
 
 .logout-btn:hover .logout-icon {
   filter: invert(25%) sepia(80%) saturate(2000%) hue-rotate(340deg) brightness(90%);
+}
+
+.dark-mode .logout-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
 }
 
 .user-avatar {

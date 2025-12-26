@@ -300,3 +300,34 @@
   font-weight: 500;
   margin: 0;
 }
+
+/* Dark Mode Styles */
+.dark-mode .action-btn {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.dark-mode .action-btn:hover {
+  background: rgba(59, 130, 246, 0.25);
+}
+
+.dark-mode .action-btn.active {
+  background: var(--accent-primary);
+}
+
+.dark-mode .action-dropdown {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .dropdown-option {
+  background: var(--bg-tertiary) !important;
+  color: var(--text-primary);
+}
+
+.dark-mode .dropdown-option:hover {
+  background: var(--bg-hover) !important;
+}
+
+.dark-mode .dropdown-option.selected {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: var(--accent-primary);
+}

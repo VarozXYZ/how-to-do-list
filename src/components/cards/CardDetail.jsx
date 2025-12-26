@@ -4,6 +4,7 @@ import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useCards } from '../../context/CardsContext'
+import { useTheme } from '../../context/ThemeContext'
 import { generateContent } from '../../services/ai'
 import './CardDetail.css'
 
@@ -11,6 +12,7 @@ registerLocale('es', es)
 
 const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const { tags, addTag, deleteTag, isDefaultTag } = useCards()
+  const { darkMode } = useTheme()
   
   const [title, setTitle] = useState('')
   const [aiPrompt, setAiPrompt] = useState('')
@@ -345,7 +347,11 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
             <div className="tag-selector-wrapper" ref={tagPickerRef}>
               <button 
                 className="tag-selector-btn"
-                style={{ 
+                style={darkMode ? {
+                  backgroundColor: 'var(--bg-tertiary)',
+                  borderColor: selectedTag?.borderColor + '40',
+                  color: selectedTag?.textColor
+                } : {
                   backgroundColor: selectedTag?.color,
                   borderColor: selectedTag?.borderColor,
                   color: selectedTag?.textColor
@@ -358,22 +364,31 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
               
               {showTagPicker && (
                 <div className="tag-picker-dropdown">
-                  {tags.map((tag) => (
-                    <div key={tag.id} className="tag-option-wrapper">
-                      <button
-                        className="tag-option"
-                        style={{ 
-                          backgroundColor: tag.color,
-                          borderColor: tag.borderColor,
-                          color: tag.textColor
-                        }}
-                        onClick={() => {
-                          setSelectedTagId(tag.id)
-                          setShowTagPicker(false)
-                        }}
-                      >
-                        {tag.name}
-                      </button>
+                  {tags.map((tag) => {
+                    // Dark mode: use dark background with colored text
+                    // Light mode: use tag's original colors
+                    const tagStyle = darkMode ? {
+                      backgroundColor: 'var(--bg-tertiary)',
+                      borderColor: 'transparent',
+                      color: tag.textColor
+                    } : {
+                      backgroundColor: tag.color,
+                      borderColor: tag.borderColor,
+                      color: tag.textColor
+                    }
+                    
+                    return (
+                      <div key={tag.id} className="tag-option-wrapper">
+                        <button
+                          className="tag-option"
+                          style={tagStyle}
+                          onClick={() => {
+                            setSelectedTagId(tag.id)
+                            setShowTagPicker(false)
+                          }}
+                        >
+                          {tag.name}
+                        </button>
                       {!isDefaultTag(tag.id) && (
                         <button
                           className="tag-delete-btn"
@@ -390,7 +405,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                         </button>
                       )}
                     </div>
-                  ))}
+                    )
+                  })}
                   
                   <div className="tag-picker-divider"></div>
                   
@@ -450,20 +466,27 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
           <div className="metadata-section">
             <label className="form-label-modal">Prioridad</label>
             <div className="priority-selector">
-              {priorityOptions.map((opt) => (
-                <button
-                  key={opt.value}
-                  className={`priority-btn ${priority === opt.value ? 'selected' : ''}`}
-                  style={{
-                    backgroundColor: priority === opt.value ? opt.bgColor : 'transparent',
-                    borderColor: priority === opt.value ? opt.color : 'var(--border-color)',
-                    color: priority === opt.value ? opt.color : 'var(--text-secondary)'
-                  }}
-                  onClick={() => setPriority(opt.value)}
-                >
-                  {opt.label}
-                </button>
-              ))}
+              {priorityOptions.map((opt) => {
+                const isSelected = priority === opt.value
+                return (
+                  <button
+                    key={opt.value}
+                    className={`priority-btn ${isSelected ? 'selected' : ''}`}
+                    style={darkMode ? {
+                      backgroundColor: isSelected ? `rgba(${opt.value === 'alta' ? '239, 68, 68' : opt.value === 'media' ? '249, 115, 22' : '34, 197, 94'}, 0.15)` : 'var(--bg-tertiary)',
+                      borderColor: isSelected ? opt.color : 'var(--border-color)',
+                      color: isSelected ? opt.color : 'var(--text-secondary)'
+                    } : {
+                      backgroundColor: isSelected ? opt.bgColor : 'transparent',
+                      borderColor: isSelected ? opt.color : 'var(--border-color)',
+                      color: isSelected ? opt.color : 'var(--text-secondary)'
+                    }}
+                    onClick={() => setPriority(opt.value)}
+                  >
+                    {opt.label}
+                  </button>
+                )
+              })}
             </div>
           </div>
         </div>

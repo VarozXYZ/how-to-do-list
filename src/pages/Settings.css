@@ -434,10 +434,11 @@
 
 .slider-header label {
   font-weight: 700;
-  color: #0d141b;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 .info-icon {
@@ -488,9 +489,10 @@
 /* Personality Grid */
 .personality-label {
   font-weight: 700;
-  color: #0d141b;
+  color: var(--text-primary);
   display: block;
   margin-bottom: 1rem;
+  transition: color 0.3s ease;
 }
 
 .personality-grid {
@@ -696,5 +698,67 @@ input.disabled {
   background: #f3f4f6;
   color: #9ca3af;
   cursor: not-allowed;
+}
+
+/* Dark Mode Styles */
+.dark-mode .preference-icon.purple {
+  background: rgba(168, 85, 247, 0.2);
+}
+
+.dark-mode .preference-icon.pink {
+  background: rgba(236, 72, 153, 0.2);
+}
+
+.dark-mode .preference-icon.green {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.dark-mode .toggle-slider {
+  background-color: #3f3f46;
+}
+
+.dark-mode .personality-icon.orange {
+  background: rgba(249, 115, 22, 0.2);
+}
+
+.dark-mode .personality-icon.blue {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.dark-mode .personality-icon.purple {
+  background: rgba(168, 85, 247, 0.2);
+}
+
+.dark-mode .personality-option {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+}
+
+.dark-mode .personality-option.selected {
+  border-color: var(--accent-primary);
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.dark-mode .btn-logout:hover {
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.dark-mode .settings-alert.success {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.dark-mode .settings-alert.error {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.dark-mode input.disabled {
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+}
+
+.dark-mode .creativity-slider {
+  background: #3f3f46;
 }
 

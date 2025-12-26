@@ -189,16 +189,16 @@
   height: 44px;
   padding: 0 1rem 0 2.5rem;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
   font-size: 0.875rem;
-  color: #0f172a;
+  color: var(--text-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.2s ease;
 }
 
 .ai-input::placeholder {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .ai-input:focus {
@@ -333,16 +333,16 @@
   align-items: center;
   padding: 0.75rem 1rem;
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
   gap: 0.5rem;
   transition: all 0.2s ease;
   min-width: 180px;
 }
 
 .datetime-input-wrapper:hover {
-  background: #f8fafc;
-  border-color: #cbd5e1;
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
 }
 
 .datetime-input-wrapper:focus-within {
@@ -361,10 +361,11 @@
   background: transparent;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #334155;
+  color: var(--text-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
   outline: none;
   min-width: 0;
+  transition: color 0.3s ease;
 }
 
 .datetime-input::-webkit-calendar-picker-indicator {
@@ -455,8 +456,8 @@
   top: 100%;
   left: 0;
   margin-top: 0.5rem;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   padding: 0.5rem;
@@ -465,6 +466,7 @@
   gap: 0.25rem;
   z-index: 100;
   min-width: 140px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .tag-option-wrapper {
@@ -535,6 +537,32 @@
 .tag-option.tag-pink {
   background: #fce7f3;
   color: #be185d;
+}
+
+/* Dark Mode Tag Options */
+.dark-mode .tag-option.tag-blue {
+  background: rgba(29, 78, 216, 0.2);
+  color: #60a5fa;
+}
+
+.dark-mode .tag-option.tag-purple {
+  background: rgba(124, 58, 237, 0.2);
+  color: #a78bfa;
+}
+
+.dark-mode .tag-option.tag-orange {
+  background: rgba(194, 65, 12, 0.2);
+  color: #fb923c;
+}
+
+.dark-mode .tag-option.tag-green {
+  background: rgba(21, 128, 61, 0.2);
+  color: #4ade80;
+}
+
+.dark-mode .tag-option.tag-pink {
+  background: rgba(190, 24, 93, 0.2);
+  color: #f472b6;
 }
 
 .tag.tag-purple {
@@ -655,23 +683,27 @@
   gap: 0.5rem;
   padding: 0.625rem 1rem;
   border-radius: 10px;
-  border: 1px solid;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
   font-size: 0.875rem;
   font-weight: 600;
   font-family: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
   transition: all 0.2s ease;
   min-width: 140px;
+  color: var(--text-primary);
 }
 
 .tag-selector-btn:hover {
   transform: scale(1.02);
+  border-color: var(--accent-primary);
 }
 
 .tag-picker-divider {
   height: 1px;
-  background: #e2e8f0;
+  background: var(--border-color);
   margin: 0.5rem 0;
+  transition: background-color 0.3s ease;
 }
 
 .create-tag-btn {
@@ -679,12 +711,12 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
-  border: 1px dashed #cbd5e1;
+  border: 1px dashed var(--border-color);
   border-radius: 8px;
   background: transparent;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-secondary);
   font-family: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -692,9 +724,9 @@
 }
 
 .create-tag-btn:hover {
-  border-color: #2b8cee;
-  color: #2b8cee;
-  background: #f8fafc;
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: var(--bg-hover);
 }
 
 .new-tag-form {
@@ -970,5 +1002,134 @@
 
 .priority-btn.selected {
   font-weight: 700;
+}
+
+/* Dark Mode Priority Buttons */
+.dark-mode .priority-btn {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.dark-mode .priority-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-color);
+}
+
+.dark-mode .priority-btn.selected {
+  background: var(--bg-tertiary);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* Priority button colors for dark mode */
+.dark-mode .priority-btn.selected[style*="alta"],
+.dark-mode .priority-btn.selected[style*="#dc2626"] {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.dark-mode .priority-btn.selected[style*="media"],
+.dark-mode .priority-btn.selected[style*="#d97706"] {
+  border-color: #f97316;
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.15);
+}
+
+.dark-mode .priority-btn.selected[style*="baja"],
+.dark-mode .priority-btn.selected[style*="#16a34a"] {
+  border-color: #22c55e;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+}
+
+/* Dark Mode Styles */
+.dark-mode .datetime-input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.dark-mode .tag-picker-dropdown {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .tag-option {
+  background: var(--bg-tertiary) !important;
+  color: var(--text-primary);
+}
+
+.dark-mode .tag-option:hover {
+  background: var(--bg-hover) !important;
+  transform: scale(1.02);
+}
+
+.dark-mode .tag-delete-btn {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.dark-mode .tag-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+/* React DatePicker Dark Mode */
+.dark-mode .react-datepicker {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark-mode .react-datepicker__header {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark-mode .react-datepicker__current-month,
+.dark-mode .react-datepicker__day-name,
+.dark-mode .react-datepicker-time__header {
+  color: var(--text-primary) !important;
+}
+
+.dark-mode .react-datepicker__day {
+  color: var(--text-primary) !important;
+}
+
+.dark-mode .react-datepicker__day:hover {
+  background: var(--bg-hover) !important;
+}
+
+.dark-mode .react-datepicker__day--outside-month {
+  color: var(--text-muted) !important;
+}
+
+.dark-mode .react-datepicker__day--disabled {
+  color: var(--text-muted) !important;
+}
+
+.dark-mode .react-datepicker__time-container {
+  border-color: var(--border-color) !important;
+}
+
+.dark-mode .react-datepicker__time-box {
+  background: var(--bg-secondary) !important;
+}
+
+.dark-mode .react-datepicker__time-list-item {
+  color: var(--text-primary) !important;
+}
+
+.dark-mode .react-datepicker__time-list-item:hover {
+  background: var(--bg-hover) !important;
+}
+
+.dark-mode .react-datepicker__navigation-icon::before {
+  border-color: var(--text-secondary) !important;
+}
+
+.dark-mode .react-datepicker__close-icon::after {
+  background: var(--text-muted) !important;
+}
+
+.dark-mode .react-datepicker__close-icon:hover::after {
+  background: var(--text-secondary) !important;
 }
 

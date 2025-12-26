@@ -21,10 +21,19 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
 
   const getCardStyle = () => {
     if (!tag) return {}
-    const endColor = darkMode ? '#1e293b' : '#ffffff'
+    if (darkMode) {
+      // Dark mode: solid background with glassy effect
+      return {
+        background: `rgba(26, 26, 26, 0.8)`,
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+        borderColor: tag.borderColor + '40'
+      }
+    }
+    // Light mode: gradient
     return {
-      background: `linear-gradient(135deg, ${tag.color}${darkMode ? '40' : ''} 0%, ${endColor} 100%)`,
-      borderColor: darkMode ? tag.borderColor + '60' : tag.borderColor
+      background: `linear-gradient(135deg, ${tag.color} 0%, #ffffff 100%)`,
+      borderColor: tag.borderColor
     }
   }
 

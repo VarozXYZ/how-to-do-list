@@ -3,10 +3,12 @@ import Sidebar from '../components/layout/Sidebar'
 import CardItem from '../components/cards/CardItem'
 import CardDetail from '../components/cards/CardDetail'
 import { useCards } from '../context/CardsContext'
+import { useTheme } from '../context/ThemeContext'
 import './Dashboard.css'
 
 const Dashboard = () => {
   const { activeCards, tags, addCard, updateCard, deleteCard, toggleComplete, getTagById, loading } = useCards()
+  const { darkMode } = useTheme()
   const [searchQuery, setSearchQuery] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [editingCard, setEditingCard] = useState(null)
@@ -156,11 +158,15 @@ const Dashboard = () => {
                     setShowPriorityMenu(false)
                     setShowSortMenu(false)
                   }}
-                  style={selectedFilterTag ? {
+                  style={selectedFilterTag ? (darkMode ? {
+                    backgroundColor: 'var(--bg-tertiary)',
+                    borderColor: selectedFilterTag.borderColor + '40',
+                    color: selectedFilterTag.textColor
+                  } : {
                     backgroundColor: selectedFilterTag.color,
                     borderColor: selectedFilterTag.borderColor,
                     color: selectedFilterTag.textColor
-                  } : {}}
+                  }) : {}}
                 >
                   <span>🏷️</span> {selectedFilterTag ? selectedFilterTag.name : 'Etiqueta'}
                 </button>
@@ -175,22 +181,28 @@ const Dashboard = () => {
                     >
                       Todas las etiquetas
                     </button>
-                    {tags.map(tag => (
-                      <button
-                        key={tag.id}
-                        className={`dropdown-option ${filterTagId === tag.id ? 'selected' : ''}`}
-                        style={{
-                          backgroundColor: tag.color,
-                          color: tag.textColor
-                        }}
-                        onClick={() => {
-                          setFilterTagId(tag.id)
-                          setShowFilterMenu(false)
-                        }}
-                      >
-                        {tag.name}
-                      </button>
-                    ))}
+                    {tags.map(tag => {
+                      const tagStyle = darkMode ? {
+                        backgroundColor: 'var(--bg-tertiary)',
+                        color: tag.textColor
+                      } : {
+                        backgroundColor: tag.color,
+                        color: tag.textColor
+                      }
+                      return (
+                        <button
+                          key={tag.id}
+                          className={`dropdown-option ${filterTagId === tag.id ? 'selected' : ''}`}
+                          style={tagStyle}
+                          onClick={() => {
+                            setFilterTagId(tag.id)
+                            setShowFilterMenu(false)
+                          }}
+                        >
+                          {tag.name}
+                        </button>
+                      )
+                    })}
                   </div>
                 )}
               </div>
@@ -204,32 +216,44 @@ const Dashboard = () => {
                     setShowFilterMenu(false)
                     setShowSortMenu(false)
                   }}
-                  style={selectedPriority?.color ? {
+                  style={selectedPriority?.color ? (darkMode ? {
+                    backgroundColor: 'var(--bg-tertiary)',
+                    borderColor: selectedPriority.color + '40',
+                    color: selectedPriority.color
+                  } : {
                     backgroundColor: selectedPriority.bgColor,
                     borderColor: selectedPriority.color,
                     color: selectedPriority.color
-                  } : {}}
+                  }) : {}}
                 >
                   <span>⚡</span> {selectedPriority?.value !== 'all' ? selectedPriority.label : 'Prioridad'}
                 </button>
                 {showPriorityMenu && (
                   <div className="action-dropdown">
-                    {priorityOptions.map(opt => (
-                      <button
-                        key={opt.value}
-                        className={`dropdown-option ${filterPriority === opt.value ? 'selected' : ''}`}
-                        style={opt.color ? {
-                          backgroundColor: opt.bgColor,
-                          color: opt.color
-                        } : {}}
-                        onClick={() => {
-                          setFilterPriority(opt.value)
-                          setShowPriorityMenu(false)
-                        }}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
+                    {priorityOptions.map(opt => {
+                      const priorityStyle = opt.color ? (darkMode ? {
+                        backgroundColor: opt.value === 'alta' ? 'rgba(239, 68, 68, 0.15)' :
+                                         opt.value === 'media' ? 'rgba(249, 115, 22, 0.15)' :
+                                         'rgba(34, 197, 94, 0.15)',
+                        color: opt.color
+                      } : {
+                        backgroundColor: opt.bgColor,
+                        color: opt.color
+                      }) : {}
+                      return (
+                        <button
+                          key={opt.value}
+                          className={`dropdown-option ${filterPriority === opt.value ? 'selected' : ''}`}
+                          style={priorityStyle}
+                          onClick={() => {
+                            setFilterPriority(opt.value)
+                            setShowPriorityMenu(false)
+                          }}
+                        >
+                          {opt.label}
+                        </button>
+                      )
+                    })}
                   </div>
                 )}
               </div>

@@ -164,3 +164,75 @@
   color: #2d7fd4;
 }
 
+/* Dark Mode Styles */
+.dark-mode .login-background {
+  background: #0f0f0f;
+}
+
+.dark-mode .login-card {
+  background: #1a1a1a;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode .login-title {
+  color: #ffffff;
+}
+
+.dark-mode .login-subtitle {
+  color: #9ca3af;
+}
+
+.dark-mode .form-label-custom {
+  color: #9ca3af;
+}
+
+.dark-mode .input-icon {
+  background-color: #252525;
+  border-color: #2a2a2a;
+}
+
+.dark-mode .input-icon-right {
+  background-color: #252525;
+  border-color: #2a2a2a;
+}
+
+.dark-mode .form-input {
+  background-color: #252525;
+  border-color: #2a2a2a;
+  color: #ffffff;
+}
+
+.dark-mode .form-input::placeholder {
+  color: #6b7280;
+}
+
+.dark-mode .form-input:focus {
+  border-color: #2a2a2a;
+}
+
+.dark-mode .input-group .form-input:last-child {
+  border-right-color: #2a2a2a;
+}
+
+.dark-mode .divider-line {
+  background-color: #2a2a2a;
+}
+
+.dark-mode .divider-text {
+  color: #6b7280;
+}
+
+.dark-mode .btn-social {
+  background: #252525;
+  border-color: #2a2a2a;
+  color: #ffffff;
+}
+
+.dark-mode .btn-social:hover {
+  background: #2f2f2f;
+}
+
+.dark-mode .register-text {
+  color: #9ca3af;
+}
+
