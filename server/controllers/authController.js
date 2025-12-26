@@ -35,6 +35,7 @@ const register = async (req, res) => {
       password: hashedPassword,
       bio: '',
       creativity: 50, // Default creativity level
+      personality: 'professional', // Default personality
       createdAt: new Date().toISOString()
     }
 
@@ -110,7 +111,8 @@ const login = async (req, res) => {
         username: user.username, 
         email: user.email,
         bio: user.bio,
-        creativity: user.creativity || 50
+        creativity: user.creativity || 50,
+        personality: user.personality || 'professional'
       }
     })
   } catch (error) {
@@ -140,6 +142,7 @@ const getMe = (req, res) => {
       email: user.email,
       bio: user.bio,
       creativity: user.creativity || 50,
+      personality: user.personality || 'professional',
       createdAt: user.createdAt
     })
   } catch (error) {
@@ -151,7 +154,7 @@ const getMe = (req, res) => {
 // Update user profile
 const updateProfile = async (req, res) => {
   try {
-    const { username, bio, creativity } = req.body
+    const { username, bio, creativity, personality } = req.body
     const db = getDB()
     
     const userIndex = db.users.findIndex(u => u.id === req.user.id)
@@ -176,6 +179,14 @@ const updateProfile = async (req, res) => {
       db.users[userIndex].creativity = Math.max(0, Math.min(100, Number(creativity)))
     }
 
+    if (personality !== undefined) {
+      // Validate personality value
+      const validPersonalities = ['friendly', 'professional', 'analytical']
+      if (validPersonalities.includes(personality)) {
+        db.users[userIndex].personality = personality
+      }
+    }
+
     saveDB(db)
 
     const user = db.users[userIndex]
@@ -184,7 +195,8 @@ const updateProfile = async (req, res) => {
       username: user.username,
       email: user.email,
       bio: user.bio,
-      creativity: user.creativity || 50
+      creativity: user.creativity || 50,
+      personality: user.personality || 'professional'
     })
   } catch (error) {
     console.error('UpdateProfile error:', error)

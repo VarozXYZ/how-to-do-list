@@ -31,33 +31,40 @@ Respond ONLY with a JSON object:
 - If acceptable: {"approved": true}
 - If not acceptable: {"approved": false, "reason": "Brief explanation in Spanish"}`,
 
-  generation: `Eres un asistente de productividad experto. Tu trabajo es ayudar a los usuarios a mejorar y completar sus tareas.
+  // Base generation prompt - will be enhanced with personality
+  generationBase: `Eres un asistente de productividad experto. Tu trabajo es ayudar a los usuarios a mejorar y completar sus tareas.
 
 Cuando el usuario te proporcione información sobre una tarea (título, descripción actual, y/o instrucciones adicionales), debes:
 
 1. Generar una descripción DETALLADA, completa y útil para la tarea
 2. Incluir pasos accionables específicos y concretos
 3. Proporcionar información suficiente para que el usuario pueda completar la tarea sin dudas
-4. Mantener un tono profesional pero amigable
-5. Responder siempre en español
-6. Sé exhaustivo y detallado - no te limites a respuestas cortas
+4. Responder siempre en español
+5. Sé exhaustivo y detallado - no te limites a respuestas cortas
 
 Tu respuesta debe ser SOLO el texto de la descripción mejorada, sin explicaciones adicionales ni formato especial.`,
 
-  questions: `Eres un asistente de productividad experto. Tu trabajo es generar entre 2 y 5 preguntas relevantes para entender mejor una tarea y poder generar una descripción más precisa.
+  questions: `Eres un asistente de productividad experto. Tu trabajo es generar preguntas relevantes para entender mejor una tarea y poder generar una descripción más precisa.
+
+IMPORTANTE:
+- Solo genera preguntas que sean realmente necesarias y de alta calidad
+- NO generes preguntas sobre información que ya está proporcionada en el contexto
+- NO fuerces un número específico de preguntas - genera solo las que sean útiles
+- Si el contexto ya es suficiente, puedes generar menos preguntas o incluso ninguna
+- Evita preguntas redundantes o que repitan información ya dada
 
 Basándote en el título, descripción y contexto proporcionado, genera preguntas que ayuden a:
-- Entender el contexto y objetivos de la tarea
-- Identificar requisitos específicos
-- Conocer limitaciones o consideraciones importantes
-- Definir el alcance y prioridades
+- Entender el contexto y objetivos de la tarea (solo si no está claro)
+- Identificar requisitos específicos (solo si faltan detalles importantes)
+- Conocer limitaciones o consideraciones importantes (solo si son relevantes)
+- Definir el alcance y prioridades (solo si es necesario)
 
 Responde SOLO con un array JSON de strings, cada string es una pregunta. Ejemplo:
 ["¿Cuál es el objetivo principal de esta tarea?", "¿Hay alguna fecha límite o restricción de tiempo?"]
 
-Genera entre 2 y 5 preguntas, siempre en español.`,
+Genera solo las preguntas necesarias (pueden ser 0, 1, 2, 3, 4 o 5), siempre en español.`,
 
-  advancedGeneration: `Eres un asistente de productividad experto. Tu trabajo es GENERAR una descripción nueva y útil para una tarea.
+  advancedGenerationBase: `Eres un asistente de productividad experto. Tu trabajo es GENERAR una descripción nueva y útil para una tarea.
 
 REGLAS CRÍTICAS:
 - NO repitas el título de la tarea en tu respuesta
@@ -90,11 +97,101 @@ const creativityToTemperature = (creativity) => {
   return (creativity / 100) * 1.5
 }
 
+// Generate system prompt with personality context
+const getGenerationPrompt = (personality = 'professional', username = null) => {
+  const basePrompt = SYSTEM_PROMPTS.generationBase
+  
+  let personalityInstructions = ''
+  
+  switch (personality) {
+    case 'friendly':
+      personalityInstructions = `
+TONO Y ESTILO (Personalidad Amigable):
+- Usa un tono cálido, cercano y motivador
+- Puedes usar emojis de forma moderada cuando sea apropiado (no exageres)
+- Si conoces el nombre del usuario (${username ? username : 'el usuario'}), puedes referirte a él/ella por su nombre de forma natural
+- Sé entusiasta y positivo, pero mantén el foco en la productividad
+- Puedes usar frases como "¡Perfecto!", "Genial", "Excelente" cuando sea apropiado
+- Haz que la descripción se sienta como si un amigo te estuviera ayudando`
+      break
+      
+    case 'analytical':
+      personalityInstructions = `
+TONO Y ESTILO (Personalidad Analítica):
+- Proporciona datos, métricas y contexto adicional cuando sea relevante
+- Sé detallado y exhaustivo en las explicaciones
+- Incluye consideraciones técnicas, mejores prácticas y alternativas
+- Estructura la información de forma lógica y organizada
+- Proporciona contexto sobre por qué ciertos pasos son importantes
+- Incluye posibles problemas o consideraciones que el usuario debería tener en cuenta`
+      break
+      
+    case 'professional':
+    default:
+      personalityInstructions = `
+TONO Y ESTILO (Personalidad Profesional):
+- Mantén un tono conciso, directo y enfocado en la productividad
+- Sé claro y específico sin ser demasiado formal
+- Evita emojis y lenguaje casual
+- Enfócate en la eficiencia y resultados
+- Proporciona información práctica y accionable`
+      break
+  }
+  
+  return basePrompt + personalityInstructions
+}
+
+// Generate advanced system prompt with personality context
+const getAdvancedGenerationPrompt = (personality = 'professional', username = null) => {
+  const basePrompt = SYSTEM_PROMPTS.advancedGenerationBase
+  
+  let personalityInstructions = ''
+  
+  switch (personality) {
+    case 'friendly':
+      personalityInstructions = `
+TONO Y ESTILO (Personalidad Amigable):
+- Usa un tono cálido, cercano y motivador
+- Puedes usar emojis de forma moderada cuando sea apropiado (no exageres)
+- Si conoces el nombre del usuario (${username ? username : 'el usuario'}), puedes referirte a él/ella por su nombre de forma natural
+- Sé entusiasta y positivo, pero mantén el foco en la productividad
+- Puedes usar frases como "¡Perfecto!", "Genial", "Excelente" cuando sea apropiado
+- Haz que la descripción se sienta como si un amigo te estuviera ayudando`
+      break
+      
+    case 'analytical':
+      personalityInstructions = `
+TONO Y ESTILO (Personalidad Analítica):
+- Proporciona datos, métricas y contexto adicional cuando sea relevante
+- Sé detallado y exhaustivo en las explicaciones
+- Incluye consideraciones técnicas, mejores prácticas y alternativas
+- Estructura la información de forma lógica y organizada
+- Proporciona contexto sobre por qué ciertos pasos son importantes
+- Incluye posibles problemas o consideraciones que el usuario debería tener en cuenta`
+      break
+      
+    case 'professional':
+    default:
+      personalityInstructions = `
+TONO Y ESTILO (Personalidad Profesional):
+- Mantén un tono conciso, directo y enfocado en la productividad
+- Sé claro y específico sin ser demasiado formal
+- Evita emojis y lenguaje casual
+- Enfócate en la eficiencia y resultados
+- Proporciona información práctica y accionable`
+      break
+  }
+  
+  return basePrompt + personalityInstructions
+}
+
 // AI generation function
 const generateTaskContent = async (title, currentDescription, userPrompt, temperature = 0.8) => {
   if (!openai) {
     throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
   }
+
+  const systemPrompt = getGenerationPrompt(personality, username)
 
   const userMessage = `
 Título de la tarea: ${title}
@@ -106,7 +203,7 @@ Por favor, genera una descripción mejorada y útil para esta tarea.`
   const completion = await openai.chat.completions.create({
     model: 'deepseek-chat',
     messages: [
-      { role: 'system', content: SYSTEM_PROMPTS.generation },
+      { role: 'system', content: systemPrompt },
       { role: 'user', content: userMessage }
     ],
     temperature: temperature
@@ -157,9 +254,16 @@ const generateContextQuestions = async (title, description, userPrompt) => {
   const userMessage = `
 Título de la tarea: ${title}
 ${description ? `Descripción actual: ${description}` : ''}
-${userPrompt ? `Contexto adicional: ${userPrompt}` : ''}
+${userPrompt ? `Contexto adicional proporcionado por el usuario: ${userPrompt}` : ''}
 
-Genera entre 2 y 5 preguntas relevantes para entender mejor esta tarea y poder generar una descripción más precisa.`
+IMPORTANTE: 
+- Revisa cuidadosamente el contexto proporcionado antes de generar preguntas
+- NO generes preguntas sobre información que ya está en el título, descripción o contexto adicional
+- Solo genera preguntas que sean realmente necesarias para mejorar la descripción
+- Si el contexto ya es suficiente, genera menos preguntas o ninguna
+- Evita preguntas redundantes o que repitan información ya proporcionada
+
+Genera solo las preguntas necesarias (pueden ser 0, 1, 2, 3, 4 o 5) que ayuden a entender mejor esta tarea y poder generar una descripción más precisa.`
 
   const completion = await openai.chat.completions.create({
     model: 'deepseek-chat',
@@ -189,10 +293,12 @@ Genera entre 2 y 5 preguntas relevantes para entender mejor esta tarea y poder g
 }
 
 // Generate basic content (title + description only)
-const generateBasicTaskContent = async (title, description, temperature = 0.8) => {
+const generateBasicTaskContent = async (title, description, temperature = 0.8, personality = 'professional', username = null) => {
   if (!openai) {
     throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
   }
+
+  const systemPrompt = getGenerationPrompt(personality, username)
 
   const userMessage = `
 Título de la tarea: ${title}
@@ -203,21 +309,22 @@ Por favor, genera una descripción mejorada y útil para esta tarea basándote s
   const completion = await openai.chat.completions.create({
     model: 'deepseek-chat',
     messages: [
-      { role: 'system', content: SYSTEM_PROMPTS.generation },
+      { role: 'system', content: systemPrompt },
       { role: 'user', content: userMessage }
     ],
-    temperature: temperature,
-    extra_body: { thinking: { type: "enabled" } }
+    temperature: temperature
   })
 
   return completion.choices[0].message.content
 }
 
 // Generate advanced content (with questions answered)
-const generateAdvancedTaskContent = async (title, description, userPrompt, answers, temperature = 0.8) => {
+const generateAdvancedTaskContent = async (title, description, userPrompt, answers, temperature = 0.8, personality = 'professional', username = null) => {
   if (!openai) {
     throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
   }
+
+  const systemPrompt = getAdvancedGenerationPrompt(personality, username)
 
   const answersText = Object.entries(answers)
     .map(([index, answer]) => `Respuesta ${parseInt(index) + 1}: ${answer}`)
@@ -235,7 +342,7 @@ IMPORTANTE: Genera una descripción nueva que explique CÓMO realizar esta tarea
   const completion = await openai.chat.completions.create({
     model: 'deepseek-chat',
     messages: [
-      { role: 'system', content: SYSTEM_PROMPTS.advancedGeneration },
+      { role: 'system', content: systemPrompt },
       { role: 'user', content: userMessage }
     ],
     temperature: temperature,
@@ -257,6 +364,8 @@ module.exports = {
   moderateContent,
   isAiAvailable,
   creativityToTemperature,
+  getGenerationPrompt,
+  getAdvancedGenerationPrompt,
   SYSTEM_PROMPTS
 }
 

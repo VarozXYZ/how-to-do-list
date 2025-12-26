@@ -234,13 +234,15 @@ const generateBasic = async (req, res) => {
       })
     }
 
-    // Step 2: Get user's creativity and convert to temperature
+    // Step 2: Get user's creativity and personality
     const user = db.users.find(u => u.id === userId)
     const userCreativity = user?.creativity || 50
+    const userPersonality = user?.personality || 'professional'
+    const username = user?.username || null
     const temperature = creativityToTemperature(userCreativity)
 
     // Step 3: Generate content
-    const generatedContent = await generateBasicTaskContent(title, description, temperature)
+    const generatedContent = await generateBasicTaskContent(title, description, temperature, userPersonality, username)
 
     // Log the generation
     const generationLog = {
@@ -326,13 +328,15 @@ const generateAdvanced = async (req, res) => {
       })
     }
 
-    // Step 2: Get user's creativity and convert to temperature
+    // Step 2: Get user's creativity and personality
     const user = db.users.find(u => u.id === userId)
     const userCreativity = user?.creativity || 50
+    const userPersonality = user?.personality || 'professional'
+    const username = user?.username || null
     const temperature = creativityToTemperature(userCreativity)
 
     // Step 3: Generate content with answers
-    const generatedContent = await generateAdvancedTaskContent(title, description, userPrompt, answers || {}, temperature)
+    const generatedContent = await generateAdvancedTaskContent(title, description, userPrompt, answers || {}, temperature, userPersonality, username)
 
     // Log the generation
     const generationLog = {

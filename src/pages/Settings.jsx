@@ -34,6 +34,8 @@ const Settings = () => {
       setBio(user.bio || '')
       // Load creativity from user (stored in DB) or default to 50
       setCreativity(user.creativity ?? 50)
+      // Load personality from user (stored in DB) or default to professional
+      setPersonality(user.personality ?? 'professional')
     }
     
     // Load preferences from localStorage (darkMode is handled by ThemeContext)
@@ -42,11 +44,13 @@ const Settings = () => {
       const prefs = JSON.parse(savedPrefs)
       setNotifications(prefs.notifications ?? true)
       setSounds(prefs.sounds ?? true)
-      // Only use localStorage creativity if user doesn't have it in DB
+      // Only use localStorage values if user doesn't have them in DB
       if (!user?.creativity) {
         setCreativity(prefs.creativity ?? 50)
       }
-      setPersonality(prefs.personality ?? 'professional')
+      if (!user?.personality) {
+        setPersonality(prefs.personality ?? 'professional')
+      }
     }
     
     // Fetch AI usage stats
@@ -72,13 +76,13 @@ const Settings = () => {
     setMessage({ type: '', text: '' })
     
     try {
-      // Save profile and creativity to backend
-      await updateProfile({ username, bio, creativity })
+      // Save profile, creativity and personality to backend
+      await updateProfile({ username, bio, creativity, personality })
       
       // Save preferences to localStorage (darkMode is saved by ThemeContext)
       const savedPrefs = localStorage.getItem('userPreferences')
       const currentPrefs = savedPrefs ? JSON.parse(savedPrefs) : {}
-      const prefs = { ...currentPrefs, notifications, sounds, personality }
+      const prefs = { ...currentPrefs, notifications, sounds }
       localStorage.setItem('userPreferences', JSON.stringify(prefs))
       
       setMessage({ type: 'success', text: '¡Cambios guardados correctamente!' })
