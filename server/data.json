@@ -7,7 +7,7 @@
       "password": "$2a$10$q0yiBKevdpdbSxyKdh37feB66IBb1noKwl9QraIhLYetfFakfYoey",
       "bio": "",
       "createdAt": "2025-12-23T16:59:24.849Z",
-      "aiUsageCount": 5,
+      "aiUsageCount": 6,
       "favoriteTagId": "design"
     }
   ],
@@ -322,6 +322,41 @@
       },
       "output": "Entrenamiento de hombros y brazos para principiantes enfocado en hipertrofia (desarrollo muscular), utilizando exclusivamente ejercicios con peso corporal. Diseñado para una sesión de aproximadamente 90 minutos.\n\n**Objetivo:** Construir fuerza y masa muscular en los grupos de los hombros (deltoides) y brazos (bíceps y tríceps) de manera accesible, sin necesidad de equipo.\n\n**Enfoque del entrenamiento:**\n*   **Nivel:** Principiante. Los ejercicios priorizan la técnica correcta y la adaptación progresiva.\n*   **Método:** Solo peso corporal. Aprenderás a usar tu propio cuerpo como resistencia principal.\n*   **Meta:** Hipertrofia. La rutina está estructurada para estimular el crecimiento muscular mediante repeticiones y series adecuadas.\n\n**Estructura sugerida para la sesión de 90 minutos:**\n1.  **Calentamiento (10 mins):** Movilidad articular de hombros, codos y muñecas. Activación con ejercicios como círculos de brazos y planchas estáticas cortas.\n2.  **Entrenamiento Principal (70 mins):**\n    *   **Hombros:** Incluirá variaciones de *pike push-ups* (flexiones en pica), *handstand holds* (sostener en posición de pino contra la pared) y *shoulder taps* (toques de hombros en plancha).\n    *   **Brazos (Bíceps/Tríceps):** Se centrará en *dips* en silla o banco para tríceps y variaciones de *chin-ups* (dominadas supinas) asistidas o isométricas para bíceps. Si no hay barra disponible, se usarán ejercicios como *bodyweight curls* (curls con toalla o bajo una mesa) e *extensiones de tríceps* en el suelo.\n    *   **Esquema:** Realizar 3-4 series de 8-15 repeticiones por ejercicio, descansando 60-90 segundos entre series. Prioriza el control del movimiento.\n3.  **Enfriamiento (10 mins):** Estiramientos estáticos suaves para los músculos",
       "timestamp": "2025-12-26T22:42:43.271Z"
+    },
+    {
+      "id": 1766789254112,
+      "userId": 1,
+      "cardId": 12,
+      "type": "moderation",
+      "input": {
+        "title": "Hacer tarta de manzana",
+        "description": "",
+        "userPrompt": ""
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-26T22:47:34.112Z"
+    },
+    {
+      "id": 1766789260153,
+      "userId": 1,
+      "cardId": 12,
+      "type": "generation",
+      "mode": "advanced",
+      "input": {
+        "title": "Hacer tarta de manzana",
+        "description": "",
+        "userPrompt": "",
+        "answers": {
+          "0": "5",
+          "2": "Sin azucar",
+          "3": "hoy",
+          "4": "Fácil"
+        }
+      },
+      "output": "Preparar una tarta de manzana casera, apta para 5 personas. La receta debe ser fácil de seguir y no incluir azúcar añadido entre sus ingredientes. Es importante completar esta tarea hoy. Se recomienda buscar o utilizar una receta que emplee endulzantes naturales alternativos, como canela, puré de manzana sin azúcar o edulcorantes aptos para hornear, para mantener el sabor dulce sin utilizar azúcar refinada. Pasos sugeridos: reunir los ingredientes (manzanas, masa, canela, etc.), preparar el relleno de manzana condimentado, armar la tarta y hornear hasta que esté dorada.",
+      "timestamp": "2025-12-26T22:47:40.152Z"
     }
   ]
 }

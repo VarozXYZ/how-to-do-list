@@ -688,15 +688,21 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       </div>
 
       <div className="modal-body-custom">
+        <p className="questions-intro">
+          Responde estas preguntas para mejorar la generación. Todas las respuestas son opcionales.
+        </p>
         {aiQuestions.map((question, index) => (
           <div key={index} className="question-item">
-            <label className="question-label">{question}</label>
-            <textarea
+            <label className="question-label">
+              {question}
+              <span className="question-optional"> (opcional)</span>
+            </label>
+            <input
+              type="text"
               className="question-input"
-              placeholder="Tu respuesta..."
+              placeholder="Tu respuesta (opcional)..."
               value={aiAnswers[index] || ''}
               onChange={(e) => setAiAnswers({ ...aiAnswers, [index]: e.target.value })}
-              rows={3}
             />
           </div>
         ))}

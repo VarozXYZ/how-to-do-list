@@ -1321,8 +1321,16 @@
   max-width: 600px;
 }
 
-.question-item {
+.questions-intro {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.5;
+}
+
+.question-item {
+  margin-bottom: 1.25rem;
 }
 
 .question-label {
@@ -1334,16 +1342,22 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
+.question-optional {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
 .question-input {
   width: 100%;
-  padding: 0.75rem;
+  height: 44px;
+  padding: 0 0.75rem;
   border-radius: 8px;
   border: 1px solid var(--border-color);
   background: var(--bg-tertiary);
   font-size: 0.875rem;
   color: var(--text-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
-  resize: vertical;
   transition: all 0.2s ease;
 }
 
