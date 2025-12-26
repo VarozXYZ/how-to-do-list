@@ -473,7 +473,7 @@
 .tag-option-wrapper {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
 
 .tag-option {
@@ -496,11 +496,13 @@
 .tag-delete-btn {
   width: 20px;
   height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   border: none;
   border-radius: 4px;
   background: #fee2e2;
   color: #dc2626;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;
@@ -509,6 +511,8 @@
   line-height: 1;
   transition: all 0.15s ease;
   flex-shrink: 0;
+  padding: 0 0.5px 3px 0;
+  margin: 0;
 }
 
 .tag-delete-btn:hover {
