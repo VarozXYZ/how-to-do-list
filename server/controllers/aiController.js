@@ -353,6 +353,7 @@ const generateBasic = async (req, res) => {
     const userCreativity = user?.creativity || 50
     const userPersonality = user?.personality || 'professional'
     const username = user?.username || null
+    const aboutMe = user?.bio || null
     // Map creativity to 0.5-0.9 range for basic mode (balanced: useful but not too creative)
     const temperature = 0.5 + (userCreativity / 100) * 0.4
     log.info('User AI settings loaded (Basic Mode - Lower Temperature)', { 
@@ -360,7 +361,8 @@ const generateBasic = async (req, res) => {
       creativity: userCreativity, 
       personality: userPersonality,
       temperature: temperature.toFixed(2),
-      username 
+      username,
+      hasAboutMe: !!aboutMe
     })
 
     // Step 3: Generate content
@@ -373,7 +375,7 @@ const generateBasic = async (req, res) => {
       temperature: temperature.toFixed(2)
     })
     const generationStart = Date.now()
-    const generatedContent = await generateBasicTaskContent(title, description, temperature, userPersonality, username)
+    const generatedContent = await generateBasicTaskContent(title, description, temperature, userPersonality, username, aboutMe)
     log.aiOperation('Generation', 'Completed', { 
       mode: 'basic',
       contentLength: generatedContent.length,

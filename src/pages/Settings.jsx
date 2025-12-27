@@ -183,11 +183,31 @@ const Settings = () => {
                   </div>
                 </div>
                 <div className="form-field full-width">
-                  <label>Biografía</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                    <label>Sobre mí</label>
+                    <button
+                      type="button"
+                      className="info-btn"
+                      title="Escribe información sobre ti que pueda ser útil para las generaciones de IA. Por ejemplo: si eres intolerante a la lactosa y sueles crear recetas, o si tienes preferencias específicas que la IA debería considerar cuando sea relevante."
+                      style={{
+                        background: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        fontSize: '0.875rem',
+                        color: 'var(--text-secondary)',
+                        padding: '0.25rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      ℹ️
+                    </button>
+                  </div>
                   <textarea
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
-                    placeholder="Cuéntanos un poco sobre ti..."
+                    placeholder="Ej: Intolerante a la lactosa, prefiero recetas vegetarianas, trabajo mejor por las mañanas..."
                     rows={3}
                   />
                 </div>

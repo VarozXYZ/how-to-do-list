@@ -305,7 +305,7 @@ Genera entre 2 y 5 preguntas útiles que ayuden a entender mejor esta tarea y po
 }
 
 // Generate basic content (title + description only) - SIMPLE and FAST
-const generateBasicTaskContent = async (title, description, temperature = 0.6, personality = 'professional', username = null) => {
+const generateBasicTaskContent = async (title, description, temperature = 0.6, personality = 'professional', username = null, aboutMe = null) => {
   if (!openai) {
     throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
   }
@@ -335,9 +335,13 @@ TONO (Profesional): Conciso, directo y enfocado.`
   
   const systemPrompt = basePrompt + personalityInstructions
 
+  const aboutMeContext = aboutMe && aboutMe.trim() 
+    ? `\n\nINFORMACIÓN SOBRE EL USUARIO (usa esta información solo cuando sea relevante para la tarea):\n${aboutMe}\n\nNota: Esta información puede ser útil para personalizar la descripción, pero solo úsala si es relevante para la tarea. No la fuerces si no aplica.`
+    : ''
+
   const userMessage = `
 Título de la tarea: ${title}
-${description ? `Descripción actual: ${description}` : ''}
+${description ? `Descripción actual: ${description}` : ''}${aboutMeContext}
 
 Genera una descripción útil y práctica para esta tarea. Incluye pasos claros y detalles relevantes, pero mantén un equilibrio entre concisión y utilidad.`
 
@@ -354,7 +358,7 @@ Genera una descripción útil y práctica para esta tarea. Incluye pasos claros 
 }
 
 // Generate advanced content (with questions answered)
-const generateAdvancedTaskContent = async (title, description, userPrompt, answers, temperature = 0.8, personality = 'professional', username = null) => {
+const generateAdvancedTaskContent = async (title, description, userPrompt, answers, temperature = 0.8, personality = 'professional', username = null, aboutMe = null) => {
   if (!openai) {
     throw new Error('AI service not configured. Missing DEEPSEEK_API_KEY.')
   }
@@ -365,12 +369,16 @@ const generateAdvancedTaskContent = async (title, description, userPrompt, answe
     .map(([index, answer]) => `Respuesta ${parseInt(index) + 1}: ${answer}`)
     .join('\n')
 
+  const aboutMeContext = aboutMe && aboutMe.trim() 
+    ? `\n\nINFORMACIÓN SOBRE EL USUARIO (usa esta información solo cuando sea relevante para la tarea):\n${aboutMe}\n\nNota: Esta información puede ser útil para personalizar la descripción, pero solo úsala si es relevante para la tarea. No la fuerces si no aplica.`
+    : ''
+
   const userMessage = `Basándote en la siguiente información, GENERA una descripción nueva y útil para esta tarea:
 
 Título: ${title}
 ${description ? `Descripción actual: ${description}` : ''}
 ${userPrompt ? `Contexto adicional: ${userPrompt}` : ''}
-${Object.keys(answers).length > 0 ? `\nInformación adicional del usuario:\n${answersText}` : ''}
+${Object.keys(answers).length > 0 ? `\nInformación adicional del usuario:\n${answersText}` : ''}${aboutMeContext}
 
 IMPORTANTE: Genera una descripción nueva que explique CÓMO realizar esta tarea. NO repitas el título ni las instrucciones. Crea contenido útil y accionable.`
 
