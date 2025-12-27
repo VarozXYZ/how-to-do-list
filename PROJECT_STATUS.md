@@ -336,7 +336,7 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 
 1. **Mejoras de IA**
    - [ ] Mostrar descripción con formato Markdown en el textarea/preview
-   - [x] ~~Dar funcionalidad al botón "IA" en las tarjetas (CardItem)~~ ✅
+   - [x] ~~Dar funcionalidad al botón "IA" en las tarjetas (CardItem)~~ ✅ (Session 6)
    - [x] ~~Conectar configuración del usuario (creatividad/formalidad) a las generaciones~~ ✅
    - [ ] Limitar cantidad de generaciones por usuario
    - [ ] (OPCIONAL) Crear cuestionario con IA para mejorar prompts
