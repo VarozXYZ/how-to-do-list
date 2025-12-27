@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react'
+import { createContext, useState, useContext, useEffect, useMemo } from 'react'
 import * as cardsService from '../services/cards'
 import * as tagsService from '../services/tags'
 import { normalizeCardId, compareCardIds } from '../utils/cardHelpers'
@@ -156,9 +156,14 @@ export const CardsProvider = ({ children }) => {
     return tags.find(tag => tag.isFavorite) || tags[0]
   }
 
-  // Computed values
-  const activeCards = cards.filter(card => !card.completed)
-  const completedCards = cards.filter(card => card.completed)
+  // Computed values - memoized to prevent unnecessary recalculations
+  const activeCards = useMemo(() => {
+    return cards.filter(card => !card.completed)
+  }, [cards])
+
+  const completedCards = useMemo(() => {
+    return cards.filter(card => card.completed)
+  }, [cards])
 
   const value = {
     cards,
