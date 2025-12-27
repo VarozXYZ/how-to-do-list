@@ -97,7 +97,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         setAiPrompt(editCard.aiPrompt || '')
       } else {
         setAiMode('basic')
-        setAiPrompt(editCard.aiPrompt || '')
+      setAiPrompt(editCard.aiPrompt || '')
       }
       
       // Store initial values for editing
@@ -122,7 +122,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         // If selected tag doesn't exist anymore, select first available
         if (tags[0]) {
           setSelectedTagId(tags[0].id)
-        }
+    }
       }
     } else if (!selectedTagId && tags.length > 0) {
       // If no tag is selected, select the first one
@@ -272,13 +272,13 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       // Wait for React to update the tags state, then set selected tag
       // Use a small delay to ensure tags array has been updated
       setTimeout(() => {
-        setSelectedTagId(newTagId)
-        setNewTagName('')
-        setNewTagColor('#eff6ff')
-        setShowNewTagForm(false)
+      setSelectedTagId(newTagId)
+      setNewTagName('')
+      setNewTagColor('#eff6ff')
+      setShowNewTagForm(false)
         // Close tag picker after a brief delay to show selection
         setTimeout(() => {
-          setShowTagPicker(false)
+      setShowTagPicker(false)
         }, 25)
       }, 10)
     } catch (error) {
@@ -418,9 +418,9 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         {/* AI Assistant Section */}
         <div className="ai-assistant-section">
           <div className="ai-assistant-header">
-            <span className="ai-assistant-label">
-              <span>✨</span> Asistente IA
-            </span>
+          <span className="ai-assistant-label">
+            <span>✨</span> Asistente IA
+          </span>
             {/* Mode Toggle */}
             <div className="ai-mode-toggle">
               <button
@@ -441,18 +441,18 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
           </div>
           <div className="ai-assistant-content">
             {aiMode === 'advanced' && (
-              <div className="ai-input-row">
-                <div className="ai-input-wrapper">
-                  <span className="ai-input-icon">🪄</span>
-                  <input
-                    type="text"
-                    className="ai-input"
+            <div className="ai-input-row">
+              <div className="ai-input-wrapper">
+                <span className="ai-input-icon">🪄</span>
+                <input
+                  type="text"
+                  className="ai-input"
                     placeholder="Instrucciones adicionales (opcional): ej. 'Generar checklist detallado', 'Incluir validaciones', 'Enfocarse en seguridad'..."
-                    value={aiPrompt}
-                    onChange={(e) => setAiPrompt(e.target.value)}
+                  value={aiPrompt}
+                  onChange={(e) => setAiPrompt(e.target.value)}
                     disabled={aiLoading}
-                  />
-                </div>
+                />
+              </div>
               </div>
             )}
             <div className={`ai-content-bottom ${aiMode === 'basic' ? 'ai-content-basic' : 'ai-content-advanced'}`}>
@@ -473,11 +473,11 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                     </>
                   ) : (
                     <>
-                      <span>⚡</span> Generar
+                <span>⚡</span> Generar
                     </>
                   )}
-                </button>
-              </div>
+              </button>
+            </div>
             </div>
             {aiError && (
               <p className="ai-error-text">{aiError}</p>
@@ -488,7 +488,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         {/* Description */}
         <div className="form-group">
           <div className="description-header">
-            <label className="form-label-modal">Descripción y notas</label>
+          <label className="form-label-modal">Descripción y notas</label>
             <button
               type="button"
               className="markdown-toggle-btn"
@@ -507,13 +507,13 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
               )}
             </div>
           ) : (
-            <textarea
-              className="form-textarea-modal"
+          <textarea
+            className="form-textarea-modal"
               placeholder="Añade detalles, enlaces o subtareas aquí... (Soporta Markdown)"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={5}
-            />
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            rows={5}
+          />
           )}
         </div>
 
@@ -608,17 +608,17 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                     }
                     
                     return (
-                      <div key={tag.id} className="tag-option-wrapper">
-                        <button
-                          className="tag-option"
+                    <div key={tag.id} className="tag-option-wrapper">
+                      <button
+                        className="tag-option"
                           style={tagStyle}
-                          onClick={() => {
-                            setSelectedTagId(tag.id)
-                            setShowTagPicker(false)
-                          }}
-                        >
-                          {tag.name}
-                        </button>
+                        onClick={() => {
+                          setSelectedTagId(tag.id)
+                          setShowTagPicker(false)
+                        }}
+                      >
+                        {tag.name}
+                      </button>
                         <button
                           className="tag-favorite-btn"
                           onClick={async (e) => {
@@ -678,15 +678,15 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                           const displayColor = darkMode ? preset.textColor : preset.color
                           const displayBorderColor = darkMode ? preset.textColor : preset.borderColor
                           return (
-                            <button
-                              key={idx}
-                              className={`color-preset-btn ${newTagColor === preset.color ? 'selected' : ''}`}
+                          <button
+                            key={idx}
+                            className={`color-preset-btn ${newTagColor === preset.color ? 'selected' : ''}`}
                               style={{ 
                                 backgroundColor: displayColor, 
                                 borderColor: displayBorderColor 
                               }}
-                              onClick={() => setNewTagColor(preset.color)}
-                            />
+                            onClick={() => setNewTagColor(preset.color)}
+                          />
                           )
                         })}
                       </div>

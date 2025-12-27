@@ -354,38 +354,48 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
    - [x] ~~Fix nodemon port conflict error (desarrollo)~~ ✅
    - [x] ~~Arreglar modo oscuro (consistencia de colores)~~ ✅
 
+5. **Sistema de tipos de usuarios y planes de pago**
+   - [ ] Implementar tipos de usuarios según plan de pago y usuario admin
+   - [ ] Implementar pasarela de pago para mayor límite de generaciones
+
+6. **Sistema de autenticación profesional**
+   - [ ] Implementar sistema de login profesional, usando potencialmente cuentas de Google
+
+7. **Migración de base de datos**
+   - [ ] Migrar base de datos a algo más profesional
+
 ### 🟡 Media prioridad
 
-5. **Mejoras de UX**
+8. **Mejoras de UX**
    - [x] ~~Cambiar prioridad por defecto a "Baja"~~ ✅
    - [x] ~~Fecha por defecto en blanco, seleccionar actual al hacer clic~~ ✅
    - [x] ~~Crear el estado "Expirado" para tarjetas cuya fecha ya pasó (mostrar emoji de reloj 🕐)~~ ✅
    - [ ] Rediseño del FAB (Floating Action Button)
 
-6. **Sistema de etiquetas**
+9. **Sistema de etiquetas**
    - [x] ~~Hacer las etiquetas por defecto eliminables~~ ✅
    - [x] ~~Permitir marcar una etiqueta como favorita para elegirla por defecto siempre~~ ✅
    - [x] ~~Arreglar el botón de eliminar de las etiquetas para que se vea simétrico~~ ✅
 
-7. **Filtros y ordenación**
+10. **Filtros y ordenación**
    - [x] ~~En los filtros, incluir solo las etiquetas y prioridades que existen en las tarjetas actuales~~ ✅
    - [x] ~~Arreglar el ordenador por prioridad para que funcione correctamente~~ ✅
 
-8. **Sistema de notificaciones**
+11. **Sistema de notificaciones**
    - [ ] El botón de notificaciones (🔔) no funciona
    - [ ] Implementar sistema completo de notificaciones
 
-9. **Internacionalización**
+12. **Internacionalización**
    - [ ] Traducir la aplicación
    - [ ] Opción para cambiar idioma (ES/EN)
 
 ### 🟢 Baja prioridad
 
-10. **Sistema de sonidos**
+13. **Sistema de sonidos**
     - [ ] Añadir sonidos para acciones (crear, completar, eliminar)
     - [ ] Opción para activar/desactivar en Settings
 
-11. **Otras mejoras**
+14. **Otras mejoras**
     - [ ] Profile photo upload functionality
     - [ ] Search improvements
 
