@@ -412,6 +412,28 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 - ~~Detección automática de tema~~ → Detecta preferencia del sistema al cargar
 - ~~Favicon dinámico~~ → Cambia según tema (claro/oscuro)
 
+## ✅ Recently Completed (Session 6 - December 26, 2025)
+
+### AI Button Functionality
+- ~~Botón IA en tarjetas~~ → Abre modal de edición en modo avanzado con prompt vacío
+
+## ✅ Previously Completed (Session 5 - December 26, 2025)
+
+### Backend & AI Improvements
+- ~~Sistema de logging mejorado~~ → Logger utility con timestamps, duraciones, estados de operaciones
+- ~~Optimización de generación de IA~~ → Modo básico más rápido, modo avanzado con thinking
+- ~~Personalidad del asistente~~ → Friendly/Professional/Analytical conectado a generaciones
+- ~~Modo básico optimizado~~ → Prompt simplificado, temperatura ajustada (0.5-0.9)
+- ~~Modo avanzado con preguntas~~ → Generación de preguntas de contexto, eliminación de moderación redundante
+- ~~Configuración de nodemon~~ → Ignora data.json, evita reinicios innecesarios
+- ~~Manejo de cierre del servidor~~ → Graceful shutdown con SIGTERM/SIGINT
+
+### UI/UX Improvements
+- ~~Toggle de tema claro/oscuro~~ → Componente reutilizable en header y login/register
+- ~~Detección automática de tema~~ → Detecta preferencia del sistema al cargar
+- ~~Favicon dinámico~~ → Cambia según tema (claro/oscuro)
+- ~~Mejoras visuales del asistente IA~~ → Ajustes de layout, centrado vertical, colores de texto
+
 ## ✅ Previously Completed (Session 4 - December 26, 2025)
 
 - ~~AI Integration~~ → DeepSeek backend, moderation, generation, usage tracking
