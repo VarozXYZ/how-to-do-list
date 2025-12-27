@@ -335,7 +335,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         </div>
 
         {/* AI Assistant Section */}
-        <div className="ai-assistant-box">
+        <div className="ai-assistant-section">
           <div className="ai-assistant-header">
             <span className="ai-assistant-label">
               <span>✨</span> Asistente IA
@@ -366,7 +366,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                   <input
                     type="text"
                     className="ai-input"
-                    placeholder="Instrucciones adicionales (opcional)..."
+                    placeholder="Instrucciones adicionales (opcional): ej. 'Generar checklist detallado', 'Incluir validaciones', 'Enfocarse en seguridad'..."
                     value={aiPrompt}
                     onChange={(e) => setAiPrompt(e.target.value)}
                     disabled={aiLoading}
@@ -374,31 +374,33 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                 </div>
               </div>
             )}
-            <div className="ai-generate-row">
-              <button 
-                className={`ai-generate-btn ${aiLoading ? 'loading' : ''}`}
-                onClick={handleAiGenerate}
-                disabled={aiLoading || !title.trim()}
-              >
-                {aiLoading ? (
-                  <>
-                    <span className="ai-spinner"></span> Generando...
-                  </>
-                ) : (
-                  <>
-                    <span>⚡</span> Generar
-                  </>
-                )}
-              </button>
+            <div className={`ai-content-bottom ${aiMode === 'basic' ? 'ai-content-basic' : 'ai-content-advanced'}`}>
+              <p className="ai-helper-text">
+                {aiMode === 'basic' 
+                  ? 'La IA generará una descripción útil basada solo en el título y descripción actual.'
+                  : 'La IA generará preguntas para entender mejor tu tarea y crear una descripción más precisa.'}
+              </p>
+              <div className="ai-generate-row">
+                <button 
+                  className={`ai-generate-btn ${aiLoading ? 'loading' : ''}`}
+                  onClick={handleAiGenerate}
+                  disabled={aiLoading || (aiMode === 'advanced' && !title.trim())}
+                >
+                  {aiLoading ? (
+                    <>
+                      <span className="ai-spinner"></span> Generando...
+                    </>
+                  ) : (
+                    <>
+                      <span>⚡</span> Generar
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
             {aiError && (
               <p className="ai-error-text">{aiError}</p>
             )}
-            <p className="ai-helper-text">
-              {aiMode === 'basic' 
-                ? 'La IA generará una descripción útil basada solo en el título y descripción actual.'
-                : 'La IA generará preguntas para entender mejor tu tarea y crear una descripción más precisa.'}
-            </p>
           </div>
         </div>
 

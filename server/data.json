@@ -8,7 +8,7 @@
       "bio": "",
       "createdAt": "2025-12-23T16:59:24.849Z",
       "aiUsageCount": 23,
-      "favoriteTagId": "design",
+      "favoriteTagId": "personal",
       "creativity": 72,
       "personality": "friendly"
     }
@@ -18,7 +18,7 @@
       "id": 13,
       "userId": 1,
       "title": "Estudiar trigonometría",
-      "description": "Comienza por repasar los conceptos básicos sobre triángulos, enfocándote en las razones trigonométricas (seno, coseno, tangente) y el teorema de Pitágoras. Realiza ejercicios prácticos de identificación de lados y ángulos en triángulos rectángulos. Dedica tiempo a resolver problemas de aplicación directa, como calcular lados desconocidos o ángulos usando las funciones. Prioriza la práctica con ejercicios tipo examen para familiarizarte con el formato y gestionar el tiempo. Como el examen es mañana, concéntrate en los temas centrales, haz un resumen de fórmulas clave y descansa bien para llegar con la mente fresca.",
+      "description": "",
       "tagId": "design",
       "priority": "baja",
       "completed": false,
@@ -31,13 +31,13 @@
       "id": 12,
       "userId": 1,
       "title": "Tarta de manzana",
-      "description": "¡Perfecto, Alvaro! Vamos a crear una deliciosa tarta de manzana, perfecta para 5 personas y sin azúcar añadido. Como eres principiante, te guiaré con cada detalle para que te quede increíble. 🍏✨\n\n**Comencemos con la masa, la base de todo:**\nNecesitarás un bol grande. Tamiza 250 gramos de harina de repostería y añade una pizca de sal. Corta 125 gramos de mantequilla sin sal (¡que esté bien fría de la nevera!) en cubitos pequeños. Échalos sobre la harina. Ahora, con las puntas de los dedos o con un tenedor, desmenuza la mantequilla con la harina rápidamente, hasta que todo parezca arena gruesa. Esto se llama \"sablaje\" y es el truco para que la masa quede crujiente. Añade un huevo batido y mezcla con una espátula. Si no se une del todo, agrega una cucharada de agua muy fría (¡solo una!). Forma una bola, aplástala un poco para hacer un disco, envuélvela en film transparente y métela en la nevera. **Espera al menos 30 minutos.** Este paso es mágico: la masa se relaja y no se encogerá en el horno.\n\n**Mientras la masa reposa, prepararemos el relleno dulce de forma natural:**\nPela y quita el corazón de unas 4-5 manzanas grandes (unos 850g). Elige variedades como Fuji o Gala, que ya son dulces por sí mismas. Córtalas en láminas finitas, más o menos del mismo grosor (unos 3mm). Para que no se oscurezcan, échalas en un bol y rocía con un poco de zumo de limón, removiendo bien. En un platito pequeño, mezcla una cucharada colmada de harina (esto espesará los jugos), dos cucharaditas de canela molida, media cucharadita de nuez moscada rallada y, si te gusta, una pizca de clavo molido. Este mix de especias será nuestro \"endulzante\" secreto. Vierte esta mezcla sobre las manzanas y remueve con cuidado hasta que todas las láminas estén cubiertas. Para un toque extra de dulzor, puedes añadir 2 o 3 cucharadas de puré de manzana natural (sin azúcar) y mezclar.\n\n**¡Hora de armar y hornear nuestra creación!**\nPrecalienta el horno a 180°C, con calor arriba y abajo. Saca la masa de la nevera. Espolvorea un poco de harina sobre la mesa y estírala con un rodillo, girándola de vez en cuando, hasta formar un círculo de unos 3mm de grosor. Colócala con cuidado sobre un molde desmontable de unos 24 cm de diámetro. Ajusta los bordes, presiona suavemente y recorta el exceso. Con un tenedor, pincha el fondo de la masa por toda la superficie (esto evita que se hinche). Ahora, coloca las manzanas condimentadas de forma ordenada y compacta. ¡Al horno! Coloca el molde en la rejilla central y hornea entre 45 y 55 minutos. Sabrás que está lista cuando el borde de la masa esté dorado y las manzanas burbujeen.\n\n**El último paso es el más importante: la paciencia.**\nSaca la tarta del horno y **déjala enfriar completamente dentro del molde**, sobre una rejilla. Esto llevará entre 1 hora y hora y media. No te tientes a sacarla antes. Al no llevar azúcar, este tiempo de reposo es esencial para que los jugos de la fruta espesen y la tarta tenga una textura perfecta al cortarla. Desmolda con cuidado. Para servir, un espolvoreado final de canela o una cucharada de yogur griego natural quedarán genial. ¡Disfruta del éxito de tu primera tarta de manzana casera y saludable",
+      "description": "",
       "tagId": "personal",
       "priority": "baja",
       "completed": false,
-      "aiPrompt": "5 personas",
-      "dueDate": null,
-      "dueTime": null,
+      "aiPrompt": "",
+      "dueDate": "2025-12-27",
+      "dueTime": "01:23",
       "createdAt": "2025-12-26T20:37:32.139Z"
     },
     {
