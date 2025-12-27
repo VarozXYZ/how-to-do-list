@@ -148,9 +148,8 @@
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   transition: color 0.3s ease;
 }
 
