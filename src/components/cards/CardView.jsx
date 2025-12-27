@@ -105,7 +105,7 @@ const CardView = ({ show, onHide, card, onEdit, onDelete }) => {
               </span>
             )}
           </div>
-          <button className="card-view-close-btn" onClick={onHide}>
+          <button className="modal-close-btn" onClick={onHide}>
             <span>✕</span>
           </button>
         </div>
