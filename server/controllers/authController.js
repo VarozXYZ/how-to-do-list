@@ -54,6 +54,8 @@ const register = async (req, res) => {
       bio: '',
       creativity: 50, // Default creativity level
       personality: 'professional', // Default personality
+      plan: 'free', // Default plan: free
+      isAdmin: false, // Default: not admin
       createdAt: new Date().toISOString()
     }
 
@@ -77,7 +79,14 @@ const register = async (req, res) => {
     res.status(201).json({
       message: 'Usuario creado exitosamente.',
       token,
-      user: { id: newUser.id, username, email, bio: '' }
+      user: { 
+        id: newUser.id, 
+        username, 
+        email, 
+        bio: '',
+        plan: 'free',
+        isAdmin: false
+      }
     })
   } catch (error) {
     log.error('Register User failed', error, { email: req.body.email, username: req.body.username })
@@ -161,7 +170,9 @@ const login = async (req, res) => {
         email: user.email,
         bio: user.bio,
         creativity: user.creativity || 50,
-        personality: user.personality || 'professional'
+        personality: user.personality || 'professional',
+        plan: user.plan || 'free',
+        isAdmin: user.isAdmin || false
       }
     })
   } catch (error) {
@@ -201,6 +212,8 @@ const getMe = (req, res) => {
       bio: user.bio,
       creativity: user.creativity || 50,
       personality: user.personality || 'professional',
+      plan: user.plan || 'free',
+      isAdmin: user.isAdmin || false,
       createdAt: user.createdAt
     })
   } catch (error) {
@@ -280,7 +293,9 @@ const updateProfile = async (req, res) => {
       email: user.email,
       bio: user.bio,
       creativity: user.creativity || 50,
-      personality: user.personality || 'professional'
+      personality: user.personality || 'professional',
+      plan: user.plan || 'free',
+      isAdmin: user.isAdmin || false
     })
   } catch (error) {
     log.error('Update Profile failed', error, { userId: req.user.id })
