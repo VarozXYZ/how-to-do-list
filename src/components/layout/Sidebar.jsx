@@ -42,6 +42,10 @@ const Sidebar = () => {
             <span className="nav-icon">⚙️</span>
             <span className="nav-text">Configuración</span>
           </NavLink>
+          <NavLink to="/pricing" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+            <span className="nav-icon">💎</span>
+            <span className="nav-text">Planes</span>
+          </NavLink>
         </nav>
       </div>
 

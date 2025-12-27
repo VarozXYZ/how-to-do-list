@@ -7,6 +7,7 @@ import Register from './components/auth/Register'
 import Dashboard from './pages/Dashboard'
 import Completed from './pages/Completed'
 import Settings from './pages/Settings'
+import Pricing from './pages/Pricing'
 
 // Loading spinner component
 const LoadingSpinner = () => (
@@ -71,6 +72,7 @@ function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/completed" element={<Completed />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/pricing" element={<Pricing />} />
       </Route>
 
       {/* Default redirect */}
