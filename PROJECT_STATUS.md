@@ -379,6 +379,10 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
    - [x] ~~Fecha por defecto en blanco, seleccionar actual al hacer clic~~ ✅
    - [x] ~~Crear el estado "Expirado" para tarjetas cuya fecha ya pasó (mostrar emoji de reloj 🕐)~~ ✅
    - [ ] Rediseño del FAB (Floating Action Button)
+   - [ ] Mostrar descripción acortada en formato Markdown (visualización) en las cards del dashboard
+   - [ ] Mostrar nombre completo del usuario en el sidebar (sin truncar)
+   - [ ] Mejorar formulario de registro: cambiar "Nombre de usuario" por "Nombre" con placeholder de ejemplo
+   - [ ] Mejorar validación del formulario de registro (incluyendo validación de contraseña)
 
 9. **Sistema de etiquetas**
    - [x] ~~Hacer las etiquetas por defecto eliminables~~ ✅
