@@ -398,24 +398,29 @@
 }
 
 .ai-usage-icon {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   background: linear-gradient(135deg, #2b8cee 0%, #a855f7 100%);
-  border-radius: 12px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(43, 140, 238, 0.25);
 }
 
 .ai-usage-info {
   flex: 1;
+  min-width: 0;
 }
 
 .ai-usage-label {
   font-size: 0.875rem;
+  font-weight: 500;
   color: var(--text-secondary);
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.5rem 0;
+  transition: color 0.3s ease;
 }
 
 .ai-usage-details {
