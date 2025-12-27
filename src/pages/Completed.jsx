@@ -8,6 +8,7 @@ import './Dashboard.css'
 
 const Completed = () => {
   const { completedCards, toggleComplete, deleteCard, getTagById, loading } = useCards()
+  const { user } = useAuth()
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
 
@@ -83,6 +84,16 @@ const Completed = () => {
                   : 'No se encontraron tareas'}</p>
               </div>
             )}
+          </div>
+        </div>
+
+        {/* User Plan Footer */}
+        <div className="completed-footer">
+          <div className="user-plan-info">
+            <span className="user-name-footer">{user?.username || 'Usuario'}</span>
+            <span className="user-plan-footer">
+              {user?.isAdmin ? 'Admin' : user?.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}
+            </span>
           </div>
         </div>
       </main>
