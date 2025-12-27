@@ -614,7 +614,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
               <p className="ai-error-text">
                 {aiError}
                 {isLimitError && (
-                  <> ¿Quieres obtener más generaciones? <Link to="/pricing" className="ai-error-link">Echa un vistazo a nuestros planes</Link>.</>
+                  <> ¿Quieres más? Echa un vistazo a <Link to="/pricing" className="ai-error-link">nuestros planes</Link>.</>
                 )}
               </p>
             )}
