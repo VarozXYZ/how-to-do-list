@@ -93,7 +93,7 @@ const Dashboard = () => {
     const card = activeCards.find(c => c.id === id)
     if (card) {
       setEditingCard({ ...card, aiMode: 'advanced', aiPrompt: '' })
-      setShowModal(true)
+      setShowEditModal(true)
     }
   }
 
