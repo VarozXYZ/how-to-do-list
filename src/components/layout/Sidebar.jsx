@@ -57,7 +57,7 @@ const Sidebar = () => {
           </div>
           <div className="user-info">
             <p className="user-name">{user?.username || 'Usuario'}</p>
-            <p className="user-plan">
+            <p className={`user-plan ${user?.plan === 'pro' ? 'user-plan-pro' : ''}`}>
               {user?.isAdmin ? 'Admin' : user?.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}
             </p>
           </div>

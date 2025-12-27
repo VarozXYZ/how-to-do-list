@@ -140,7 +140,9 @@ const Settings = () => {
             <div className="profile-info">
               <h2 className="profile-name">{username || 'Usuario'}</h2>
               <p className="profile-email">{email}</p>
-              <span className="profile-badge">Free Plan</span>
+              <span className={`profile-badge ${user?.plan === 'pro' ? 'profile-badge-pro' : ''}`}>
+                <span>{user?.isAdmin ? 'Admin' : user?.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}</span>
+              </span>
             </div>
             <button className="change-photo-btn">
               <span>📤</span> Cambiar foto
