@@ -32,10 +32,83 @@ const Settings = () => {
   // About Me info popover
   const [showAboutMeInfo, setShowAboutMeInfo] = useState(false)
   const aboutMeInfoRef = useRef(null)
+  const aboutMeButtonRef = useRef(null)
+  const [aboutMePopoverStyle, setAboutMePopoverStyle] = useState({})
   
   // Creativity info popover
   const [showCreativityInfo, setShowCreativityInfo] = useState(false)
   const creativityInfoRef = useRef(null)
+  const creativityButtonRef = useRef(null)
+  const [creativityPopoverStyle, setCreativityPopoverStyle] = useState({})
+  
+  // Calculate popover position to keep it visible
+  const calculatePopoverPosition = (buttonRef) => {
+    if (!buttonRef.current) return {}
+    
+    const buttonRect = buttonRef.current.getBoundingClientRect()
+    const viewportHeight = window.innerHeight
+    const viewportWidth = window.innerWidth
+    const popoverWidth = 420
+    const popoverHeight = 300 // Approximate height
+    const margin = 10
+    
+    let top = '100%'
+    let left = '0'
+    let marginTop = '0.5rem'
+    let marginLeft = '0'
+    let bottom = 'auto'
+    let right = 'auto'
+    let marginBottom = '0'
+    
+    // Check if there's enough space below
+    const spaceBelow = viewportHeight - buttonRect.bottom
+    const spaceAbove = buttonRect.top
+    
+    // If not enough space below, position above
+    if (spaceBelow < popoverHeight + margin && spaceAbove > popoverHeight + margin) {
+      top = 'auto'
+      bottom = '100%'
+      marginTop = '0'
+      marginBottom = '0.5rem'
+    }
+    
+    // Check horizontal position
+    const spaceRight = viewportWidth - buttonRect.left
+    const spaceLeft = buttonRect.left
+    
+    // If not enough space on the right, adjust left position
+    if (spaceRight < popoverWidth + margin) {
+      left = 'auto'
+      right = '0'
+      marginLeft = '0'
+    }
+    
+    return {
+      top: top === 'auto' ? undefined : top,
+      bottom: bottom === 'auto' ? undefined : bottom,
+      left: left === 'auto' ? undefined : left,
+      right: right === 'auto' ? undefined : right,
+      marginTop,
+      marginBottom: marginBottom || undefined,
+      marginLeft
+    }
+  }
+  
+  const handleAboutMeMouseEnter = () => {
+    if (aboutMeButtonRef.current) {
+      const style = calculatePopoverPosition(aboutMeButtonRef)
+      setAboutMePopoverStyle(style)
+    }
+    setShowAboutMeInfo(true)
+  }
+  
+  const handleCreativityMouseEnter = () => {
+    if (creativityButtonRef.current) {
+      const style = calculatePopoverPosition(creativityButtonRef)
+      setCreativityPopoverStyle(style)
+    }
+    setShowCreativityInfo(true)
+  }
 
   // Load user data and preferences on mount
   useEffect(() => {
