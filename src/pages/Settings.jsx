@@ -206,66 +206,57 @@ const Settings = () => {
                 <div className="form-field full-width">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', position: 'relative' }}>
                     <label>Sobre mí</label>
-                    <button
-                      type="button"
-                      className="info-btn"
-                      onClick={() => setShowAboutMeInfo(!showAboutMeInfo)}
-                      style={{
-                        background: 'var(--bg-hover)',
-                        border: '1px solid var(--border-color)',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                        fontSize: '0.875rem',
-                        color: 'var(--accent-primary)',
-                        padding: '0.25rem 0.5rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '24px',
-                        height: '24px',
-                        transition: 'all 0.2s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'var(--accent-primary)'
-                        e.currentTarget.style.color = '#fff'
-                        e.currentTarget.style.transform = 'scale(1.1)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'var(--bg-hover)'
-                        e.currentTarget.style.color = 'var(--accent-primary)'
-                        e.currentTarget.style.transform = 'scale(1)'
-                      }}
+                    <div
+                      className="info-btn-wrapper"
+                      onMouseEnter={() => setShowAboutMeInfo(true)}
+                      onMouseLeave={() => setShowAboutMeInfo(false)}
+                      style={{ position: 'relative' }}
                     >
-                      ℹ️
-                    </button>
-                    {showAboutMeInfo && (
-                      <div 
-                        ref={aboutMeInfoRef}
-                        className="about-me-info-popover"
-                        onClick={(e) => e.stopPropagation()}
+                      <button
+                        type="button"
+                        className="info-btn"
+                        style={{
+                          background: 'var(--bg-hover)',
+                          border: '1px solid var(--border-color)',
+                          borderRadius: '50%',
+                          cursor: 'pointer',
+                          fontSize: '0.875rem',
+                          color: 'var(--accent-primary)',
+                          padding: '0.25rem 0.5rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '24px',
+                          height: '24px',
+                          transition: 'all 0.2s ease'
+                        }}
                       >
-                        <div className="popover-header">
-                          <span>💡 Sobre mí</span>
-                          <button 
-                            className="popover-close"
-                            onClick={() => setShowAboutMeInfo(false)}
-                          >
-                            ✕
-                          </button>
+                        ❓
+                      </button>
+                      {showAboutMeInfo && (
+                        <div 
+                          ref={aboutMeInfoRef}
+                          className="about-me-info-popover"
+                          onMouseEnter={() => setShowAboutMeInfo(true)}
+                          onMouseLeave={() => setShowAboutMeInfo(false)}
+                        >
+                          <div className="popover-header">
+                            <span>💡 Sobre mí</span>
+                          </div>
+                          <div className="popover-content">
+                            <p>Escribe información sobre ti que pueda ser útil para las generaciones de IA.</p>
+                            <p><strong>Ejemplos:</strong></p>
+                            <ul>
+                              <li>Si eres intolerante a la lactosa y sueles crear recetas</li>
+                              <li>Si tienes preferencias dietéticas específicas</li>
+                              <li>Si trabajas mejor en ciertos momentos del día</li>
+                              <li>Cualquier información relevante para tus tareas</li>
+                            </ul>
+                            <p className="popover-note">La IA usará esta información solo cuando sea relevante para la tarea. No la forzará si no aplica.</p>
+                          </div>
                         </div>
-                        <div className="popover-content">
-                          <p>Escribe información sobre ti que pueda ser útil para las generaciones de IA.</p>
-                          <p><strong>Ejemplos:</strong></p>
-                          <ul>
-                            <li>Si eres intolerante a la lactosa y sueles crear recetas</li>
-                            <li>Si tienes preferencias dietéticas específicas</li>
-                            <li>Si trabajas mejor en ciertos momentos del día</li>
-                            <li>Cualquier información relevante para tus tareas</li>
-                          </ul>
-                          <p className="popover-note">La IA usará esta información solo cuando sea relevante para la tarea. No la forzará si no aplica.</p>
-                        </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                   <textarea
                     value={bio}
