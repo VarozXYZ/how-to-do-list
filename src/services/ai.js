@@ -2,7 +2,7 @@ import api from './api'
 
 // Get AI usage statistics
 export const getAiStats = async () => {
-  const response = await api.get('/ai/usage')
+  const response = await api.get('/ai/stats')
   return response.data
 }
 
