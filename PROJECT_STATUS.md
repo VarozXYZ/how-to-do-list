@@ -335,7 +335,7 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 ### 🔴 Alta prioridad
 
 1. **Mejoras de IA**
-   - [ ] Mostrar descripción con formato Markdown en el textarea/preview
+   - [x] ~~Mostrar descripción con formato Markdown en el textarea/preview~~ ✅ (Session 6)
    - [x] ~~Dar funcionalidad al botón "IA" en las tarjetas (CardItem)~~ ✅ (Session 6)
    - [x] ~~Conectar configuración del usuario (creatividad/formalidad) a las generaciones~~ ✅
    - [ ] Limitar cantidad de generaciones por usuario
