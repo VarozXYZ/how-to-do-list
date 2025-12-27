@@ -356,7 +356,59 @@ const Settings = () => {
               {/* Creativity Slider */}
               <div className="ai-setting">
                 <div className="slider-header">
-                  <label>Nivel de creatividad <span className="info-icon">ℹ️</span></label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', position: 'relative' }}>
+                    <label>Nivel de creatividad</label>
+                    <div
+                      className="info-btn-wrapper"
+                      onMouseEnter={() => setShowCreativityInfo(true)}
+                      onMouseLeave={() => setShowCreativityInfo(false)}
+                      style={{ position: 'relative' }}
+                    >
+                      <button
+                        type="button"
+                        className="info-btn"
+                        style={{
+                          background: 'var(--bg-hover)',
+                          border: '1px solid var(--border-color)',
+                          borderRadius: '50%',
+                          cursor: 'pointer',
+                          fontSize: '0.875rem',
+                          color: 'var(--accent-primary)',
+                          padding: '0.25rem 0.5rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '24px',
+                          height: '24px',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        🧠
+                      </button>
+                      {showCreativityInfo && (
+                        <div 
+                          ref={creativityInfoRef}
+                          className="about-me-info-popover"
+                          onMouseEnter={() => setShowCreativityInfo(true)}
+                          onMouseLeave={() => setShowCreativityInfo(false)}
+                        >
+                          <div className="popover-header">
+                            <span>🧠 Nivel de creatividad</span>
+                          </div>
+                          <div className="popover-content">
+                            <p>El nivel de creatividad controla qué tan originales y variadas son las generaciones de IA.</p>
+                            <p><strong>Niveles:</strong></p>
+                            <ul>
+                              <li><strong>Preciso (0-33):</strong> Respuestas más directas, estructuradas y predecibles. Ideal para tareas técnicas o que requieren exactitud.</li>
+                              <li><strong>Equilibrado (34-66):</strong> Balance entre creatividad y precisión. Bueno para la mayoría de tareas.</li>
+                              <li><strong>Creativo (67-100):</strong> Respuestas más originales, variadas e innovadoras. Perfecto para tareas que requieren ideas nuevas o enfoques diferentes.</li>
+                            </ul>
+                            <p className="popover-note">Este ajuste afecta la "temperatura" de la IA: valores bajos = más preciso, valores altos = más creativo.</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                   <span className="creativity-badge">{getCreativityLabel(creativity)}</span>
                 </div>
                 <input
