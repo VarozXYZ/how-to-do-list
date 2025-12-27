@@ -69,6 +69,11 @@ html, body, #root {
   overflow-x: hidden;
 }
 
+html {
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s ease;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -90,4 +95,55 @@ a:hover {
 button {
   font-family: inherit;
   cursor: pointer;
+}
+
+/* Custom Scrollbar Styles */
+/* WebKit browsers (Chrome, Safari, Edge) */
+/* Apply to all scrollable elements */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-tertiary);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+  border: 2px solid var(--bg-tertiary);
+  transition: background 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Dark mode scrollbar - override for all elements */
+.dark-mode,
+.dark-mode * {
+  scrollbar-color: #4a5568 var(--bg-tertiary);
+}
+
+.dark-mode ::-webkit-scrollbar-track,
+.dark-mode::-webkit-scrollbar-track {
+  background: var(--bg-tertiary) !important;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb,
+.dark-mode::-webkit-scrollbar-thumb {
+  background: #4a5568 !important;
+  border-color: var(--bg-tertiary) !important;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover,
+.dark-mode::-webkit-scrollbar-thumb:hover {
+  background: #5a6578 !important;
 }

@@ -260,6 +260,26 @@
   box-shadow: 0 0 0 3px rgba(61, 151, 239, 0.1);
 }
 
+/* Resize handle styling for Settings textarea */
+.form-field textarea::-webkit-resizer {
+  background: var(--border-color);
+  border-radius: 0 0 12px 0;
+  border: none;
+  cursor: nwse-resize;
+}
+
+.form-field textarea::-webkit-resizer:hover {
+  background: var(--text-tertiary);
+}
+
+.dark-mode .form-field textarea::-webkit-resizer {
+  background: var(--border-color);
+}
+
+.dark-mode .form-field textarea::-webkit-resizer:hover {
+  background: var(--text-secondary);
+}
+
 /* Preference Items */
 .preference-item {
   display: flex;

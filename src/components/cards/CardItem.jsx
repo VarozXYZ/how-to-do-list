@@ -105,16 +105,16 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit, onView
       {/* Header */}
       <div className="card-header">
         <div className="card-badges">
-          <span 
-            className="card-category"
-            style={{
-              backgroundColor: tag?.textColor,
-              color: '#ffffff',
-              border: 'none'
-            }}
-          >
-            {tag?.name || 'Sin etiqueta'}
-          </span>
+        <span 
+          className="card-category"
+          style={{
+            backgroundColor: tag?.textColor,
+            color: '#ffffff',
+            border: 'none'
+          }}
+        >
+          {tag?.name || 'Sin etiqueta'}
+        </span>
           <span 
             className="card-priority"
             style={{
@@ -152,18 +152,18 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit, onView
           >
             ✏️
           </button>
-          <button 
-            className="card-delete-btn"
+        <button 
+          className="card-delete-btn"
             onClick={handleDelete}
-            title="Eliminar tarea"
-            style={{
-              background: `${tag?.textColor}${darkMode ? '30' : '15'}`,
-              borderColor: `${tag?.textColor}${darkMode ? '50' : '30'}`,
-              color: tag?.textColor
-            }}
-          >
-            🗑️
-          </button>
+          title="Eliminar tarea"
+          style={{
+            background: `${tag?.textColor}${darkMode ? '30' : '15'}`,
+            borderColor: `${tag?.textColor}${darkMode ? '50' : '30'}`,
+            color: tag?.textColor
+          }}
+        >
+          🗑️
+        </button>
         </div>
       </div>
 

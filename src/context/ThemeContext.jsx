@@ -75,9 +75,11 @@ export const ThemeProvider = ({ children }) => {
     }
 
     if (darkMode) {
+      document.documentElement.classList.add('dark-mode')
       document.body.classList.add('dark-mode')
       updateFavicon(true)
     } else {
+      document.documentElement.classList.remove('dark-mode')
       document.body.classList.remove('dark-mode')
       updateFavicon(false)
     }
