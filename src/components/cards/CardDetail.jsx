@@ -367,10 +367,19 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       }
     } catch (error) {
       console.error('AI Generation error:', error)
-      const errorMessage = error.response?.data?.reason || 
-                          error.response?.data?.error || 
-                          'Error al generar contenido. Inténtalo de nuevo.'
-      setAiError(errorMessage)
+      
+      // Check if it's a limit error (403)
+      if (error.response?.status === 403) {
+        const limitData = error.response?.data
+        const errorMessage = limitData?.reason || limitData?.error || 'Has alcanzado el límite de generaciones de tu plan.'
+        setAiError(`${errorMessage} Visita la página de Planes para actualizar.`)
+      } else {
+        const errorMessage = error.response?.data?.reason || 
+                            error.response?.data?.error || 
+                            'Error al generar contenido. Inténtalo de nuevo.'
+        setAiError(errorMessage)
+      }
+      
       setShowProgressModal(false)
       setProgress(0)
       setAiLoading(false)
