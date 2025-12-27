@@ -348,11 +348,7 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
    - [x] ~~Dar funcionalidad al botón "IA" en las tarjetas (CardItem)~~ ✅ (Session 6)
    - [x] ~~Conectar configuración del usuario (creatividad/formalidad) a las generaciones~~ ✅
    - [x] ~~Crear animación genial para la carga de la generación~~ ✅
-   - [ ] Limitar cantidad de generaciones por usuario
-
-2. **Sistema de borradores**
-   - [ ] Guardar borradores para evitar perder contenido generado no guardado
-   - [x] ~~Pedir confirmación si se cierra una tarjeta sin guardar~~ ✅ (Session 6)
+   - [x] ~~Limitar cantidad de generaciones por usuario~~ ✅
 
 3. **Pantalla de preview de tarjetas**
    - [x] ~~Crear vista de preview donde el texto sea más fácil de leer~~ ✅ (Session 6)
@@ -362,14 +358,14 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
    - [x] ~~Fix nodemon port conflict error (desarrollo)~~ ✅
    - [x] ~~Arreglar modo oscuro (consistencia de colores)~~ ✅
 
-5. **Sistema de tipos de usuarios y planes de pago**
+4. **Sistema de tipos de usuarios y planes de pago**
    - [x] ~~Implementar tipos de usuarios según plan de pago y usuario admin~~ ✅
    - [ ] Implementar pasarela de pago para mayor límite de generaciones
 
-6. **Sistema de autenticación profesional**
+5. **Sistema de autenticación profesional**
    - [ ] Implementar sistema de login profesional, usando potencialmente cuentas de Google
 
-7. **Migración de base de datos**
+6. **Migración de base de datos**
    - [ ] Migrar base de datos a algo más profesional
 
 ### 🟡 Media prioridad
@@ -378,7 +374,6 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
    - [x] ~~Cambiar prioridad por defecto a "Baja"~~ ✅
    - [x] ~~Fecha por defecto en blanco, seleccionar actual al hacer clic~~ ✅
    - [x] ~~Crear el estado "Expirado" para tarjetas cuya fecha ya pasó (mostrar emoji de reloj 🕐)~~ ✅
-   - [ ] Rediseño del FAB (Floating Action Button)
    - [ ] Mostrar descripción acortada en formato Markdown (visualización) en las cards del dashboard
    - [ ] Mostrar nombre completo del usuario en el sidebar (sin truncar)
    - [ ] Mejorar formulario de registro: cambiar "Nombre de usuario" por "Nombre" con placeholder de ejemplo
