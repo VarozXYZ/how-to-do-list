@@ -37,6 +37,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const [showMarkdownPreview, setShowMarkdownPreview] = useState(false)
   const [initialValues, setInitialValues] = useState(null)
   const [showConfirmClose, setShowConfirmClose] = useState(false)
+  const [showProgressModal, setShowProgressModal] = useState(false)
+  const [progress, setProgress] = useState(0)
   
   const priorityOptions = [
     { value: 'alta', label: 'Alta', color: '#dc2626', bgColor: '#fef2f2' },
@@ -206,6 +208,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     setShowMarkdownPreview(false)
     setInitialValues(null)
     setShowConfirmClose(false)
+    setShowProgressModal(false)
+    setProgress(0)
     onHide()
   }
 
@@ -322,16 +326,43 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
           setAiLoading(false)
         } else {
           // No questions, proceed with generation
-          const result = await generateAdvancedContent(
-            title.trim(),
-            description.trim(),
-            aiPrompt.trim(),
-            {},
-            editCard?.id || null
-          )
-          setDescription(result.content)
-          setAiError(null)
-          setAiLoading(false)
+          // Show progress modal for advanced mode
+          setShowProgressModal(true)
+          setProgress(0)
+          
+          // Start progress simulation
+          let progressInterval = startProgressSimulation(setProgress)
+          
+          try {
+            const result = await generateAdvancedContent(
+              title.trim(),
+              description.trim(),
+              aiPrompt.trim(),
+              {},
+              editCard?.id || null
+            )
+            // Complete progress to 100%
+            if (progressInterval) {
+              clearInterval(progressInterval)
+            }
+            setProgress(100)
+            
+            // Wait a bit for smooth completion animation
+            await new Promise(resolve => setTimeout(resolve, 500))
+            
+            setDescription(result.content)
+            setAiError(null)
+            setShowProgressModal(false)
+            setProgress(0)
+            setAiLoading(false)
+          } catch (error) {
+            if (progressInterval) {
+              clearInterval(progressInterval)
+            }
+            setShowProgressModal(false)
+            setProgress(0)
+            throw error
+          }
         }
       }
     } catch (error) {
@@ -340,6 +371,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                           error.response?.data?.error || 
                           'Error al generar contenido. Inténtalo de nuevo.'
       setAiError(errorMessage)
+      setShowProgressModal(false)
+      setProgress(0)
       setAiLoading(false)
     }
   }
@@ -347,6 +380,14 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const handleSubmitAnswers = async () => {
     setAiLoading(true)
     setAiError(null)
+    
+    // Close questions modal and show progress modal
+    setShowQuestionsModal(false)
+    setShowProgressModal(true)
+    setProgress(0)
+    
+    // Start progress simulation
+    let progressInterval = startProgressSimulation(setProgress)
 
     try {
       const result = await generateAdvancedContent(
@@ -357,21 +398,58 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         editCard?.id || null
       )
       
+      // Complete progress to 100%
+      if (progressInterval) {
+        clearInterval(progressInterval)
+      }
+      setProgress(100)
+      
+      // Wait a bit for smooth completion animation
+      await new Promise(resolve => setTimeout(resolve, 500))
+      
       setDescription(result.content)
       setAiError(null)
-      setShowQuestionsModal(false)
       setAiAnswers({})
       setAiQuestions([])
+      setShowProgressModal(false)
+      setProgress(0)
       setAiLoading(false)
     } catch (error) {
+      if (progressInterval) {
+        clearInterval(progressInterval)
+      }
+      setShowProgressModal(false)
+      setProgress(0)
       console.error('AI Generation error:', error)
       const errorMessage = error.response?.data?.reason || 
                           error.response?.data?.error || 
                           'Error al generar contenido. Inténtalo de nuevo.'
       setAiError(errorMessage)
-    } finally {
       setAiLoading(false)
     }
+  }
+  
+  // Progress simulation function
+  // Median time for advanced generation: ~30 seconds
+  // We'll simulate progress up to 85%, then wait for actual completion
+  const startProgressSimulation = (setProgressFn) => {
+    const medianTime = 30000 // 30 seconds
+    const targetProgress = 85 // Stop at 85% and wait for actual completion
+    const updateInterval = 50 // Update every 50ms
+    const increment = (targetProgress / medianTime) * updateInterval
+    
+    let currentProgress = 0
+    
+    const interval = setInterval(() => {
+      currentProgress += increment
+      if (currentProgress >= targetProgress) {
+        currentProgress = targetProgress
+        clearInterval(interval)
+      }
+      setProgressFn(Math.min(currentProgress, targetProgress))
+    }, updateInterval)
+    
+    return interval
   }
 
   const selectedTag = tags.find(t => t.id === selectedTagId) || tags[0]
@@ -468,12 +546,38 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
                   disabled={aiLoading || (aiMode === 'advanced' && !title.trim())}
                 >
                   {aiLoading ? (
-                    <>
-                      <span className="ai-spinner"></span> Generando...
-                    </>
+                    <div className="ai-loading-content">
+                      <div className="ai-spinner-wrapper">
+                        <div className="ai-spinner-outer"></div>
+                        <div className="ai-spinner-inner"></div>
+                        <div className="ai-spinner-core"></div>
+                      </div>
+                      <span className="ai-loading-text">
+                        <span className="ai-loading-dots">
+                          <span>G</span>
+                          <span>e</span>
+                          <span>n</span>
+                          <span>e</span>
+                          <span>r</span>
+                          <span>a</span>
+                          <span>n</span>
+                          <span>d</span>
+                          <span>o</span>
+                          <span className="dot">.</span>
+                          <span className="dot">.</span>
+                          <span className="dot">.</span>
+                        </span>
+                      </span>
+                      <div className="ai-sparkles">
+                        <span className="sparkle sparkle-1">✨</span>
+                        <span className="sparkle sparkle-2">✨</span>
+                        <span className="sparkle sparkle-3">✨</span>
+                        <span className="sparkle sparkle-4">✨</span>
+                      </div>
+                    </div>
                   ) : (
                     <>
-                <span>⚡</span> Generar
+                      <span>⚡</span> Generar
                     </>
                   )}
               </button>
@@ -823,12 +927,96 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
             Cancelar
           </button>
           <button
-            className="btn-primary"
+            className={`btn-primary ${aiLoading ? 'loading' : ''}`}
             onClick={handleSubmitAnswers}
             disabled={aiLoading}
           >
-            {aiLoading ? 'Generando...' : 'Continuar'}
+            {aiLoading ? (
+              <div className="ai-loading-content">
+                <div className="ai-spinner-wrapper">
+                  <div className="ai-spinner-outer"></div>
+                  <div className="ai-spinner-inner"></div>
+                  <div className="ai-spinner-core"></div>
+                </div>
+                <span className="ai-loading-text">
+                  <span className="ai-loading-dots">
+                    <span>G</span>
+                    <span>e</span>
+                    <span>n</span>
+                    <span>e</span>
+                    <span>r</span>
+                    <span>a</span>
+                    <span>n</span>
+                    <span>d</span>
+                    <span>o</span>
+                    <span className="dot">.</span>
+                    <span className="dot">.</span>
+                    <span className="dot">.</span>
+                  </span>
+                </span>
+                <div className="ai-sparkles">
+                  <span className="sparkle sparkle-1">✨</span>
+                  <span className="sparkle sparkle-2">✨</span>
+                  <span className="sparkle sparkle-3">✨</span>
+                  <span className="sparkle sparkle-4">✨</span>
+                </div>
+              </div>
+            ) : 'Continuar'}
           </button>
+        </div>
+      </div>
+    </Modal>
+
+    {/* Progress Modal for Advanced Mode */}
+    <Modal 
+      show={showProgressModal} 
+      onHide={() => {}} // Prevent closing during generation
+      centered 
+      size="sm"
+      className="progress-modal"
+      backdrop="static"
+      keyboard={false}
+    >
+      <div className="modal-header-custom">
+        <div className="modal-header-left">
+          <div className="modal-icon">
+            <span>✨</span>
+          </div>
+          <div className="modal-header-text">
+            <h2 className="modal-title-custom">Generando con IA</h2>
+            <p className="modal-subtitle">Modo avanzado - Esto puede tardar unos segundos</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal-body-custom progress-modal-body">
+        <div className="progress-container">
+          <div className="progress-bar-wrapper">
+            <div 
+              className="progress-bar-fill"
+              style={{ width: `${progress}%` }}
+            >
+              <div className="progress-bar-shine"></div>
+            </div>
+          </div>
+          <div className="progress-text">
+            <span className="progress-percentage">{Math.round(progress)}%</span>
+            <span className="progress-status">
+              {progress < 30 ? 'Analizando tu tarea...' :
+               progress < 60 ? 'Generando contenido...' :
+               progress < 85 ? 'Refinando detalles...' :
+               progress < 100 ? 'Finalizando...' :
+               '¡Completado!'}
+            </span>
+          </div>
+        </div>
+        
+        <div className="progress-animation">
+          <div className="progress-dots">
+            <span className="dot dot-1"></span>
+            <span className="dot dot-2"></span>
+            <span className="dot dot-3"></span>
+          </div>
         </div>
       </div>
     </Modal>
