@@ -171,8 +171,6 @@ const generateQuestions = async (req, res) => {
       questionsCount: questions.length 
     })
 
-    console.log('🔵 Questions generated:', questions)
-
     res.json({ 
       success: true,
       questions: questions
@@ -196,7 +194,6 @@ const generateQuestions = async (req, res) => {
 
 // Generate basic content (title + description only)
 const generateBasic = async (req, res) => {
-  console.log('🔵 generateBasic called - Request received')
   const startTime = log.operationStart('AI Generate Basic', req, { 
     title: req.body.title?.substring(0, 50),
     cardId: req.body.cardId 

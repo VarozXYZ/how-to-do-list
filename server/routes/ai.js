@@ -7,10 +7,7 @@ const auth = require('../middleware/auth')
 router.use(auth)
 
 // POST /api/ai/generate-basic - Generate basic AI content (title + description only)
-router.post('/generate-basic', (req, res, next) => {
-  console.log('🟢 Route /generate-basic hit - Middleware')
-  next()
-}, generateBasic)
+router.post('/generate-basic', generateBasic)
 
 // POST /api/ai/generate-advanced - Generate advanced AI content (with questions answered)
 router.post('/generate-advanced', generateAdvanced)
