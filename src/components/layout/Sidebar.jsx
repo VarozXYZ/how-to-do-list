@@ -53,7 +53,9 @@ const Sidebar = () => {
           </div>
           <div className="user-info">
             <p className="user-name">{user?.username || 'Usuario'}</p>
-            <p className="user-plan">Free Plan</p>
+            <p className="user-plan">
+              {user?.isAdmin ? 'Admin' : user?.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}
+            </p>
           </div>
           <button 
             className="logout-btn"

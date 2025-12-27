@@ -37,3 +37,10 @@ export const updateProfile = async (data) => {
   updateUser(response.data)
   return response.data
 }
+
+// Update plan
+export const updatePlan = async (plan) => {
+  const response = await api.put('/auth/plan', { plan })
+  updateUser(response.data)
+  return response.data
+}

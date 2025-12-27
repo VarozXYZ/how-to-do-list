@@ -43,6 +43,13 @@ export const AuthProvider = ({ children }) => {
     return updatedUser
   }
 
+  // Update user plan
+  const updatePlan = async (plan) => {
+    const updatedUser = await authService.updatePlan(plan)
+    setUser(updatedUser)
+    return updatedUser
+  }
+
   const value = {
     user,
     loading,
@@ -50,7 +57,8 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
-    updateProfile
+    updateProfile,
+    updatePlan
   }
 
   return (
