@@ -31,6 +31,14 @@ export const getCurrentUser = () => {
   return getUser()
 }
 
+// Get current user from backend (refreshes user data)
+export const getMe = async () => {
+  const response = await api.get('/auth/me')
+  const user = response.data
+  updateUser(user)
+  return user
+}
+
 // Update profile
 export const updateProfile = async (data) => {
   const response = await api.put('/auth/profile', data)

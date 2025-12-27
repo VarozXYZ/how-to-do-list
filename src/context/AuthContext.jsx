@@ -9,11 +9,25 @@ export const AuthProvider = ({ children }) => {
 
   // Check if user is already logged in on app load
   useEffect(() => {
-    const savedUser = authService.getCurrentUser()
-    if (savedUser) {
-      setUser(savedUser)
+    const loadUser = async () => {
+      const savedUser = authService.getCurrentUser()
+      if (savedUser) {
+        // Set user from localStorage first (for immediate display)
+        setUser(savedUser)
+        
+        // Then fetch fresh data from backend to ensure plan and other data is up to date
+        try {
+          const freshUser = await authService.getMe()
+          setUser(freshUser)
+        } catch (error) {
+          // If backend call fails, keep using localStorage data
+          console.error('Error fetching user from backend:', error)
+        }
+      }
+      setLoading(false)
     }
-    setLoading(false)
+    
+    loadUser()
   }, [])
 
   // Login function
