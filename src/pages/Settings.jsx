@@ -26,6 +26,8 @@ const Settings = () => {
   
   // AI Usage stats
   const [aiUsageCount, setAiUsageCount] = useState(0)
+  const [aiLimit, setAiLimit] = useState(null)
+  const [aiRemaining, setAiRemaining] = useState(null)
 
   // Load user data and preferences on mount
   useEffect(() => {
@@ -56,6 +58,8 @@ const Settings = () => {
       try {
         const stats = await getAiStats()
         setAiUsageCount(stats.aiUsageCount || 0)
+        setAiLimit(stats.limit || null)
+        setAiRemaining(stats.remaining !== null ? stats.remaining : null)
       } catch (error) {
         console.error('Error fetching AI stats:', error)
       }
@@ -262,7 +266,23 @@ const Settings = () => {
                 <div className="ai-usage-icon">🤖</div>
                 <div className="ai-usage-info">
                   <p className="ai-usage-label">Generaciones de IA utilizadas</p>
-                  <p className="ai-usage-count">{aiUsageCount}</p>
+                  <div className="ai-usage-details">
+                    <p className="ai-usage-count">{aiUsageCount}</p>
+                    {aiLimit !== null && (
+                      <span className="ai-usage-limit">/ {aiLimit}</span>
+                    )}
+                    {aiRemaining !== null && (
+                      <span className="ai-usage-remaining">({aiRemaining} restantes)</span>
+                    )}
+                    {aiLimit === null && (
+                      <span className="ai-usage-unlimited">Ilimitado</span>
+                    )}
+                  </div>
+                  {user?.plan && (
+                    <p className="ai-plan-badge">
+                      Plan: {user.isAdmin ? 'Admin' : user.plan === 'pro' ? 'Pro' : 'Free'}
+                    </p>
+                  )}
                 </div>
               </div>
               
