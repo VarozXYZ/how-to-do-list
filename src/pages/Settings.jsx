@@ -28,6 +28,27 @@ const Settings = () => {
   const [aiUsageCount, setAiUsageCount] = useState(0)
   const [aiLimit, setAiLimit] = useState(null)
   const [aiRemaining, setAiRemaining] = useState(null)
+  
+  // About Me info popover
+  const [showAboutMeInfo, setShowAboutMeInfo] = useState(false)
+  const aboutMeInfoRef = useRef(null)
+
+  // Close popover when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (aboutMeInfoRef.current && !aboutMeInfoRef.current.contains(event.target)) {
+        const infoButton = event.target.closest('.info-btn')
+        if (!infoButton) {
+          setShowAboutMeInfo(false)
+        }
+      }
+    }
+
+    if (showAboutMeInfo) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showAboutMeInfo])
 
   // Load user data and preferences on mount
   useEffect(() => {
