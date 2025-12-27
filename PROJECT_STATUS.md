@@ -5,7 +5,7 @@
 **Project Name:** [How] ToDoList - AI Enhanced Task Manager  
 **Repository:** https://github.com/VarozXYZ/how-to-do-list  
 **Tech Stack:** React + Vite (Frontend), Node.js + Express + JSON DB (Backend)  
-**Last Updated:** December 23, 2025
+**Last Updated:** December 26, 2025
 
 ---
 
@@ -80,13 +80,15 @@ server/
 - RESTful API endpoints for auth, cards, and tags
 - Frontend fully connected to backend API
 
-### Phase 5: AI Integration (IN PROGRESS)
+### Phase 5: AI Integration ✅
 - DeepSeek API integration via OpenAI SDK
-- Task improvement suggestions
-- Auto-generate descriptions
+- Task improvement suggestions (Basic and Advanced modes)
+- Auto-generate descriptions with personality and creativity settings
 - Content moderation filter
 - AI usage tracking per user
 - AI logs stored in database
+- Context questions for advanced mode
+- Thinking mode for advanced generation
 
 ---
 
@@ -217,19 +219,25 @@ how-to-do-list/
 │   └── logo.png
 ├── server/                  # Backend (Node.js + Express)
 │   ├── config/
-│   │   └── db.js            # JSON database helpers
+│   │   ├── db.js            # JSON database helpers
+│   │   └── ai.js            # DeepSeek AI configuration
 │   ├── controllers/
 │   │   ├── authController.js
 │   │   ├── cardsController.js
-│   │   └── tagsController.js
+│   │   ├── tagsController.js
+│   │   └── aiController.js  # AI generation endpoints
 │   ├── middleware/
 │   │   └── auth.js          # JWT verification
 │   ├── routes/
 │   │   ├── auth.js
 │   │   ├── cards.js
-│   │   └── tags.js
+│   │   ├── tags.js
+│   │   └── ai.js            # AI routes
+│   ├── utils/
+│   │   └── logger.js        # Enhanced logging utility
 │   ├── data.json            # Database file
-│   ├── .env                 # JWT_SECRET, PORT
+│   ├── .env                 # JWT_SECRET, PORT, DEEPSEEK_API_KEY
+│   ├── nodemon.json         # Nodemon configuration
 │   ├── index.js
 │   └── package.json
 ├── src/                     # Frontend (React + Vite)
@@ -259,7 +267,11 @@ how-to-do-list/
 │   │   ├── api.js           # Axios instance + interceptors
 │   │   ├── auth.js          # Auth API functions
 │   │   ├── cards.js         # Cards CRUD API
-│   │   └── tags.js          # Tags CRUD API
+│   │   ├── tags.js          # Tags CRUD API
+│   │   └── ai.js            # AI generation API
+│   ├── components/
+│   │   └── common/
+│   │       └── ThemeToggle.jsx  # Theme toggle component
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── index.css
@@ -324,8 +336,8 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 
 1. **Mejoras de IA**
    - [ ] Mostrar descripción con formato Markdown en el textarea/preview
-   - [ ] Dar funcionalidad al botón "IA" en las tarjetas (CardItem)
-   - [ ] Conectar configuración del usuario (creatividad/formalidad) a las generaciones
+   - [x] ~~Dar funcionalidad al botón "IA" en las tarjetas (CardItem)~~ ✅
+   - [x] ~~Conectar configuración del usuario (creatividad/formalidad) a las generaciones~~ ✅
    - [ ] Limitar cantidad de generaciones por usuario
    - [ ] (OPCIONAL) Crear cuestionario con IA para mejorar prompts
 
@@ -338,25 +350,25 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
    - [ ] Botones de eliminar/editar aparecen en hover y dentro del preview
 
 4. **Arreglar errores**
-   - [ ] Fix nodemon port conflict error (desarrollo)
-   - [ ] Arreglar modo oscuro (consistencia de colores)
+   - [x] ~~Fix nodemon port conflict error (desarrollo)~~ ✅
+   - [x] ~~Arreglar modo oscuro (consistencia de colores)~~ ✅
 
 ### 🟡 Media prioridad
 
 5. **Mejoras de UX**
    - [x] ~~Cambiar prioridad por defecto a "Baja"~~ ✅
-   - [ ] ~~Fecha por defecto en blanco, seleccionar actual al hacer clic~~ ✅
-   - [ ] Crear el estado "Expirado" para tarjetas cuya fecha ya pasó (mostrar emoji de reloj 🕐)
+   - [x] ~~Fecha por defecto en blanco, seleccionar actual al hacer clic~~ ✅
+   - [x] ~~Crear el estado "Expirado" para tarjetas cuya fecha ya pasó (mostrar emoji de reloj 🕐)~~ ✅
    - [ ] Rediseño del FAB (Floating Action Button)
 
 6. **Sistema de etiquetas**
-   - [ ] Hacer las etiquetas por defecto eliminables
-   - [ ] Permitir marcar una etiqueta como favorita para elegirla por defecto siempre
-   - [ ] Arreglar el botón de eliminar de las etiquetas para que se vea simétrico
+   - [x] ~~Hacer las etiquetas por defecto eliminables~~ ✅
+   - [x] ~~Permitir marcar una etiqueta como favorita para elegirla por defecto siempre~~ ✅
+   - [x] ~~Arreglar el botón de eliminar de las etiquetas para que se vea simétrico~~ ✅
 
 7. **Filtros y ordenación**
-   - [ ] En los filtros, incluir solo las etiquetas y prioridades que existen en las tarjetas actuales
-   - [ ] Arreglar el ordenador por prioridad para que funcione correctamente
+   - [x] ~~En los filtros, incluir solo las etiquetas y prioridades que existen en las tarjetas actuales~~ ✅
+   - [x] ~~Arreglar el ordenador por prioridad para que funcione correctamente~~ ✅
 
 8. **Sistema de notificaciones**
    - [ ] El botón de notificaciones (🔔) no funciona
@@ -368,13 +380,13 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 
 ### 🟢 Baja prioridad
 
-8. **Sistema de sonidos**
-   - [ ] Añadir sonidos para acciones (crear, completar, eliminar)
-   - [ ] Opción para activar/desactivar en Settings
+10. **Sistema de sonidos**
+    - [ ] Añadir sonidos para acciones (crear, completar, eliminar)
+    - [ ] Opción para activar/desactivar en Settings
 
-9. **Otras mejoras**
-   - [ ] Profile photo upload functionality
-   - [ ] Search improvements
+11. **Otras mejoras**
+    - [ ] Profile photo upload functionality
+    - [ ] Search improvements
 
 ### ✅ Completado
 
@@ -384,12 +396,33 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 
 ---
 
-## ✅ Recently Completed (Session 4 - December 26, 2025)
+## ✅ Recently Completed (Session 5 - December 26, 2025)
+
+### Backend & AI Improvements
+- ~~Sistema de logging mejorado~~ → Logger utility con timestamps, duraciones, estados de operaciones
+- ~~Optimización de generación de IA~~ → Modo básico más rápido, modo avanzado con thinking
+- ~~Personalidad del asistente~~ → Friendly/Professional/Analytical conectado a generaciones
+- ~~Modo básico optimizado~~ → Prompt simplificado, temperatura ajustada (0.5-0.9)
+- ~~Modo avanzado con preguntas~~ → Generación de preguntas de contexto, eliminación de moderación redundante
+- ~~Configuración de nodemon~~ → Ignora data.json, evita reinicios innecesarios
+- ~~Manejo de cierre del servidor~~ → Graceful shutdown con SIGTERM/SIGINT
+
+### UI/UX Improvements
+- ~~Toggle de tema claro/oscuro~~ → Componente reutilizable en header y login/register
+- ~~Detección automática de tema~~ → Detecta preferencia del sistema al cargar
+- ~~Favicon dinámico~~ → Cambia según tema (claro/oscuro)
+
+## ✅ Previously Completed (Session 4 - December 26, 2025)
 
 - ~~AI Integration~~ → DeepSeek backend, moderation, generation, usage tracking
 - ~~Sistema de prioridad~~ → Alta/Media/Baja con filtros y ordenación
 - ~~Blur-out animation~~ → Animación al eliminar/completar tarjetas
 - ~~AI usage count~~ → Visible en Settings page
+- ~~Estado "Expirado"~~ → Detecta y muestra tarjetas con fecha pasada
+- ~~Etiquetas por defecto eliminables~~ → Permite eliminar tags por defecto
+- ~~Etiqueta favorita~~ → Marcar etiqueta como favorita, se selecciona automáticamente
+- ~~Filtros dinámicos~~ → Solo muestra etiquetas/prioridades existentes
+- ~~Ordenador por prioridad~~ → Funciona correctamente (alta → media → baja)
 
 ### Previously Completed
 - ~~Rediseño de controles de tarjeta~~ → Delete button added, three-dots removed
@@ -449,4 +482,27 @@ npm run dev
 9. User data is isolated - each user only sees their own cards and custom tags
 10. Default tags are shared across all users (defined in `server/config/db.js`)
 11. AI logs stored in `data.json` under `aiLogs` array
-12. Nodemon may show port conflict errors - this is normal, the original server keeps running
+12. ~~Nodemon port conflict errors~~ → Fixed with nodemon.json config (ignores data.json)
+13. Enhanced logging system with timestamps, durations, and operation tracking
+14. AI generation supports two modes: Basic (fast) and Advanced (with context questions)
+15. User personality (friendly/professional/analytical) affects AI generation tone
+16. User creativity setting (0-100) maps to temperature (0.0-1.5) for AI generation
+
+---
+
+## 📊 Resumen de Tareas Pendientes
+
+### 🔴 Alta Prioridad (4 tareas principales)
+1. **Mostrar Markdown en descripciones** - Renderizar formato Markdown en textarea/preview
+2. **Limitar generaciones de IA** - Implementar límite de uso por usuario
+3. **Sistema de borradores** - Guardar contenido no guardado y confirmar cierre
+4. **Pantalla de preview** - Vista mejorada para leer tarjetas
+
+### 🟡 Media Prioridad (3 tareas)
+1. **Rediseño del FAB** - Mejorar diseño del botón flotante
+2. **Sistema de notificaciones** - Implementar notificaciones completas
+3. **Internacionalización** - Traducción ES/EN con selector de idioma
+
+### 🟢 Baja Prioridad (2 tareas)
+1. **Sistema de sonidos** - Sonidos para acciones con toggle en Settings
+2. **Mejoras adicionales** - Upload de foto de perfil, mejoras de búsqueda
