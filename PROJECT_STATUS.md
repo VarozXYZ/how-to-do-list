@@ -414,8 +414,9 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 
 ## ✅ Recently Completed (Session 6 - December 26, 2025)
 
-### AI Button Functionality
+### AI & UI Improvements
 - ~~Botón IA en tarjetas~~ → Abre modal de edición en modo avanzado con prompt vacío
+- ~~Preview de Markdown~~ → Toggle entre editor y preview renderizado para descripciones
 
 ## ✅ Previously Completed (Session 5 - December 26, 2025)
 
