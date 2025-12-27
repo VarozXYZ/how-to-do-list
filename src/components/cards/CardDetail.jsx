@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Modal } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -53,6 +54,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   useEffect(() => {
     if (show) {
       setAiError(null) // Clear any previous AI errors
+      setIsLimitError(false)
       setShowConfirmClose(false)
     }
     if (show && !editCard) {
@@ -198,6 +200,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     setShowTagPicker(false)
     setAiMode('basic')
     setAiError(null)
+    setIsLimitError(false)
     setAiQuestions([])
     setAiAnswers({})
     setShowQuestionsModal(false)
@@ -205,6 +208,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     setNewTagName('')
     setNewTagColor('#eff6ff')
     setAiError(null)
+    setIsLimitError(false)
     setShowMarkdownPreview(false)
     setInitialValues(null)
     setShowConfirmClose(false)
@@ -372,12 +376,14 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       if (error.response?.status === 403) {
         const limitData = error.response?.data
         const errorMessage = limitData?.reason || limitData?.error || 'Has alcanzado el límite de generaciones de tu plan.'
-        setAiError(`${errorMessage} ¿Quieres obtener más generaciones? Echa un vistazo a nuestros planes.`)
+        setAiError(errorMessage)
+        setIsLimitError(true)
       } else {
         const errorMessage = error.response?.data?.reason || 
                             error.response?.data?.error || 
                             'Error al generar contenido. Inténtalo de nuevo.'
         setAiError(errorMessage)
+        setIsLimitError(false)
       }
       
       setShowProgressModal(false)
@@ -435,12 +441,14 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       if (error.response?.status === 403) {
         const limitData = error.response?.data
         const errorMessage = limitData?.reason || limitData?.error || 'Has alcanzado el límite de generaciones de tu plan.'
-        setAiError(`${errorMessage} ¿Quieres obtener más generaciones? Echa un vistazo a nuestros planes.`)
+        setAiError(errorMessage)
+        setIsLimitError(true)
       } else {
         const errorMessage = error.response?.data?.reason || 
                             error.response?.data?.error || 
                             'Error al generar contenido. Inténtalo de nuevo.'
         setAiError(errorMessage)
+        setIsLimitError(false)
       }
       
       setAiLoading(false)
@@ -602,7 +610,12 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
             </div>
             </div>
             {aiError && (
-              <p className="ai-error-text">{aiError}</p>
+              <p className="ai-error-text">
+                {aiError}
+                {isLimitError && (
+                  <> ¿Quieres obtener más generaciones? <Link to="/pricing" className="ai-error-link">Echa un vistazo a nuestros planes</Link>.</>
+                )}
+              </p>
             )}
           </div>
         </div>

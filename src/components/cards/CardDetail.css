@@ -536,6 +536,21 @@
   font-weight: 500;
 }
 
+.ai-error-link {
+  color: #dc2626;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.ai-error-link:hover {
+  opacity: 0.8;
+}
+
+[data-theme="dark"] .ai-error-link {
+  color: #f87171;
+}
+
 .ai-helper-text {
   margin: 0;
   font-size: 0.75rem;
