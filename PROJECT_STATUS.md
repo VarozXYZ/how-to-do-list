@@ -363,7 +363,7 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
    - [x] ~~Arreglar modo oscuro (consistencia de colores)~~ ✅
 
 5. **Sistema de tipos de usuarios y planes de pago**
-   - [ ] Implementar tipos de usuarios según plan de pago y usuario admin
+   - [x] ~~Implementar tipos de usuarios según plan de pago y usuario admin~~ ✅
    - [ ] Implementar pasarela de pago para mayor límite de generaciones
 
 6. **Sistema de autenticación profesional**
