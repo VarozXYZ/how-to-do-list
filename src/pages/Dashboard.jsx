@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Sidebar from '../components/layout/Sidebar'
 import CardItem from '../components/cards/CardItem'
 import CardDetail from '../components/cards/CardDetail'
+import CardView from '../components/cards/CardView'
 import ThemeToggle from '../components/common/ThemeToggle'
 import { useCards } from '../context/CardsContext'
 import { useTheme } from '../context/ThemeContext'
@@ -11,7 +12,9 @@ const Dashboard = () => {
   const { activeCards, tags, addCard, updateCard, deleteCard, toggleComplete, getTagById, loading } = useCards()
   const { darkMode } = useTheme()
   const [searchQuery, setSearchQuery] = useState('')
-  const [showModal, setShowModal] = useState(false)
+  const [showViewModal, setShowViewModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [viewingCard, setViewingCard] = useState(null)
   const [editingCard, setEditingCard] = useState(null)
   const [filterTagId, setFilterTagId] = useState('all')
   const [filterPriority, setFilterPriority] = useState('all')
@@ -94,13 +97,24 @@ const Dashboard = () => {
     }
   }
 
-  const handleEdit = (card) => {
-    setEditingCard(card)
-    setShowModal(true)
+  const handleView = (card) => {
+    setViewingCard(card)
+    setShowViewModal(true)
   }
 
-  const handleCloseModal = () => {
-    setShowModal(false)
+  const handleEdit = (card) => {
+    setEditingCard(card)
+    setShowEditModal(true)
+    setShowViewModal(false) // Close view modal if open
+  }
+
+  const handleCloseViewModal = () => {
+    setShowViewModal(false)
+    setViewingCard(null)
+  }
+
+  const handleCloseEditModal = () => {
+    setShowEditModal(false)
     // Clean up AI-specific properties when closing
     if (editingCard && (editingCard.aiMode || editingCard.aiPrompt !== undefined)) {
       const { aiMode, aiPrompt, ...cleanCard } = editingCard
@@ -373,6 +387,7 @@ const Dashboard = () => {
                   onAiAssist={handleAiAssist}
                   onDelete={deleteCard}
                   onEdit={handleEdit}
+                  onView={handleView}
                 />
               ))
             ) : (
@@ -385,14 +400,26 @@ const Dashboard = () => {
         </div>
 
         {/* FAB Button */}
-        <button className="fab-button" title="Nueva tarea" onClick={() => setShowModal(true)}>
+        <button className="fab-button" title="Nueva tarea" onClick={() => {
+          setEditingCard(null)
+          setShowEditModal(true)
+        }}>
           +
         </button>
 
+        {/* View Card Modal */}
+        <CardView
+          show={showViewModal}
+          onHide={handleCloseViewModal}
+          card={viewingCard}
+          onEdit={handleEdit}
+          onDelete={deleteCard}
+        />
+
         {/* Create/Edit Task Modal */}
         <CardDetail 
-          show={showModal} 
-          onHide={handleCloseModal}
+          show={showEditModal} 
+          onHide={handleCloseEditModal}
           onSave={addCard}
           onUpdate={updateCard}
           editCard={editingCard}

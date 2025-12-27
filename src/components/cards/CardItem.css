@@ -21,6 +21,11 @@
   box-shadow: var(--card-shadow-hover);
 }
 
+.card-item:hover .card-hover-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* Header */
 .card-header {
   display: flex;
@@ -60,6 +65,17 @@
   border: 1px solid;
 }
 
+/* Hover Actions */
+.card-hover-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+.card-edit-btn,
 .card-delete-btn {
   padding: 0.5rem;
   background: var(--bg-secondary);
@@ -69,8 +85,14 @@
   font-size: 0.875rem;
   line-height: 1;
   transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.card-edit-btn:hover,
 .card-delete-btn:hover {
   transform: scale(1.1);
   background: var(--bg-hover);

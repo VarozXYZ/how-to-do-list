@@ -3,7 +3,7 @@ import { useCards } from '../../context/CardsContext'
 import { useTheme } from '../../context/ThemeContext'
 import './CardItem.css'
 
-const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
+const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit, onView }) => {
   const { id, title, description, tagId, completed, dueDate, dueTime, priority } = card
   const { getTagById } = useCards()
   const { darkMode } = useTheme()
@@ -84,6 +84,13 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
   }
 
   const handleCardClick = () => {
+    if (!isAnimating && onView) {
+      onView(card)
+    }
+  }
+
+  const handleEditClick = (e) => {
+    e.stopPropagation()
     if (!isAnimating && onEdit) {
       onEdit(card)
     }
@@ -132,18 +139,32 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit }) => {
             </span>
           )}
         </div>
-        <button 
-          className="card-delete-btn"
-          onClick={handleDelete}
-          title="Eliminar tarea"
-          style={{
-            background: `${tag?.textColor}${darkMode ? '30' : '15'}`,
-            borderColor: `${tag?.textColor}${darkMode ? '50' : '30'}`,
-            color: tag?.textColor
-          }}
-        >
-          🗑️
-        </button>
+        <div className="card-hover-actions">
+          <button 
+            className="card-edit-btn"
+            onClick={handleEditClick}
+            title="Editar tarea"
+            style={{
+              background: `${tag?.textColor}${darkMode ? '30' : '15'}`,
+              borderColor: `${tag?.textColor}${darkMode ? '50' : '30'}`,
+              color: tag?.textColor
+            }}
+          >
+            ✏️
+          </button>
+          <button 
+            className="card-delete-btn"
+            onClick={handleDelete}
+            title="Eliminar tarea"
+            style={{
+              background: `${tag?.textColor}${darkMode ? '30' : '15'}`,
+              borderColor: `${tag?.textColor}${darkMode ? '50' : '30'}`,
+              color: tag?.textColor
+            }}
+          >
+            🗑️
+          </button>
+        </div>
       </div>
 
       {/* Content */}
