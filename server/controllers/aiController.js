@@ -15,6 +15,32 @@ const formatDuration = (ms) => {
   return `${(ms / 1000).toFixed(2)}s`
 }
 
+// Helper function to check AI generation limits
+const checkGenerationLimit = (user) => {
+  const plan = user.plan || 'free'
+  const isAdmin = user.isAdmin || false
+  const usageCount = user.aiUsageCount || 0
+  
+  // Admin and Pro plan have unlimited generations
+  if (isAdmin || plan === 'pro') {
+    return { allowed: true, limit: null, remaining: null }
+  }
+  
+  // Free plan has limit of 50
+  const freeLimit = 50
+  if (plan === 'free') {
+    const remaining = Math.max(0, freeLimit - usageCount)
+    return { 
+      allowed: usageCount < freeLimit, 
+      limit: freeLimit, 
+      remaining 
+    }
+  }
+  
+  // Default: no limit (shouldn't happen, but safe fallback)
+  return { allowed: true, limit: null, remaining: null }
+}
+
 // Get AI usage stats for current user
 const getUsageStats = (req, res) => {
   const startTime = log.operationStart('Get AI Usage Stats', req)
@@ -393,6 +419,32 @@ const generateAdvanced = async (req, res) => {
     log.operationProgress('AI Generate Advanced', 'Loading database', req)
     const db = getDB()
     log.dbOperation('Database loaded', { userId, cardId })
+
+    // Check generation limit
+    const user = db.users.find(u => u.id === userId)
+    if (!user) {
+      log.warn('User not found', { userId })
+      log.apiResponse('POST', '/api/ai/generate-advanced', 404, req)
+      return res.status(404).json({ error: 'Usuario no encontrado.' })
+    }
+
+    const limitCheck = checkGenerationLimit(user)
+    if (!limitCheck.allowed) {
+      log.warn('AI generation limit reached', { 
+        userId, 
+        plan: user.plan, 
+        usageCount: user.aiUsageCount,
+        limit: limitCheck.limit
+      })
+      log.apiResponse('POST', '/api/ai/generate-advanced', 403, req)
+      return res.status(403).json({ 
+        error: 'Has alcanzado el límite de generaciones de tu plan.',
+        reason: `Plan ${user.plan || 'free'}: ${limitCheck.limit} generaciones. Actual: ${user.aiUsageCount || 0}.`,
+        limit: limitCheck.limit,
+        current: user.aiUsageCount || 0,
+        plan: user.plan || 'free'
+      })
+    }
 
     // Note: Content moderation was already done in the questions step, so we skip it here
     log.info('Skipping moderation - already done in questions step', { userId, title: title.substring(0, 50) })
