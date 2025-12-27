@@ -3,6 +3,7 @@ import Sidebar from '../components/layout/Sidebar'
 import CardItem from '../components/cards/CardItem'
 import ThemeToggle from '../components/common/ThemeToggle'
 import { useCards } from '../context/CardsContext'
+import { useAuth } from '../context/AuthContext'
 import { useDebounce } from '../hooks/useDebounce'
 import './Dashboard.css'
 
