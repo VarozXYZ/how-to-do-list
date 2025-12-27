@@ -31,6 +31,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const [saving, setSaving] = useState(false)
   const [aiLoading, setAiLoading] = useState(false)
   const [aiError, setAiError] = useState(null)
+  const [isLimitError, setIsLimitError] = useState(false)
   const [aiMode, setAiMode] = useState('basic') // 'basic' or 'advanced'
   const [showQuestionsModal, setShowQuestionsModal] = useState(false)
   const [aiQuestions, setAiQuestions] = useState([])
