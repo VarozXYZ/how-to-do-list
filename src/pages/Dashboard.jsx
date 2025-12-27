@@ -6,12 +6,14 @@ import CardView from '../components/cards/CardView'
 import ThemeToggle from '../components/common/ThemeToggle'
 import { useCards } from '../context/CardsContext'
 import { useTheme } from '../context/ThemeContext'
+import { useDebounce } from '../hooks/useDebounce'
 import './Dashboard.css'
 
 const Dashboard = () => {
   const { activeCards, tags, addCard, updateCard, deleteCard, toggleComplete, getTagById, loading } = useCards()
   const { darkMode } = useTheme()
   const [searchQuery, setSearchQuery] = useState('')
+  const debouncedSearchQuery = useDebounce(searchQuery, 300)
   const [showViewModal, setShowViewModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
   const [viewingCard, setViewingCard] = useState(null)
@@ -144,7 +146,7 @@ const Dashboard = () => {
   // Filter and sort cards
   const filteredCards = activeCards
     .filter(card => {
-      const query = searchQuery.toLowerCase()
+      const query = debouncedSearchQuery.toLowerCase()
       const tag = getTagById(card.tagId)
       const matchesSearch = (
         card.title.toLowerCase().includes(query) ||

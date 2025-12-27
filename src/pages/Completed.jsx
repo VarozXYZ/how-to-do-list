@@ -3,14 +3,16 @@ import Sidebar from '../components/layout/Sidebar'
 import CardItem from '../components/cards/CardItem'
 import ThemeToggle from '../components/common/ThemeToggle'
 import { useCards } from '../context/CardsContext'
+import { useDebounce } from '../hooks/useDebounce'
 import './Dashboard.css'
 
 const Completed = () => {
   const { completedCards, toggleComplete, deleteCard, getTagById, loading } = useCards()
   const [searchQuery, setSearchQuery] = useState('')
+  const debouncedSearchQuery = useDebounce(searchQuery, 300)
 
   const filteredCards = completedCards.filter(card => {
-    const query = searchQuery.toLowerCase()
+    const query = debouncedSearchQuery.toLowerCase()
     const tag = getTagById(card.tagId)
     return (
       card.title.toLowerCase().includes(query) ||
