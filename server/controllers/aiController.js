@@ -45,23 +45,39 @@ const checkGenerationLimit = (user) => {
 const getUsageStats = (req, res) => {
   const startTime = log.operationStart('Get AI Usage Stats', req)
   try {
-    log.apiRequest('GET', '/api/ai/usage', req)
+    log.apiRequest('GET', '/api/ai/stats', req)
     log.operationProgress('Get AI Usage Stats', 'Loading database', req)
     const db = getDB()
     const user = db.users.find(u => u.id === req.user.id)
     
-    const usageCount = user?.aiUsageCount || 0
-    log.success('AI usage stats retrieved', { userId: req.user.id, usageCount })
-    log.operationEnd('Get AI Usage Stats', startTime, req, { usageCount })
-    log.apiResponse('GET', '/api/ai/usage', 200, req, { usageCount })
+    if (!user) {
+      log.warn('User not found', { userId: req.user.id })
+      log.apiResponse('GET', '/api/ai/stats', 404, req)
+      return res.status(404).json({ error: 'Usuario no encontrado.' })
+    }
+    
+    const usageCount = user.aiUsageCount || 0
+    const plan = user.plan || 'free'
+    const isAdmin = user.isAdmin || false
+    
+    // Calculate limit and remaining using the same logic as checkGenerationLimit
+    const limitCheck = checkGenerationLimit(user)
+    
+    log.success('AI usage stats retrieved', { userId: req.user.id, usageCount, plan, limit: limitCheck.limit })
+    log.operationEnd('Get AI Usage Stats', startTime, req, { usageCount, plan })
+    log.apiResponse('GET', '/api/ai/stats', 200, req, { usageCount, plan })
     
     res.json({
-      aiUsageCount: usageCount
+      aiUsageCount: usageCount,
+      plan: plan,
+      isAdmin: isAdmin,
+      limit: limitCheck.limit,
+      remaining: limitCheck.remaining
     })
   } catch (error) {
     log.error('Get AI Usage Stats failed', error, { userId: req.user.id })
     log.operationEnd('Get AI Usage Stats', startTime, req, { error: true })
-    log.apiResponse('GET', '/api/ai/usage', 500, req)
+    log.apiResponse('GET', '/api/ai/stats', 500, req)
     res.status(500).json({ error: 'Error al obtener estadísticas.' })
   }
 }

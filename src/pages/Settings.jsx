@@ -267,12 +267,14 @@ const Settings = () => {
                 <div className="ai-usage-info">
                   <p className="ai-usage-label">Generaciones de IA utilizadas</p>
                   <div className="ai-usage-details">
-                    <p className="ai-usage-count">{aiUsageCount}</p>
+                    <span className="ai-usage-count">{aiUsageCount}</span>
                     {aiLimit !== null && (
-                      <span className="ai-usage-limit">/ {aiLimit}</span>
-                    )}
-                    {aiRemaining !== null && (
-                      <span className="ai-usage-remaining">({aiRemaining} restantes)</span>
+                      <>
+                        <span className="ai-usage-limit">/ {aiLimit}</span>
+                        {aiRemaining !== null && (
+                          <span className="ai-usage-remaining">({aiRemaining} restantes)</span>
+                        )}
+                      </>
                     )}
                     {aiLimit === null && (
                       <span className="ai-usage-unlimited">Ilimitado</span>
