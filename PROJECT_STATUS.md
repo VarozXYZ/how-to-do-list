@@ -271,7 +271,8 @@ how-to-do-list/
 │   │   └── ai.js            # AI generation API
 │   ├── components/
 │   │   └── common/
-│   │       └── ThemeToggle.jsx  # Theme toggle component
+│   │       ├── ThemeToggle.jsx  # Theme toggle component
+│   │       └── ConfirmModal.jsx + ConfirmModal.css  # Reusable confirmation modal
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── index.css
@@ -343,11 +344,11 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 
 2. **Sistema de borradores**
    - [ ] Guardar borradores para evitar perder contenido generado no guardado
-   - [ ] Pedir confirmación si se cierra una tarjeta sin guardar
+   - [x] ~~Pedir confirmación si se cierra una tarjeta sin guardar~~ ✅ (Session 6)
 
 3. **Pantalla de preview de tarjetas**
-   - [ ] Crear vista de preview donde el texto sea más fácil de leer
-   - [ ] Botones de eliminar/editar aparecen en hover y dentro del preview
+   - [x] ~~Crear vista de preview donde el texto sea más fácil de leer~~ ✅ (Session 6)
+   - [x] ~~Botones de eliminar/editar aparecen en hover y dentro del preview~~ ✅ (Session 6)
 
 4. **Arreglar errores**
    - [x] ~~Fix nodemon port conflict error (desarrollo)~~ ✅
