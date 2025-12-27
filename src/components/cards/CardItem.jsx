@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useCards } from '../../context/CardsContext'
 import { useTheme } from '../../context/ThemeContext'
+import ConfirmModal from '../common/ConfirmModal'
 import './CardItem.css'
 
 const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit, onView }) => {
@@ -8,6 +9,7 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit, onView
   const { getTagById } = useCards()
   const { darkMode } = useTheme()
   const [isAnimating, setIsAnimating] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
   const tag = getTagById(tagId)
   
@@ -68,6 +70,10 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit, onView
   const handleDelete = (e) => {
     e.stopPropagation()
     if (isAnimating) return
+    setShowDeleteConfirm(true)
+  }
+
+  const confirmDelete = () => {
     setIsAnimating(true)
     setTimeout(() => {
       onDelete && onDelete(id)
@@ -207,6 +213,17 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit, onView
           <span className="checkmark"></span>
         </label>
       </div>
+
+      <ConfirmModal
+        show={showDeleteConfirm}
+        onHide={() => setShowDeleteConfirm(false)}
+        onConfirm={confirmDelete}
+        title="¿Eliminar tarea?"
+        message="¿Estás seguro de que quieres eliminar esta tarea? Esta acción no se puede deshacer."
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        variant="danger"
+      />
     </div>
   )
 }

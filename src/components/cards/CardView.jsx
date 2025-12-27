@@ -1,12 +1,15 @@
+import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import ReactMarkdown from 'react-markdown'
 import { useCards } from '../../context/CardsContext'
 import { useTheme } from '../../context/ThemeContext'
+import ConfirmModal from '../common/ConfirmModal'
 import './CardView.css'
 
 const CardView = ({ show, onHide, card, onEdit, onDelete }) => {
   const { getTagById } = useCards()
   const { darkMode } = useTheme()
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
   if (!card) return null
 
@@ -53,10 +56,12 @@ const CardView = ({ show, onHide, card, onEdit, onDelete }) => {
   }
 
   const handleDelete = () => {
-    if (window.confirm('¿Estás seguro de que quieres eliminar esta tarea?')) {
-      onDelete && onDelete(card.id)
-      onHide()
-    }
+    setShowDeleteConfirm(true)
+  }
+
+  const confirmDelete = () => {
+    onDelete && onDelete(card.id)
+    onHide()
   }
 
   return (
@@ -146,6 +151,17 @@ const CardView = ({ show, onHide, card, onEdit, onDelete }) => {
           </button>
         </div>
       </div>
+
+      <ConfirmModal
+        show={showDeleteConfirm}
+        onHide={() => setShowDeleteConfirm(false)}
+        onConfirm={confirmDelete}
+        title="¿Eliminar tarea?"
+        message="¿Estás seguro de que quieres eliminar esta tarea? Esta acción no se puede deshacer."
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        variant="danger"
+      />
     </Modal>
   )
 }

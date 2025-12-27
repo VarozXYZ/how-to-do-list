@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown'
 import { useCards } from '../../context/CardsContext'
 import { useTheme } from '../../context/ThemeContext'
 import { generateContent, generateBasicContent, generateAdvancedContent, generateContextQuestions } from '../../services/ai'
+import ConfirmModal from '../common/ConfirmModal'
 import './CardDetail.css'
 
 registerLocale('es', es)
@@ -34,6 +35,8 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const [aiQuestions, setAiQuestions] = useState([])
   const [aiAnswers, setAiAnswers] = useState({})
   const [showMarkdownPreview, setShowMarkdownPreview] = useState(false)
+  const [initialValues, setInitialValues] = useState(null)
+  const [showConfirmClose, setShowConfirmClose] = useState(false)
   
   const priorityOptions = [
     { value: 'alta', label: 'Alta', color: '#dc2626', bgColor: '#fef2f2' },
@@ -48,23 +51,45 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   useEffect(() => {
     if (show) {
       setAiError(null) // Clear any previous AI errors
+      setShowConfirmClose(false)
     }
     if (show && !editCard) {
       // New card: use favorite tag or first available tag
       const favoriteTag = getFavoriteTag()
-      setSelectedTagId(favoriteTag?.id || tags[0]?.id || '')
+      const defaultTagId = favoriteTag?.id || tags[0]?.id || ''
+      setSelectedTagId(defaultTagId)
       setDueDate(null)
       setDueTime(null)
       setAiMode('basic')
       setAiPrompt('')
+      setTitle('')
+      setDescription('')
+      setPriority('baja')
+      
+      // Store initial values for new card
+      setInitialValues({
+        title: '',
+        description: '',
+        tagId: defaultTagId,
+        priority: 'baja',
+        dueDate: null,
+        dueTime: null
+      })
     } else if (editCard) {
       // Editing: populate with existing data
-      setTitle(editCard.title || '')
-      setDescription(editCard.description || '')
-      setSelectedTagId(editCard.tagId || getFavoriteTag()?.id || tags[0]?.id || '')
-      setPriority(editCard.priority || 'baja')
-      setDueDate(editCard.dueDate ? new Date(editCard.dueDate) : null)
-      setDueTime(editCard.dueTime ? new Date(`2000-01-01T${editCard.dueTime}`) : null)
+      const cardTitle = editCard.title || ''
+      const cardDescription = editCard.description || ''
+      const cardTagId = editCard.tagId || getFavoriteTag()?.id || tags[0]?.id || ''
+      const cardPriority = editCard.priority || 'baja'
+      const cardDueDate = editCard.dueDate ? new Date(editCard.dueDate) : null
+      const cardDueTime = editCard.dueTime ? new Date(`2000-01-01T${editCard.dueTime}`) : null
+      
+      setTitle(cardTitle)
+      setDescription(cardDescription)
+      setSelectedTagId(cardTagId)
+      setPriority(cardPriority)
+      setDueDate(cardDueDate)
+      setDueTime(cardDueTime)
       
       // Check if opened from AI button (has aiMode and aiPrompt properties)
       if (editCard.aiMode === 'advanced') {
@@ -74,6 +99,16 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         setAiMode('basic')
         setAiPrompt(editCard.aiPrompt || '')
       }
+      
+      // Store initial values for editing
+      setInitialValues({
+        title: cardTitle,
+        description: cardDescription,
+        tagId: cardTagId,
+        priority: cardPriority,
+        dueDate: editCard.dueDate,
+        dueTime: editCard.dueTime
+      })
     }
   }, [show, editCard, tags, getFavoriteTag])
 
@@ -124,7 +159,32 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     { color: '#f0fdfa', borderColor: '#99f6e4', textColor: '#0d9488' }, // Teal
   ]
 
-  const handleClose = () => {
+  // Helper function to check if there are unsaved changes
+  const hasUnsavedChanges = () => {
+    if (!initialValues) return false
+    
+    const currentDueTime = dueTime ? dueTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : null
+    const initialDueTime = initialValues.dueTime ? (typeof initialValues.dueTime === 'string' ? initialValues.dueTime : new Date(`2000-01-01T${initialValues.dueTime}`).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })) : null
+    const currentDueDate = dueDate ? dueDate.toISOString().split('T')[0] : null
+    const initialDueDate = initialValues.dueDate ? (typeof initialValues.dueDate === 'string' ? initialValues.dueDate : new Date(initialValues.dueDate).toISOString().split('T')[0]) : null
+    
+    return (
+      title.trim() !== (initialValues.title || '').trim() ||
+      description.trim() !== (initialValues.description || '').trim() ||
+      selectedTagId !== initialValues.tagId ||
+      priority !== initialValues.priority ||
+      currentDueDate !== initialDueDate ||
+      currentDueTime !== initialDueTime
+    )
+  }
+
+  const handleClose = (force = false) => {
+    // Check for unsaved changes
+    if (!force && hasUnsavedChanges()) {
+      setShowConfirmClose(true)
+      return
+    }
+    
     setTitle('')
     setAiPrompt('')
     setDescription('')
@@ -144,7 +204,13 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     setNewTagColor('#eff6ff')
     setAiError(null)
     setShowMarkdownPreview(false)
+    setInitialValues(null)
+    setShowConfirmClose(false)
     onHide()
+  }
+
+  const handleConfirmClose = () => {
+    handleClose(true)
   }
 
   const handleSave = async () => {
@@ -179,7 +245,9 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         }
         await onSave(newCard)
       }
-      handleClose()
+      // Reset initial values after successful save
+      setInitialValues(null)
+      handleClose(true)
     } catch (error) {
       console.error('Error saving card:', error)
       alert('Error al guardar la tarea')
@@ -312,7 +380,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     <>
     <Modal 
       show={show} 
-      onHide={handleClose} 
+      onHide={() => handleClose()} 
       centered 
       size="lg"
       className="task-modal"
@@ -764,6 +832,18 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
         </div>
       </div>
     </Modal>
+
+    {/* Confirm Close Modal */}
+    <ConfirmModal
+      show={showConfirmClose}
+      onHide={() => setShowConfirmClose(false)}
+      onConfirm={handleConfirmClose}
+      title="¿Descartar cambios?"
+      message="Tienes cambios sin guardar. ¿Estás seguro de que quieres cerrar sin guardar?"
+      confirmText="Descartar"
+      cancelText="Cancelar"
+      variant="danger"
+    />
     </>
   )
 }
