@@ -3,16 +3,6 @@ import { createContext, useState, useContext, useEffect } from 'react'
 const ThemeContext = createContext(null)
 
 export const ThemeProvider = ({ children }) => {
-  // Check if user has manually set a preference
-  const hasManualPreference = () => {
-    const savedPrefs = localStorage.getItem('userPreferences')
-    if (savedPrefs) {
-      const prefs = JSON.parse(savedPrefs)
-      return prefs.darkMode !== undefined
-    }
-    return false
-  }
-
   const [darkMode, setDarkMode] = useState(() => {
     // Check localStorage first
     const savedPrefs = localStorage.getItem('userPreferences')
