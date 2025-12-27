@@ -372,7 +372,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       if (error.response?.status === 403) {
         const limitData = error.response?.data
         const errorMessage = limitData?.reason || limitData?.error || 'Has alcanzado el límite de generaciones de tu plan.'
-        setAiError(`${errorMessage} Visita la página de Planes para actualizar.`)
+        setAiError(`${errorMessage} ¿Quieres obtener más generaciones? Echa un vistazo a nuestros planes.`)
       } else {
         const errorMessage = error.response?.data?.reason || 
                             error.response?.data?.error || 
@@ -435,7 +435,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       if (error.response?.status === 403) {
         const limitData = error.response?.data
         const errorMessage = limitData?.reason || limitData?.error || 'Has alcanzado el límite de generaciones de tu plan.'
-        setAiError(`${errorMessage} Visita la página de Planes para actualizar.`)
+        setAiError(`${errorMessage} ¿Quieres obtener más generaciones? Echa un vistazo a nuestros planes.`)
       } else {
         const errorMessage = error.response?.data?.reason || 
                             error.response?.data?.error || 

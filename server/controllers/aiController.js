@@ -283,9 +283,10 @@ const generateBasic = async (req, res) => {
         limit: limitCheck.limit
       })
       log.apiResponse('POST', '/api/ai/generate-basic', 403, req)
+      const planName = user.plan === 'pro' ? 'Pro' : user.plan === 'admin' ? 'Admin' : 'Gratuito'
       return res.status(403).json({ 
         error: 'Has alcanzado el límite de generaciones de tu plan.',
-        reason: `Plan ${user.plan || 'free'}: ${limitCheck.limit} generaciones. Actual: ${user.aiUsageCount || 0}.`,
+        reason: `Has usado las ${limitCheck.limit} generaciones incluidas en tu plan ${planName}.`,
         limit: limitCheck.limit,
         current: user.aiUsageCount || 0,
         plan: user.plan || 'free'
@@ -481,9 +482,10 @@ const generateAdvanced = async (req, res) => {
         limit: limitCheck.limit
       })
       log.apiResponse('POST', '/api/ai/generate-advanced', 403, req)
+      const planName = user.plan === 'pro' ? 'Pro' : user.plan === 'admin' ? 'Admin' : 'Gratuito'
       return res.status(403).json({ 
         error: 'Has alcanzado el límite de generaciones de tu plan.',
-        reason: `Plan ${user.plan || 'free'}: ${limitCheck.limit} generaciones. Actual: ${user.aiUsageCount || 0}.`,
+        reason: `Has usado las ${limitCheck.limit} generaciones incluidas en tu plan ${planName}.`,
         limit: limitCheck.limit,
         current: user.aiUsageCount || 0,
         plan: user.plan || 'free'
