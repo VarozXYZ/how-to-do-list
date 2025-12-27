@@ -1,5 +1,6 @@
 const { getDB, saveDB } = require('../config/db')
 const log = require('../utils/logger')
+const { normalizeCardId, compareCardIds } = require('../utils/cardHelpers')
 
 // Get all cards for user
 const getCards = (req, res) => {
@@ -160,8 +161,7 @@ const deleteCard = (req, res) => {
     const db = getDB()
 
     const cardIndex = db.cards.findIndex(c => {
-      const cId = typeof c.id === 'string' ? parseInt(c.id, 10) : c.id
-      return cId === cardId && c.userId === req.user.id
+      return compareCardIds(c.id, cardId) && c.userId === req.user.id
     })
     
     if (cardIndex === -1) {

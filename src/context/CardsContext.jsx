@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from 'react'
 import * as cardsService from '../services/cards'
 import * as tagsService from '../services/tags'
+import { normalizeCardId, compareCardIds } from '../utils/cardHelpers'
 
 const CardsContext = createContext(null)
 
@@ -48,14 +49,9 @@ export const CardsProvider = ({ children }) => {
   // Delete a card
   const deleteCard = async (id) => {
     try {
-      // Ensure id is a number if it's coming as a string
-      const cardId = typeof id === 'string' ? parseInt(id, 10) : id
+      const cardId = normalizeCardId(id)
       await cardsService.deleteCard(cardId)
-      setCards(cards.filter(card => {
-        // Handle both string and number IDs
-        const currentCardId = typeof card.id === 'string' ? parseInt(card.id, 10) : card.id
-        return currentCardId !== cardId
-      }))
+      setCards(cards.filter(card => !compareCardIds(card.id, cardId)))
     } catch (err) {
       console.error('Error deleting card:', err)
       // Show user-friendly error message
