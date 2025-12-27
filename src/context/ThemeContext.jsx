@@ -1,16 +1,14 @@
 import { createContext, useState, useContext, useEffect } from 'react'
+import { getPreferences, updatePreference } from '../utils/storage'
 
 const ThemeContext = createContext(null)
 
 export const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(() => {
     // Check localStorage first
-    const savedPrefs = localStorage.getItem('userPreferences')
-    if (savedPrefs) {
-      const prefs = JSON.parse(savedPrefs)
-      if (prefs.darkMode !== undefined) {
-        return prefs.darkMode
-      }
+    const prefs = getPreferences()
+    if (prefs.darkMode !== undefined) {
+      return prefs.darkMode
     }
     // Check system preference if no manual preference
     return window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -22,8 +20,8 @@ export const ThemeProvider = ({ children }) => {
     
     const handleChange = (e) => {
       // Only update if user hasn't manually set a preference
-      const savedPrefs = localStorage.getItem('userPreferences')
-      const hasManualPref = savedPrefs && JSON.parse(savedPrefs).darkMode !== undefined
+      const prefs = getPreferences()
+      const hasManualPref = prefs.darkMode !== undefined
       
       if (!hasManualPref) {
         setDarkMode(e.matches)
@@ -31,8 +29,8 @@ export const ThemeProvider = ({ children }) => {
     }
 
     // Check initial state - only listen if no manual preference
-    const savedPrefs = localStorage.getItem('userPreferences')
-    const hasManualPref = savedPrefs && JSON.parse(savedPrefs).darkMode !== undefined
+    const prefs = getPreferences()
+    const hasManualPref = prefs.darkMode !== undefined
     
     if (!hasManualPref) {
       // Modern browsers
@@ -80,10 +78,7 @@ export const ThemeProvider = ({ children }) => {
     setDarkMode(newValue)
     
     // Update localStorage - mark as manual preference
-    const savedPrefs = localStorage.getItem('userPreferences')
-    const prefs = savedPrefs ? JSON.parse(savedPrefs) : {}
-    prefs.darkMode = newValue
-    localStorage.setItem('userPreferences', JSON.stringify(prefs))
+    updatePreference('darkMode', newValue)
   }
 
   return (

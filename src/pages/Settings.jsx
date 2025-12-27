@@ -4,6 +4,7 @@ import Sidebar from '../components/layout/Sidebar'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import { getAiStats } from '../services/ai'
+import { getPreferences, setPreferences } from '../utils/storage'
 import './Settings.css'
 
 const Settings = () => {
@@ -39,18 +40,15 @@ const Settings = () => {
     }
     
     // Load preferences from localStorage (darkMode is handled by ThemeContext)
-    const savedPrefs = localStorage.getItem('userPreferences')
-    if (savedPrefs) {
-      const prefs = JSON.parse(savedPrefs)
-      setNotifications(prefs.notifications ?? true)
-      setSounds(prefs.sounds ?? true)
-      // Only use localStorage values if user doesn't have them in DB
-      if (!user?.creativity) {
-        setCreativity(prefs.creativity ?? 50)
-      }
-      if (!user?.personality) {
-        setPersonality(prefs.personality ?? 'professional')
-      }
+    const prefs = getPreferences()
+    setNotifications(prefs.notifications ?? true)
+    setSounds(prefs.sounds ?? true)
+    // Only use localStorage values if user doesn't have them in DB
+    if (!user?.creativity) {
+      setCreativity(prefs.creativity ?? 50)
+    }
+    if (!user?.personality) {
+      setPersonality(prefs.personality ?? 'professional')
     }
     
     // Fetch AI usage stats
@@ -80,10 +78,9 @@ const Settings = () => {
       await updateProfile({ username, bio, creativity, personality })
       
       // Save preferences to localStorage (darkMode is saved by ThemeContext)
-      const savedPrefs = localStorage.getItem('userPreferences')
-      const currentPrefs = savedPrefs ? JSON.parse(savedPrefs) : {}
+      const currentPrefs = getPreferences()
       const prefs = { ...currentPrefs, notifications, sounds }
-      localStorage.setItem('userPreferences', JSON.stringify(prefs))
+      setPreferences(prefs)
       
       setMessage({ type: 'success', text: '¡Cambios guardados correctamente!' })
       setTimeout(() => setMessage({ type: '', text: '' }), 3000)

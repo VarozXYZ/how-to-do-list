@@ -1,13 +1,12 @@
 import api from './api'
+import { storeAuth, clearAuth, getUser, updateUser } from '../utils/storage'
 
 // Login user
 export const login = async (email, password) => {
   const response = await api.post('/auth/login', { email, password })
   const { token, user } = response.data
   
-  // Store token and user in localStorage
-  localStorage.setItem('token', token)
-  localStorage.setItem('user', JSON.stringify(user))
+  storeAuth(token, user)
   
   return { token, user }
 }
@@ -17,29 +16,24 @@ export const register = async (username, email, password) => {
   const response = await api.post('/auth/register', { username, email, password })
   const { token, user } = response.data
   
-  // Store token and user in localStorage
-  localStorage.setItem('token', token)
-  localStorage.setItem('user', JSON.stringify(user))
+  storeAuth(token, user)
   
   return { token, user }
 }
 
 // Logout user
 export const logout = () => {
-  localStorage.removeItem('token')
-  localStorage.removeItem('user')
+  clearAuth()
 }
 
 // Get current user from localStorage
 export const getCurrentUser = () => {
-  const user = localStorage.getItem('user')
-  return user ? JSON.parse(user) : null
+  return getUser()
 }
 
 // Update profile
 export const updateProfile = async (data) => {
   const response = await api.put('/auth/profile', data)
-  // Update localStorage
-  localStorage.setItem('user', JSON.stringify(response.data))
+  updateUser(response.data)
   return response.data
 }
