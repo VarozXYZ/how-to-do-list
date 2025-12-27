@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 import { useCards } from '../../context/CardsContext'
 import { useTheme } from '../../context/ThemeContext'
 import ConfirmModal from '../common/ConfirmModal'
@@ -176,7 +177,13 @@ const CardItem = ({ card, onToggleComplete, onAiAssist, onDelete, onEdit, onView
       {/* Content */}
       <div className="card-content">
         <h4 className="card-title">{title}</h4>
-        <p className="card-description">{description}</p>
+        <div className="card-description">
+          {description ? (
+            <ReactMarkdown>{description}</ReactMarkdown>
+          ) : (
+            <p style={{ margin: 0, color: 'var(--text-muted)' }}>Sin descripción</p>
+          )}
+        </div>
         
         {/* Date display */}
         {(dueDate || dueTime) && (
