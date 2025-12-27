@@ -518,13 +518,15 @@ const generateAdvanced = async (req, res) => {
     const userCreativity = user?.creativity || 50
     const userPersonality = user?.personality || 'professional'
     const username = user?.username || null
+    const aboutMe = user?.bio || null
     const temperature = creativityToTemperature(userCreativity)
     log.info('User AI settings loaded', { 
       userId, 
       creativity: userCreativity, 
       personality: userPersonality,
       temperature: temperature.toFixed(2),
-      username 
+      username,
+      hasAboutMe: !!aboutMe
     })
 
     // Step 3: Generate content with answers
@@ -539,7 +541,7 @@ const generateAdvanced = async (req, res) => {
       answersCount: answers ? Object.keys(answers).length : 0
     })
     const generationStart = Date.now()
-    const generatedContent = await generateAdvancedTaskContent(title, description, userPrompt, answers || {}, temperature, userPersonality, username)
+    const generatedContent = await generateAdvancedTaskContent(title, description, userPrompt, answers || {}, temperature, userPersonality, username, aboutMe)
     log.aiOperation('Generation', 'Completed', { 
       mode: 'advanced',
       contentLength: generatedContent.length,
