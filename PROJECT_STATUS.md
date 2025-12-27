@@ -415,9 +415,16 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 
 ## ✅ Recently Completed (Session 6 - December 26, 2025)
 
+### Security & UX Improvements
+- ~~Modal de confirmación reutilizable~~ → Componente `ConfirmModal` para eliminar y descartar cambios
+- ~~Confirmación al cerrar sin guardar~~ → Detecta cambios sin guardar y muestra confirmación antes de cerrar
+- ~~Confirmación al eliminar tarjetas~~ → Reemplazado `window.confirm` con modal personalizado consistente
+- ~~Mejoras visuales de modales~~ → Diseño centrado, iconos, botones con alineación vertical perfecta
+
 ### AI & UI Improvements
 - ~~Botón IA en tarjetas~~ → Abre modal de edición en modo avanzado con prompt vacío
 - ~~Preview de Markdown~~ → Toggle entre editor y preview renderizado para descripciones
+- ~~Pantalla de preview de tarjetas~~ → Vista mejorada para leer tarjetas con botones en hover
 
 ## ✅ Previously Completed (Session 5 - December 26, 2025)
 
@@ -438,17 +445,18 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
 
 ## ✅ Previously Completed (Session 4 - December 26, 2025)
 
+### AI & Priority System
 - ~~AI Integration~~ → DeepSeek backend, moderation, generation, usage tracking
 - ~~Sistema de prioridad~~ → Alta/Media/Baja con filtros y ordenación
-- ~~Blur-out animation~~ → Animación al eliminar/completar tarjetas
 - ~~AI usage count~~ → Visible en Settings page
+
+### UI/UX Enhancements
+- ~~Blur-out animation~~ → Animación al eliminar/completar tarjetas
 - ~~Estado "Expirado"~~ → Detecta y muestra tarjetas con fecha pasada
 - ~~Etiquetas por defecto eliminables~~ → Permite eliminar tags por defecto
 - ~~Etiqueta favorita~~ → Marcar etiqueta como favorita, se selecciona automáticamente
 - ~~Filtros dinámicos~~ → Solo muestra etiquetas/prioridades existentes
 - ~~Ordenador por prioridad~~ → Funciona correctamente (alta → media → baja)
-
-### Previously Completed
 - ~~Rediseño de controles de tarjeta~~ → Delete button added, three-dots removed
 - ~~Mejora visual de etiquetas~~ → Tags now have distinct styling
 - ~~Logout accesible~~ → Added in sidebar with icon
@@ -512,21 +520,3 @@ npm run dev
 15. User personality (friendly/professional/analytical) affects AI generation tone
 16. User creativity setting (0-100) maps to temperature (0.0-1.5) for AI generation
 
----
-
-## 📊 Resumen de Tareas Pendientes
-
-### 🔴 Alta Prioridad (4 tareas principales)
-1. **Mostrar Markdown en descripciones** - Renderizar formato Markdown en textarea/preview
-2. **Limitar generaciones de IA** - Implementar límite de uso por usuario
-3. **Sistema de borradores** - Guardar contenido no guardado y confirmar cierre
-4. **Pantalla de preview** - Vista mejorada para leer tarjetas
-
-### 🟡 Media Prioridad (3 tareas)
-1. **Rediseño del FAB** - Mejorar diseño del botón flotante
-2. **Sistema de notificaciones** - Implementar notificaciones completas
-3. **Internacionalización** - Traducción ES/EN con selector de idioma
-
-### 🟢 Baja Prioridad (2 tareas)
-1. **Sistema de sonidos** - Sonidos para acciones con toggle en Settings
-2. **Mejoras adicionales** - Upload de foto de perfil, mejoras de búsqueda
