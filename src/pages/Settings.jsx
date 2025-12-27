@@ -32,6 +32,10 @@ const Settings = () => {
   // About Me info popover
   const [showAboutMeInfo, setShowAboutMeInfo] = useState(false)
   const aboutMeInfoRef = useRef(null)
+  
+  // Creativity info popover
+  const [showCreativityInfo, setShowCreativityInfo] = useState(false)
+  const creativityInfoRef = useRef(null)
 
   // Load user data and preferences on mount
   useEffect(() => {
