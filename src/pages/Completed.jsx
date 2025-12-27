@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Sidebar from '../components/layout/Sidebar'
 import CardItem from '../components/cards/CardItem'
+import ThemeToggle from '../components/common/ThemeToggle'
 import { useCards } from '../context/CardsContext'
 import './Dashboard.css'
 
@@ -40,6 +41,11 @@ const Completed = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
+            <ThemeToggle />
+            <button className="notification-btn">
+              <span>🔔</span>
+              <span className="notification-dot"></span>
+            </button>
           </div>
         </header>
 
