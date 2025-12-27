@@ -305,4 +305,61 @@ const updateProfile = async (req, res) => {
   }
 }
 
-module.exports = { register, login, getMe, updateProfile }
+// Update user plan (admin only or for upgrading)
+const updatePlan = async (req, res) => {
+  const startTime = log.operationStart('Update Plan', req)
+  try {
+    log.apiRequest('PUT', '/api/auth/plan', req)
+    const { plan } = req.body
+    const userId = req.user.id
+    
+    // Validate plan value
+    const validPlans = ['free', 'pro']
+    if (!validPlans.includes(plan)) {
+      log.warn('Invalid plan value', { plan, userId })
+      log.apiResponse('PUT', '/api/auth/plan', 400, req)
+      return res.status(400).json({ error: 'Plan inválido. Planes válidos: free, pro' })
+    }
+
+    log.operationProgress('Update Plan', 'Loading database', req)
+    const db = getDB()
+    
+    const userIndex = db.users.findIndex(u => u.id === userId)
+    if (userIndex === -1) {
+      log.warn('User not found for plan update', { userId })
+      log.apiResponse('PUT', '/api/auth/plan', 404, req)
+      return res.status(404).json({ error: 'Usuario no encontrado.' })
+    }
+
+    const oldPlan = db.users[userIndex].plan || 'free'
+    db.users[userIndex].plan = plan
+    
+    log.operationProgress('Update Plan', 'Saving plan change', req, { oldPlan, newPlan: plan })
+    saveDB(db)
+    log.dbOperation('Plan updated and saved', { userId, oldPlan, newPlan: plan })
+
+    const user = db.users[userIndex]
+    log.success('Plan updated successfully', { 
+      userId: user.id, 
+      oldPlan, 
+      newPlan: plan 
+    })
+    log.operationEnd('Update Plan', startTime, req, { userId: user.id, oldPlan, newPlan: plan })
+    log.apiResponse('PUT', '/api/auth/plan', 200, req, { userId: user.id })
+    
+    res.json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      plan: user.plan,
+      isAdmin: user.isAdmin || false
+    })
+  } catch (error) {
+    log.error('Update Plan failed', error, { userId: req.user.id })
+    log.operationEnd('Update Plan', startTime, req, { error: true })
+    log.apiResponse('PUT', '/api/auth/plan', 500, req)
+    res.status(500).json({ error: 'Error al actualizar plan.' })
+  }
+}
+
+module.exports = { register, login, getMe, updateProfile, updatePlan }
