@@ -4,14 +4,17 @@ import CardItem from '../components/cards/CardItem'
 import CardDetail from '../components/cards/CardDetail'
 import CardView from '../components/cards/CardView'
 import ThemeToggle from '../components/common/ThemeToggle'
+import NotificationsDropdown from '../components/common/NotificationsDropdown'
 import { useCards } from '../context/CardsContext'
 import { useTheme } from '../context/ThemeContext'
 import { useDebounce } from '../hooks/useDebounce'
+import { useNotifications } from '../hooks/useNotifications'
 import './Dashboard.css'
 
 const Dashboard = () => {
   const { activeCards, tags, addCard, updateCard, deleteCard, toggleComplete, getTagById, loading } = useCards()
   const { darkMode } = useTheme()
+  const { unreadCount, refresh: refreshNotifications } = useNotifications()
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
   const [showViewModal, setShowViewModal] = useState(false)
@@ -24,10 +27,12 @@ const Dashboard = () => {
   const [showFilterMenu, setShowFilterMenu] = useState(false)
   const [showPriorityMenu, setShowPriorityMenu] = useState(false)
   const [showSortMenu, setShowSortMenu] = useState(false)
+  const [showNotifications, setShowNotifications] = useState(false)
   
   const filterRef = useRef(null)
   const priorityRef = useRef(null)
   const sortRef = useRef(null)
+  const notificationBtnRef = useRef(null)
   
   const priorityOptions = [
     { value: 'all', label: 'Todas', color: null, bgColor: null },
@@ -218,10 +223,30 @@ const Dashboard = () => {
               />
             </div>
             <ThemeToggle />
-            <button className="notification-btn">
-              <span>🔔</span>
-              <span className="notification-dot"></span>
-            </button>
+            <div style={{ position: 'relative' }}>
+              <button 
+                ref={notificationBtnRef}
+                className="notification-btn"
+                onClick={() => {
+                  setShowNotifications(!showNotifications)
+                  if (!showNotifications) {
+                    refreshNotifications()
+                  }
+                }}
+              >
+                <span>🔔</span>
+                {unreadCount > 0 && (
+                  <span className="notification-dot">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                )}
+              </button>
+              <NotificationsDropdown 
+                isOpen={showNotifications} 
+                onClose={() => setShowNotifications(false)}
+                onNotificationChange={refreshNotifications}
+              />
+            </div>
           </div>
         </header>
 

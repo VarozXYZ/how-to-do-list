@@ -31,6 +31,7 @@ const authRoutes = require('./routes/auth')
 const cardsRoutes = require('./routes/cards')
 const tagsRoutes = require('./routes/tags')
 const aiRoutes = require('./routes/ai')
+const notificationsRoutes = require('./routes/notifications')
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -47,6 +48,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/cards', cardsRoutes)
 app.use('/api/tags', tagsRoutes)
 app.use('/api/ai', aiRoutes)
+app.use('/api/notifications', notificationsRoutes)
 
 // Health check
 app.get('/api/health', (req, res) => {

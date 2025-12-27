@@ -1,15 +1,20 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Sidebar from '../components/layout/Sidebar'
 import CardItem from '../components/cards/CardItem'
 import ThemeToggle from '../components/common/ThemeToggle'
+import NotificationsDropdown from '../components/common/NotificationsDropdown'
 import { useCards } from '../context/CardsContext'
 import { useDebounce } from '../hooks/useDebounce'
+import { useNotifications } from '../hooks/useNotifications'
 import './Dashboard.css'
 
 const Completed = () => {
   const { completedCards, toggleComplete, deleteCard, getTagById, loading } = useCards()
+  const { unreadCount, refresh: refreshNotifications } = useNotifications()
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
+  const [showNotifications, setShowNotifications] = useState(false)
+  const notificationBtnRef = useRef(null)
 
   const filteredCards = completedCards.filter(card => {
     const query = debouncedSearchQuery.toLowerCase()
@@ -44,10 +49,30 @@ const Completed = () => {
               />
             </div>
             <ThemeToggle />
-            <button className="notification-btn">
-              <span>🔔</span>
-              <span className="notification-dot"></span>
-            </button>
+            <div style={{ position: 'relative' }}>
+              <button 
+                ref={notificationBtnRef}
+                className="notification-btn"
+                onClick={() => {
+                  setShowNotifications(!showNotifications)
+                  if (!showNotifications) {
+                    refreshNotifications()
+                  }
+                }}
+              >
+                <span>🔔</span>
+                {unreadCount > 0 && (
+                  <span className="notification-dot">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                )}
+              </button>
+              <NotificationsDropdown 
+                isOpen={showNotifications} 
+                onClose={() => setShowNotifications(false)}
+                onNotificationChange={refreshNotifications}
+              />
+            </div>
           </div>
         </header>
 

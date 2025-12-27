@@ -1,6 +1,7 @@
 const { getDB, saveDB } = require('../config/db')
 const log = require('../utils/logger')
 const { normalizeCardId, compareCardIds } = require('../utils/cardHelpers')
+const { createNotification } = require('../utils/notificationsHelper')
 
 // Get all cards for user
 const getCards = (req, res) => {
@@ -73,6 +74,15 @@ const createCard = (req, res) => {
     saveDB(db)
     log.dbOperation('Card created and saved', { cardId: newCard.id, userId: req.user.id })
 
+    // Create notification for new task
+    createNotification(
+      req.user.id,
+      'task_created',
+      `Nueva tarea: ${title}`,
+      'Has creado una nueva tarea',
+      { cardId: newCard.id }
+    )
+
     // Add tag info
     const tag = db.tags.find(t => t.id === newCard.tagId)
     log.success('Card created successfully', { 
@@ -115,6 +125,10 @@ const updateCard = (req, res) => {
       fieldsToUpdate: Object.keys(req.body).filter(k => req.body[k] !== undefined)
     })
 
+    // Track if task was just completed
+    const wasCompleted = db.cards[cardIndex].completed
+    const isNowCompleted = completed === true
+
     // Update fields
     if (title !== undefined) db.cards[cardIndex].title = title
     if (description !== undefined) db.cards[cardIndex].description = description
@@ -127,6 +141,17 @@ const updateCard = (req, res) => {
 
     saveDB(db)
     log.dbOperation('Card updated and saved', { cardId: id, userId: req.user.id })
+
+    // Create notification if task was just completed
+    if (!wasCompleted && isNowCompleted) {
+      createNotification(
+        req.user.id,
+        'task_completed',
+        `Tarea completada: ${db.cards[cardIndex].title}`,
+        '¡Buen trabajo! Has completado una tarea',
+        { cardId: parseInt(id) }
+      )
+    }
 
     const card = db.cards[cardIndex]
     const tag = db.tags.find(t => t.id === card.tagId)

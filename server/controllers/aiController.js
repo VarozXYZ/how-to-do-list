@@ -8,6 +8,7 @@ const {
   creativityToTemperature
 } = require('../config/ai')
 const log = require('../utils/logger')
+const { createNotification } = require('../utils/notificationsHelper')
 
 // Helper function for duration formatting
 const formatDuration = (ms) => {
@@ -282,8 +283,18 @@ const generateBasic = async (req, res) => {
         usageCount: user.aiUsageCount,
         limit: limitCheck.limit
       })
-      log.apiResponse('POST', '/api/ai/generate-basic', 403, req)
+      
+      // Create notification for AI limit reached
       const planName = user.plan === 'pro' ? 'Pro' : user.plan === 'admin' ? 'Admin' : 'Gratuito'
+      createNotification(
+        userId,
+        'ai_limit',
+        'Límite de generaciones alcanzado',
+        `Has usado las ${limitCheck.limit} generaciones de tu plan ${planName}. Considera actualizar tu plan.`,
+        { plan: user.plan || 'free', limit: limitCheck.limit, current: user.aiUsageCount || 0 }
+      )
+      
+      log.apiResponse('POST', '/api/ai/generate-basic', 403, req)
       return res.status(403).json({ 
         error: 'Has alcanzado el límite de generaciones de tu plan.',
         reason: `Has usado las ${limitCheck.limit} generaciones incluidas en tu plan ${planName}.`,
@@ -483,9 +494,19 @@ const generateAdvanced = async (req, res) => {
         usageCount: user.aiUsageCount,
         limit: limitCheck.limit
       })
-      log.apiResponse('POST', '/api/ai/generate-advanced', 403, req)
+      
+      // Create notification for AI limit reached
       const planName = user.plan === 'pro' ? 'Pro' : user.plan === 'admin' ? 'Admin' : 'Gratuito'
-      return res.status(403).json({ 
+      createNotification(
+        userId,
+        'ai_limit',
+        'Límite de generaciones alcanzado',
+        `Has usado las ${limitCheck.limit} generaciones de tu plan ${planName}. Considera actualizar tu plan.`,
+        { plan: user.plan || 'free', limit: limitCheck.limit, current: user.aiUsageCount || 0 }
+      )
+      
+      log.apiResponse('POST', '/api/ai/generate-advanced', 403, req)
+      return res.status(403).json({
         error: 'Has alcanzado el límite de generaciones de tu plan.',
         reason: `Has usado las ${limitCheck.limit} generaciones incluidas en tu plan ${planName}.`,
         limit: limitCheck.limit,
