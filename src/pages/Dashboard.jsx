@@ -87,7 +87,11 @@ const Dashboard = () => {
   ]
 
   const handleAiAssist = (id) => {
-    console.log('AI Assist clicked for card:', id)
+    const card = activeCards.find(c => c.id === id)
+    if (card) {
+      setEditingCard({ ...card, aiMode: 'advanced', aiPrompt: '' })
+      setShowModal(true)
+    }
   }
 
   const handleEdit = (card) => {
@@ -97,7 +101,13 @@ const Dashboard = () => {
 
   const handleCloseModal = () => {
     setShowModal(false)
-    setEditingCard(null)
+    // Clean up AI-specific properties when closing
+    if (editingCard && (editingCard.aiMode || editingCard.aiPrompt !== undefined)) {
+      const { aiMode, aiPrompt, ...cleanCard } = editingCard
+      setEditingCard(null)
+    } else {
+      setEditingCard(null)
+    }
   }
 
   // Priority order for sorting (expired first, then alta, media, baja)

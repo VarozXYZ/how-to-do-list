@@ -53,15 +53,25 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
       setSelectedTagId(favoriteTag?.id || tags[0]?.id || '')
       setDueDate(null)
       setDueTime(null)
+      setAiMode('basic')
+      setAiPrompt('')
     } else if (editCard) {
       // Editing: populate with existing data
       setTitle(editCard.title || '')
       setDescription(editCard.description || '')
       setSelectedTagId(editCard.tagId || getFavoriteTag()?.id || tags[0]?.id || '')
       setPriority(editCard.priority || 'baja')
-      setAiPrompt(editCard.aiPrompt || '')
       setDueDate(editCard.dueDate ? new Date(editCard.dueDate) : null)
       setDueTime(editCard.dueTime ? new Date(`2000-01-01T${editCard.dueTime}`) : null)
+      
+      // Check if opened from AI button (has aiMode and aiPrompt properties)
+      if (editCard.aiMode === 'advanced') {
+        setAiMode('advanced')
+        setAiPrompt(editCard.aiPrompt || '')
+      } else {
+        setAiMode('basic')
+        setAiPrompt(editCard.aiPrompt || '')
+      }
     }
   }, [show, editCard, tags, getFavoriteTag])
 
