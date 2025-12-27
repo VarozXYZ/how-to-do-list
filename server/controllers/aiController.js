@@ -250,6 +250,32 @@ const generateBasic = async (req, res) => {
     const db = getDB()
     log.dbOperation('Database loaded', { userId, cardId })
 
+    // Check generation limit
+    const user = db.users.find(u => u.id === userId)
+    if (!user) {
+      log.warn('User not found', { userId })
+      log.apiResponse('POST', '/api/ai/generate-basic', 404, req)
+      return res.status(404).json({ error: 'Usuario no encontrado.' })
+    }
+
+    const limitCheck = checkGenerationLimit(user)
+    if (!limitCheck.allowed) {
+      log.warn('AI generation limit reached', { 
+        userId, 
+        plan: user.plan, 
+        usageCount: user.aiUsageCount,
+        limit: limitCheck.limit
+      })
+      log.apiResponse('POST', '/api/ai/generate-basic', 403, req)
+      return res.status(403).json({ 
+        error: 'Has alcanzado el límite de generaciones de tu plan.',
+        reason: `Plan ${user.plan || 'free'}: ${limitCheck.limit} generaciones. Actual: ${user.aiUsageCount || 0}.`,
+        limit: limitCheck.limit,
+        current: user.aiUsageCount || 0,
+        plan: user.plan || 'free'
+      })
+    }
+
     // Step 1: Content moderation
     log.operationProgress('AI Generate Basic', 'Content moderation', req, { title: title.substring(0, 50) })
     log.waiting('AI moderation API response', { title: title.substring(0, 50) })
