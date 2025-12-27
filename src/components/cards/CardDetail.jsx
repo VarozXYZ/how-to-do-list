@@ -3,6 +3,7 @@ import { Modal } from 'react-bootstrap'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import es from 'date-fns/locale/es'
 import 'react-datepicker/dist/react-datepicker.css'
+import ReactMarkdown from 'react-markdown'
 import { useCards } from '../../context/CardsContext'
 import { useTheme } from '../../context/ThemeContext'
 import { generateContent, generateBasicContent, generateAdvancedContent, generateContextQuestions } from '../../services/ai'
@@ -32,6 +33,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
   const [showQuestionsModal, setShowQuestionsModal] = useState(false)
   const [aiQuestions, setAiQuestions] = useState([])
   const [aiAnswers, setAiAnswers] = useState({})
+  const [showMarkdownPreview, setShowMarkdownPreview] = useState(false)
   
   const priorityOptions = [
     { value: 'alta', label: 'Alta', color: '#dc2626', bgColor: '#fef2f2' },
@@ -141,6 +143,7 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
     setNewTagName('')
     setNewTagColor('#eff6ff')
     setAiError(null)
+    setShowMarkdownPreview(false)
     onHide()
   }
 
@@ -416,14 +419,34 @@ const CardDetail = ({ show, onHide, onSave, onUpdate, editCard }) => {
 
         {/* Description */}
         <div className="form-group">
-          <label className="form-label-modal">Descripción y notas</label>
-          <textarea
-            className="form-textarea-modal"
-            placeholder="Añade detalles, enlaces o subtareas aquí..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={5}
-          />
+          <div className="description-header">
+            <label className="form-label-modal">Descripción y notas</label>
+            <button
+              type="button"
+              className="markdown-toggle-btn"
+              onClick={() => setShowMarkdownPreview(!showMarkdownPreview)}
+              title={showMarkdownPreview ? "Mostrar editor" : "Mostrar preview"}
+            >
+              {showMarkdownPreview ? '✏️ Editar' : '👁️ Preview'}
+            </button>
+          </div>
+          {showMarkdownPreview ? (
+            <div className="markdown-preview">
+              {description.trim() ? (
+                <ReactMarkdown>{description}</ReactMarkdown>
+              ) : (
+                <p className="markdown-preview-empty">No hay descripción. Haz clic en "Editar" para añadir contenido.</p>
+              )}
+            </div>
+          ) : (
+            <textarea
+              className="form-textarea-modal"
+              placeholder="Añade detalles, enlaces o subtareas aquí... (Soporta Markdown)"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={5}
+            />
+          )}
         </div>
 
         {/* Divider */}

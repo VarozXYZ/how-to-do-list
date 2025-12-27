@@ -7,7 +7,7 @@
       "password": "$2a$10$q0yiBKevdpdbSxyKdh37feB66IBb1noKwl9QraIhLYetfFakfYoey",
       "bio": "",
       "createdAt": "2025-12-23T16:59:24.849Z",
-      "aiUsageCount": 23,
+      "aiUsageCount": 24,
       "favoriteTagId": "personal",
       "creativity": 72,
       "personality": "friendly"
@@ -19,8 +19,8 @@
       "userId": 1,
       "title": "Estudiar trigonometría",
       "description": "",
-      "tagId": "design",
-      "priority": "baja",
+      "tagId": "personal",
+      "priority": "media",
       "completed": false,
       "aiPrompt": "",
       "dueDate": null,
@@ -31,7 +31,7 @@
       "id": 12,
       "userId": 1,
       "title": "Tarta de manzana",
-      "description": "",
+      "description": "¡Genial, Alvaro! Una tarta clásica, perfecta para 5 personas y adaptada para que sea sin gluten. No te preocupes, aunque suene especial, el proceso es bastante sencillo y el resultado será delicioso. 🍎✨\n\nVamos a trabajar con ingredientes básicos que seguramente tienes a mano o son fáciles de conseguir. Para la masa, necesitarás una harina sin gluten (una mezcla prehecha funciona muy bien), mantequilla fría, un huevo y un poco de azúcar. Para el relleno, unas 4-5 manzanas (mejor si son de variedad firme como Granny Smith), canela en polvo, el jugo de medio limón y un poco de mermelada de albaricoque para brillar.\n\n**Paso a paso:**\n1.  **Prepara la masa:** En un bol, mezcla 250g de harina sin gluten con 100g de azúcar. Añade 125g de mantequilla fría en cubitos y, con las puntas de los dedos, intégrala hasta obtener una textura de arena gruesa. Agrega un huevo batido y une todo hasta formar una bola. Envuelve la masa en film transparente y déjala reposar en la nevera unos 30 minutos.\n2.  **Prepara el relleno:** Pela y descorazona las manzanas. Córtalas en láminas finas y mézclalas en un bol con el jugo de limón (para que no se oxiden), 2-3 cucharadas de azúcar y una cucharadita generosa de canela. Reserva.\n3.  **Monta la tarta:** Precalienta el horno a 180°C. Estira la masa entre dos papeles de horno hasta que tenga un grosor uniforme y sea un poco más grande que tu molde (de unos 22-24 cm). Forra el molde con la masa, presionando suavemente. Recorta el exceso.\n4.  **Rellena y hornea:** Coloca las láminas de manzana sobre la masa formando círculos concéntricos, superponiéndolas ligeramente. Hornea durante unos 40-45 minutos, hasta que el borde de la masa esté dorado.\n5.  **Acabado final:** Al sacarla del horno, calienta un par de cucharadas de mermelada con una cucharada de agua y pincela la superficie de las manzanas. Esto le dará un brillo precioso y un toque de dulzor extra. Deja que se enfríe completamente antes de desmoldar y servir.\n\n¡Y listo! Disfruta de un postre casero, fragante y apto para todos. Quedará tan buena que nadie notará la diferencia. 😊",
       "tagId": "personal",
       "priority": "baja",
       "completed": false,
@@ -890,6 +890,25 @@
       },
       "output": "¡Perfecto, Alvaro! Vamos a crear una deliciosa tarta de manzana, perfecta para 5 personas y sin azúcar añadido. Como eres principiante, te guiaré con cada detalle para que te quede increíble. 🍏✨\n\n**Comencemos con la masa, la base de todo:**\nNecesitarás un bol grande. Tamiza 250 gramos de harina de repostería y añade una pizca de sal. Corta 125 gramos de mantequilla sin sal (¡que esté bien fría de la nevera!) en cubitos pequeños. Échalos sobre la harina. Ahora, con las puntas de los dedos o con un tenedor, desmenuza la mantequilla con la harina rápidamente, hasta que todo parezca arena gruesa. Esto se llama \"sablaje\" y es el truco para que la masa quede crujiente. Añade un huevo batido y mezcla con una espátula. Si no se une del todo, agrega una cucharada de agua muy fría (¡solo una!). Forma una bola, aplástala un poco para hacer un disco, envuélvela en film transparente y métela en la nevera. **Espera al menos 30 minutos.** Este paso es mágico: la masa se relaja y no se encogerá en el horno.\n\n**Mientras la masa reposa, prepararemos el relleno dulce de forma natural:**\nPela y quita el corazón de unas 4-5 manzanas grandes (unos 850g). Elige variedades como Fuji o Gala, que ya son dulces por sí mismas. Córtalas en láminas finitas, más o menos del mismo grosor (unos 3mm). Para que no se oscurezcan, échalas en un bol y rocía con un poco de zumo de limón, removiendo bien. En un platito pequeño, mezcla una cucharada colmada de harina (esto espesará los jugos), dos cucharaditas de canela molida, media cucharadita de nuez moscada rallada y, si te gusta, una pizca de clavo molido. Este mix de especias será nuestro \"endulzante\" secreto. Vierte esta mezcla sobre las manzanas y remueve con cuidado hasta que todas las láminas estén cubiertas. Para un toque extra de dulzor, puedes añadir 2 o 3 cucharadas de puré de manzana natural (sin azúcar) y mezclar.\n\n**¡Hora de armar y hornear nuestra creación!**\nPrecalienta el horno a 180°C, con calor arriba y abajo. Saca la masa de la nevera. Espolvorea un poco de harina sobre la mesa y estírala con un rodillo, girándola de vez en cuando, hasta formar un círculo de unos 3mm de grosor. Colócala con cuidado sobre un molde desmontable de unos 24 cm de diámetro. Ajusta los bordes, presiona suavemente y recorta el exceso. Con un tenedor, pincha el fondo de la masa por toda la superficie (esto evita que se hinche). Ahora, coloca las manzanas condimentadas de forma ordenada y compacta. ¡Al horno! Coloca el molde en la rejilla central y hornea entre 45 y 55 minutos. Sabrás que está lista cuando el borde de la masa esté dorado y las manzanas burbujeen.\n\n**El último paso es el más importante: la paciencia.**\nSaca la tarta del horno y **déjala enfriar completamente dentro del molde**, sobre una rejilla. Esto llevará entre 1 hora y hora y media. No te tientes a sacarla antes. Al no llevar azúcar, este tiempo de reposo es esencial para que los jugos de la fruta espesen y la tarta tenga una textura perfecta al cortarla. Desmolda con cuidado. Para servir, un espolvoreado final de canela o una cucharada de yogur griego natural quedarán genial. ¡Disfruta del éxito de tu primera tarta de manzana casera y saludable",
       "timestamp": "2025-12-26T23:57:26.922Z"
+    },
+    {
+      "id": 1766797465906,
+      "userId": 1,
+      "cardId": 12,
+      "type": "generation",
+      "mode": "advanced",
+      "input": {
+        "title": "Tarta de manzana",
+        "description": "",
+        "userPrompt": "",
+        "answers": {
+          "0": "5",
+          "2": "sin gluten",
+          "3": "basico"
+        }
+      },
+      "output": "¡Genial, Alvaro! Una tarta clásica, perfecta para 5 personas y adaptada para que sea sin gluten. No te preocupes, aunque suene especial, el proceso es bastante sencillo y el resultado será delicioso. 🍎✨\n\nVamos a trabajar con ingredientes básicos que seguramente tienes a mano o son fáciles de conseguir. Para la masa, necesitarás una harina sin gluten (una mezcla prehecha funciona muy bien), mantequilla fría, un huevo y un poco de azúcar. Para el relleno, unas 4-5 manzanas (mejor si son de variedad firme como Granny Smith), canela en polvo, el jugo de medio limón y un poco de mermelada de albaricoque para brillar.\n\n**Paso a paso:**\n1.  **Prepara la masa:** En un bol, mezcla 250g de harina sin gluten con 100g de azúcar. Añade 125g de mantequilla fría en cubitos y, con las puntas de los dedos, intégrala hasta obtener una textura de arena gruesa. Agrega un huevo batido y une todo hasta formar una bola. Envuelve la masa en film transparente y déjala reposar en la nevera unos 30 minutos.\n2.  **Prepara el relleno:** Pela y descorazona las manzanas. Córtalas en láminas finas y mézclalas en un bol con el jugo de limón (para que no se oxiden), 2-3 cucharadas de azúcar y una cucharadita generosa de canela. Reserva.\n3.  **Monta la tarta:** Precalienta el horno a 180°C. Estira la masa entre dos papeles de horno hasta que tenga un grosor uniforme y sea un poco más grande que tu molde (de unos 22-24 cm). Forra el molde con la masa, presionando suavemente. Recorta el exceso.\n4.  **Rellena y hornea:** Coloca las láminas de manzana sobre la masa formando círculos concéntricos, superponiéndolas ligeramente. Hornea durante unos 40-45 minutos, hasta que el borde de la masa esté dorado.\n5.  **Acabado final:** Al sacarla del horno, calienta un par de cucharadas de mermelada con una cucharada de agua y pincela la superficie de las manzanas. Esto le dará un brillo precioso y un toque de dulzor extra. Deja que se enfríe completamente antes de desmoldar y servir.\n\n¡Y listo! Disfruta de un postre casero, fragante y apto para todos. Quedará tan buena que nadie notará la diferencia. 😊",
+      "timestamp": "2025-12-27T01:04:25.905Z"
     }
   ]
 }
