@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import ReactMarkdown from 'react-markdown'
 import { useCards } from '../../context/CardsContext'
 import { useTheme } from '../../context/ThemeContext'
-import { generateContent, generateBasicContent, generateAdvancedContent, generateContextQuestions } from '../../services/ai'
+import { generateBasicContent, generateAdvancedContent, generateContextQuestions } from '../../services/ai'
 import ConfirmModal from '../common/ConfirmModal'
 import './CardDetail.css'
 

@@ -340,6 +340,7 @@ addCard, updateCard, deleteCard, toggleComplete, addTag, deleteTag, getTagById
    - [x] ~~Dar funcionalidad al botón "IA" en las tarjetas (CardItem)~~ ✅ (Session 6)
    - [x] ~~Conectar configuración del usuario (creatividad/formalidad) a las generaciones~~ ✅
    - [ ] Limitar cantidad de generaciones por usuario
+   - [ ] Crear animación genial para la carga de la generación
    - [ ] (OPCIONAL) Crear cuestionario con IA para mejorar prompts
 
 2. **Sistema de borradores**

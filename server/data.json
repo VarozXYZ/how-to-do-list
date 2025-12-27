@@ -7,7 +7,7 @@
       "password": "$2a$10$q0yiBKevdpdbSxyKdh37feB66IBb1noKwl9QraIhLYetfFakfYoey",
       "bio": "",
       "createdAt": "2025-12-23T16:59:24.849Z",
-      "aiUsageCount": 24,
+      "aiUsageCount": 26,
       "favoriteTagId": "personal",
       "creativity": 72,
       "personality": "friendly"
@@ -18,7 +18,7 @@
       "id": 13,
       "userId": 1,
       "title": "Estudiar trigonometría",
-      "description": "",
+      "description": "¡Excelente plan, Álvaro! Vamos a estructurar una sesión productiva que te permita dominar estos conceptos paso a paso. 🎯\n\nPrimero, reúne todo tu material: calculadora científica (verificando que esté en el modo angular correcto para tus ejercicios), cuaderno, lápices de colores para destacar fórmulas y tus apuntes o libro de texto de referencia.\n\nComienza con una revisión activa de 25 minutos. No leas pasivamente; dibuja un triángulo rectángulo y anota al margen las razones seno, coseno y tangente. Luego, traza un círculo unitario y ubica los ángulos notables (0°, 30°, 45°, 90°, etc.), escribiendo junto a cada uno los valores de seno y coseno. Este mapa visual será tu mejor aliado.\n\nAhora, elige UN solo tema para profundizar durante los próximos 50 minutos. Por ejemplo, si eliges \"Identidades Fundamentales\", céntrate en la identidad pitagórica (sen²θ + cos²θ = 1) y en las de suma y resta de ángulos. Dedica tiempo a entender de dónde vienen, no solo a memorizarlas.\n\nLlega el momento crucial de la práctica (40 minutos). Busca ejercicios progresivos sobre el tema elegido. Empieza con 3 o 4 problemas directos de aplicación y luego avanza a 2 más complejos que integren conceptos. Si te atoras, no pases más de 5 minutos forcejeando; márcalo con un círculo y continúa.\n\nAl finalizar la práctica, dedica 20 minutos exclusivamente a resolver dudas. Revisa los problemas marcados: busca un video explicativo de un ejercicio similar o desglosa el problema en pasos más pequeños en una hoja aparte. Anota la duda concreta en una tarjeta o al final de tu cuaderno para consultarla después.\n\nPara cerrar, en los últimos 10 minutos, haz un resumen \"de futuro tú para presente tú\". En media hoja, escribe con tus propias palabras los 3 conceptos clave que aprendiste hoy y copia las 2 fórmulas que más usaste. Esto sella el aprendizaje.\n\nRecuerda que la clave está en la concentración y la constancia. Si 2 horas seguidas son demasiado, divide la sesión: una para teoría y otra para práctica en otro momento del día. ¡Confía en el proceso, que cada ejercicio resuelto te acerca a dominarlo! 💪",
       "tagId": "personal",
       "priority": "media",
       "completed": false,
@@ -909,6 +909,49 @@
       },
       "output": "¡Genial, Alvaro! Una tarta clásica, perfecta para 5 personas y adaptada para que sea sin gluten. No te preocupes, aunque suene especial, el proceso es bastante sencillo y el resultado será delicioso. 🍎✨\n\nVamos a trabajar con ingredientes básicos que seguramente tienes a mano o son fáciles de conseguir. Para la masa, necesitarás una harina sin gluten (una mezcla prehecha funciona muy bien), mantequilla fría, un huevo y un poco de azúcar. Para el relleno, unas 4-5 manzanas (mejor si son de variedad firme como Granny Smith), canela en polvo, el jugo de medio limón y un poco de mermelada de albaricoque para brillar.\n\n**Paso a paso:**\n1.  **Prepara la masa:** En un bol, mezcla 250g de harina sin gluten con 100g de azúcar. Añade 125g de mantequilla fría en cubitos y, con las puntas de los dedos, intégrala hasta obtener una textura de arena gruesa. Agrega un huevo batido y une todo hasta formar una bola. Envuelve la masa en film transparente y déjala reposar en la nevera unos 30 minutos.\n2.  **Prepara el relleno:** Pela y descorazona las manzanas. Córtalas en láminas finas y mézclalas en un bol con el jugo de limón (para que no se oxiden), 2-3 cucharadas de azúcar y una cucharadita generosa de canela. Reserva.\n3.  **Monta la tarta:** Precalienta el horno a 180°C. Estira la masa entre dos papeles de horno hasta que tenga un grosor uniforme y sea un poco más grande que tu molde (de unos 22-24 cm). Forra el molde con la masa, presionando suavemente. Recorta el exceso.\n4.  **Rellena y hornea:** Coloca las láminas de manzana sobre la masa formando círculos concéntricos, superponiéndolas ligeramente. Hornea durante unos 40-45 minutos, hasta que el borde de la masa esté dorado.\n5.  **Acabado final:** Al sacarla del horno, calienta un par de cucharadas de mermelada con una cucharada de agua y pincela la superficie de las manzanas. Esto le dará un brillo precioso y un toque de dulzor extra. Deja que se enfríe completamente antes de desmoldar y servir.\n\n¡Y listo! Disfruta de un postre casero, fragante y apto para todos. Quedará tan buena que nadie notará la diferencia. 😊",
       "timestamp": "2025-12-27T01:04:25.905Z"
+    },
+    {
+      "id": 1766839302708,
+      "userId": 1,
+      "cardId": 13,
+      "type": "moderation",
+      "input": {
+        "title": "Estudiar trigonometría",
+        "description": "",
+        "userPrompt": ""
+      },
+      "output": {
+        "approved": true
+      },
+      "timestamp": "2025-12-27T12:41:42.708Z"
+    },
+    {
+      "id": 1766839318941,
+      "userId": 1,
+      "cardId": 13,
+      "type": "generation",
+      "mode": "basic",
+      "input": {
+        "title": "Estudiar trigonometría",
+        "description": ""
+      },
+      "output": "**Descripción:** Organiza una sesión de estudio para comprender y practicar los conceptos fundamentales de trigonometría, esenciales para matemáticas avanzadas, física o ingeniería. 🧮\n\n**Pasos recomendados:**\n1.  **Revisa los conceptos básicos (20-30 min):** Repasa las definiciones clave: seno, coseno y tangente en un triángulo rectángulo, y el círculo unitario. Anota las fórmulas principales.\n2.  **Enfócate en un tema específico (40-60 min):** Elige un área para profundizar hoy (ej: identidades trigonométricas, resolución de triángulos, o gráficas de funciones seno/coseno). Evita abarcar todo a la vez.\n3.  **Practica con ejercicios (30-45 min):** Resuelve problemas progresivos, desde sencillos hasta más complejos, aplicando lo repasado. Usa tu libro de texto, cuadernos de apuntes o recursos en línea confiables.\n4.  **Identifica y aclara dudas (15-20 min):** Marca los ejercicios o conceptos que no entendiste. Consulta videos tutoriales, foros o anótalos para preguntar a tu profesor o compañeros.\n5.  **Haz un resumen final (10 min):** Escribe en tus propias palabras los puntos más importantes aprendidos y las fórmulas que más usaste. Esto ayuda a fijar el conocimiento.\n\n**Consideraciones:**\n*   Ten a mano tu calculadora científica (en modo grados o radianes según lo requerido), hojas de papel, lápiz y tus materiales de estudio.\n*   Un estudio efectivo de 2-2.5 horas es mejor que muchas horas sin foco. Si es mucho, divide la tarea en varias sesiones más cortas (ej: \"Repasar identidades\" y \"Practicar problemas de aplicación\").\n*   La constancia es clave. Es mejor estudiar 1 hora al día que 7 horas un solo día. ¡Tú puedes! 💪",
+      "timestamp": "2025-12-27T12:41:58.940Z"
+    },
+    {
+      "id": 1766839440116,
+      "userId": 1,
+      "cardId": 13,
+      "type": "generation",
+      "mode": "advanced",
+      "input": {
+        "title": "Estudiar trigonometría",
+        "description": "**Descripción:** Organiza una sesión de estudio para comprender y practicar los conceptos fundamentales de trigonometría, esenciales para matemáticas avanzadas, física o ingeniería. 🧮\n\n**Pasos recomendados:**\n1.  **Revisa los conceptos básicos (20-30 min):** Repasa las definiciones clave: seno, coseno y tangente en un triángulo rectángulo, y el círculo unitario. Anota las fórmulas principales.\n2.  **Enfócate en un tema específico (40-60 min):** Elige un área para profundizar hoy (ej: identidades trigonométricas, resolución de triángulos, o gráficas de funciones seno/coseno). Evita abarcar todo a la vez.\n3.  **Practica con ejercicios (30-45 min):** Resuelve problemas progresivos, desde sencillos hasta más complejos, aplicando lo repasado. Usa tu libro de texto, cuadernos de apuntes o recursos en línea confiables.\n4.  **Identifica y aclara dudas (15-20 min):** Marca los ejercicios o conceptos que no entendiste. Consulta videos tutoriales, foros o anótalos para preguntar a tu profesor o compañeros.\n5.  **Haz un resumen final (10 min):** Escribe en tus propias palabras los puntos más importantes aprendidos y las fórmulas que más usaste. Esto ayuda a fijar el conocimiento.\n\n**Consideraciones:**\n*   Ten a mano tu calculadora científica (en modo grados o radianes según lo requerido), hojas de papel, lápiz y tus materiales de estudio.\n*   Un estudio efectivo de 2-2.5 horas es mejor que muchas horas sin foco. Si es mucho, divide la tarea en varias sesiones más cortas (ej: \"Repasar identidades\" y \"Practicar problemas de aplicación\").\n*   La constancia es clave. Es mejor estudiar 1 hora al día que 7 horas un solo día. ¡Tú puedes! 💪",
+        "userPrompt": "",
+        "answers": {}
+      },
+      "output": "¡Excelente plan, Álvaro! Vamos a estructurar una sesión productiva que te permita dominar estos conceptos paso a paso. 🎯\n\nPrimero, reúne todo tu material: calculadora científica (verificando que esté en el modo angular correcto para tus ejercicios), cuaderno, lápices de colores para destacar fórmulas y tus apuntes o libro de texto de referencia.\n\nComienza con una revisión activa de 25 minutos. No leas pasivamente; dibuja un triángulo rectángulo y anota al margen las razones seno, coseno y tangente. Luego, traza un círculo unitario y ubica los ángulos notables (0°, 30°, 45°, 90°, etc.), escribiendo junto a cada uno los valores de seno y coseno. Este mapa visual será tu mejor aliado.\n\nAhora, elige UN solo tema para profundizar durante los próximos 50 minutos. Por ejemplo, si eliges \"Identidades Fundamentales\", céntrate en la identidad pitagórica (sen²θ + cos²θ = 1) y en las de suma y resta de ángulos. Dedica tiempo a entender de dónde vienen, no solo a memorizarlas.\n\nLlega el momento crucial de la práctica (40 minutos). Busca ejercicios progresivos sobre el tema elegido. Empieza con 3 o 4 problemas directos de aplicación y luego avanza a 2 más complejos que integren conceptos. Si te atoras, no pases más de 5 minutos forcejeando; márcalo con un círculo y continúa.\n\nAl finalizar la práctica, dedica 20 minutos exclusivamente a resolver dudas. Revisa los problemas marcados: busca un video explicativo de un ejercicio similar o desglosa el problema en pasos más pequeños en una hoja aparte. Anota la duda concreta en una tarjeta o al final de tu cuaderno para consultarla después.\n\nPara cerrar, en los últimos 10 minutos, haz un resumen \"de futuro tú para presente tú\". En media hoja, escribe con tus propias palabras los 3 conceptos clave que aprendiste hoy y copia las 2 fórmulas que más usaste. Esto sella el aprendizaje.\n\nRecuerda que la clave está en la concentración y la constancia. Si 2 horas seguidas son demasiado, divide la sesión: una para teoría y otra para práctica en otro momento del día. ¡Confía en el proceso, que cada ejercicio resuelto te acerca a dominarlo! 💪",
+      "timestamp": "2025-12-27T12:44:00.115Z"
     }
   ]
 }
