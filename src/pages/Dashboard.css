@@ -229,7 +229,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  padding-bottom: 5rem;
+  padding-bottom: 6rem; /* Extra padding to account for fixed FAB */
 }
 
 @media (max-width: 1200px) {
@@ -246,7 +246,7 @@
 
 /* FAB Button */
 .fab-button {
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   right: 2rem;
   width: 56px;
@@ -265,6 +265,7 @@
   font-size: 32px;
   font-weight: 300;
   line-height: 0;
+  z-index: 1000;
 }
 
 .fab-button:hover {
