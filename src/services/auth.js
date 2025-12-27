@@ -36,17 +36,6 @@ export const getCurrentUser = () => {
   return user ? JSON.parse(user) : null
 }
 
-// Check if user is logged in
-export const isAuthenticated = () => {
-  return !!localStorage.getItem('token')
-}
-
-// Get user profile from API
-export const getProfile = async () => {
-  const response = await api.get('/auth/me')
-  return response.data
-}
-
 // Update profile
 export const updateProfile = async (data) => {
   const response = await api.put('/auth/profile', data)
