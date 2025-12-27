@@ -292,6 +292,22 @@ const generateBasic = async (req, res) => {
       })
     }
 
+    // Increment usage count immediately when API call is made (before generation)
+    log.operationProgress('AI Generate Basic', 'Incrementing usage count', req)
+    const userIndex = db.users.findIndex(u => u.id === userId)
+    if (userIndex !== -1) {
+      if (!db.users[userIndex].aiUsageCount) {
+        db.users[userIndex].aiUsageCount = 0
+      }
+      db.users[userIndex].aiUsageCount++
+      log.info('AI usage count incremented (before generation)', { 
+        userId, 
+        newCount: db.users[userIndex].aiUsageCount 
+      })
+      saveDB(db)
+      log.dbOperation('Usage count incremented and saved', { userId })
+    }
+
     // Step 1: Content moderation
     log.operationProgress('AI Generate Basic', 'Content moderation', req, { title: title.substring(0, 50) })
     log.waiting('AI moderation API response', { title: title.substring(0, 50) })
@@ -485,6 +501,22 @@ const generateAdvanced = async (req, res) => {
         current: user.aiUsageCount || 0,
         plan: user.plan || 'free'
       })
+    }
+
+    // Increment usage count immediately when API call is made (before generation)
+    log.operationProgress('AI Generate Advanced', 'Incrementing usage count', req)
+    const userIndex = db.users.findIndex(u => u.id === userId)
+    if (userIndex !== -1) {
+      if (!db.users[userIndex].aiUsageCount) {
+        db.users[userIndex].aiUsageCount = 0
+      }
+      db.users[userIndex].aiUsageCount++
+      log.info('AI usage count incremented (before generation)', { 
+        userId, 
+        newCount: db.users[userIndex].aiUsageCount 
+      })
+      saveDB(db)
+      log.dbOperation('Usage count incremented and saved', { userId })
     }
 
     // Note: Content moderation was already done in the questions step, so we skip it here
