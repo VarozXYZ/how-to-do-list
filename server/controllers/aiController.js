@@ -317,7 +317,6 @@ const generateBasic = async (req, res) => {
     // Step 2: Get user's creativity and personality
     // For basic mode, use moderate temperature (0.5-0.9 range) for balanced responses
     log.operationProgress('AI Generate Basic', 'Loading user settings', req)
-    const user = db.users.find(u => u.id === userId)
     const userCreativity = user?.creativity || 50
     const userPersonality = user?.personality || 'professional'
     const username = user?.username || null
@@ -477,7 +476,6 @@ const generateAdvanced = async (req, res) => {
 
     // Step 1: Get user's creativity and personality
     log.operationProgress('AI Generate Advanced', 'Loading user settings', req)
-    const user = db.users.find(u => u.id === userId)
     const userCreativity = user?.creativity || 50
     const userPersonality = user?.personality || 'professional'
     const username = user?.username || null
