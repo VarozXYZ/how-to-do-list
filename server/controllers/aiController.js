@@ -556,20 +556,7 @@ const generateAdvanced = async (req, res) => {
     db.aiLogs.push(generationLog)
     log.dbOperation('Generation log saved', { logId: generationLog.id })
 
-    // Step 4: Increment user's AI usage count
-    log.operationProgress('AI Generate Advanced', 'Updating usage count', req)
-    const userIndex = db.users.findIndex(u => u.id === userId)
-    if (userIndex !== -1) {
-      if (!db.users[userIndex].aiUsageCount) {
-        db.users[userIndex].aiUsageCount = 0
-      }
-      db.users[userIndex].aiUsageCount++
-      log.info('AI usage count incremented', { 
-        userId, 
-        newCount: db.users[userIndex].aiUsageCount 
-      })
-    }
-
+    // Usage count was already incremented before generation
     saveDB(db)
     log.dbOperation('Database saved', { userId })
 
