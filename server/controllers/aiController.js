@@ -1,6 +1,5 @@
 const { getDB, saveDB } = require('../config/db')
 const { 
-  generateTaskContent, 
   generateBasicTaskContent, 
   generateAdvancedTaskContent,
   generateContextQuestions,
@@ -14,95 +13,6 @@ const log = require('../utils/logger')
 const formatDuration = (ms) => {
   if (ms < 1000) return `${ms}ms`
   return `${(ms / 1000).toFixed(2)}s`
-}
-
-// Generate AI content for a task
-const generate = async (req, res) => {
-  try {
-    // Check if AI is available
-    if (!isAiAvailable()) {
-      return res.status(503).json({ 
-        error: 'Servicio de IA no disponible.',
-        reason: 'El servicio de IA no está configurado. Contacta al administrador.'
-      })
-    }
-
-    const { title, description, userPrompt, cardId } = req.body
-    const userId = req.user.id
-
-    if (!title) {
-      return res.status(400).json({ error: 'El título es obligatorio.' })
-    }
-
-    const db = getDB()
-
-    // Step 1: Content moderation
-    const moderationResult = await moderateContent(title, description, userPrompt)
-    
-    // Log the moderation attempt
-    const moderationLog = {
-      id: Date.now(),
-      userId: userId,
-      cardId: cardId || null,
-      type: 'moderation',
-      input: { title, description, userPrompt },
-      output: moderationResult,
-      timestamp: new Date().toISOString()
-    }
-    
-    if (!db.aiLogs) db.aiLogs = []
-    db.aiLogs.push(moderationLog)
-
-    if (!moderationResult.approved) {
-      saveDB(db)
-      return res.status(400).json({ 
-        error: 'Contenido no permitido', 
-        reason: moderationResult.reason || 'El contenido no cumple con las políticas de uso.'
-      })
-    }
-
-    // Step 2: Generate content
-    const generatedContent = await generateTaskContent(title, description, userPrompt)
-
-    // Log the generation
-    const generationLog = {
-      id: Date.now() + 1,
-      userId: userId,
-      cardId: cardId || null,
-      type: 'generation',
-      input: { title, description, userPrompt },
-      output: generatedContent,
-      timestamp: new Date().toISOString()
-    }
-    db.aiLogs.push(generationLog)
-
-    // Step 3: Increment user's AI usage count
-    const userIndex = db.users.findIndex(u => u.id === userId)
-    if (userIndex !== -1) {
-      if (!db.users[userIndex].aiUsageCount) {
-        db.users[userIndex].aiUsageCount = 0
-      }
-      db.users[userIndex].aiUsageCount++
-    }
-
-    saveDB(db)
-
-    res.json({ 
-      success: true,
-      content: generatedContent,
-      usageCount: db.users[userIndex]?.aiUsageCount || 1
-    })
-
-  } catch (error) {
-    console.error('AI Generate error:', error)
-    
-    // Check for API key issues
-    if (error.message?.includes('API key') || error.status === 401) {
-      return res.status(500).json({ error: 'Error de configuración del servicio de IA.' })
-    }
-    
-    res.status(500).json({ error: 'Error al generar contenido con IA.' })
-  }
 }
 
 // Get AI usage stats for current user
@@ -589,5 +499,5 @@ const generateAdvanced = async (req, res) => {
   }
 }
 
-module.exports = { generate, generateBasic, generateAdvanced, generateQuestions, getUsageStats, getLogs }
+module.exports = { generateBasic, generateAdvanced, generateQuestions, getUsageStats, getLogs }
 

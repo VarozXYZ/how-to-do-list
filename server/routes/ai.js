@@ -1,13 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { generate, generateBasic, generateAdvanced, generateQuestions, getUsageStats, getLogs } = require('../controllers/aiController')
+const { generateBasic, generateAdvanced, generateQuestions, getUsageStats, getLogs } = require('../controllers/aiController')
 const auth = require('../middleware/auth')
 
 // All routes require authentication
 router.use(auth)
-
-// POST /api/ai/generate - Generate AI content for a task (legacy)
-router.post('/generate', generate)
 
 // POST /api/ai/generate-basic - Generate basic AI content (title + description only)
 router.post('/generate-basic', (req, res, next) => {
