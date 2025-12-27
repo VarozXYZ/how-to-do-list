@@ -195,11 +195,12 @@ const Settings = () => {
                     <label>Sobre mí</label>
                     <div
                       className="info-btn-wrapper"
-                      onMouseEnter={() => setShowAboutMeInfo(true)}
+                      onMouseEnter={handleAboutMeMouseEnter}
                       onMouseLeave={() => setShowAboutMeInfo(false)}
                       style={{ position: 'relative' }}
                     >
                       <button
+                        ref={aboutMeButtonRef}
                         type="button"
                         className="info-btn"
                         style={{
@@ -224,6 +225,7 @@ const Settings = () => {
                         <div 
                           ref={aboutMeInfoRef}
                           className="about-me-info-popover"
+                          style={aboutMePopoverStyle}
                           onMouseEnter={() => setShowAboutMeInfo(true)}
                           onMouseLeave={() => setShowAboutMeInfo(false)}
                         >
@@ -360,11 +362,12 @@ const Settings = () => {
                     <label>Nivel de creatividad</label>
                     <div
                       className="info-btn-wrapper"
-                      onMouseEnter={() => setShowCreativityInfo(true)}
+                      onMouseEnter={handleCreativityMouseEnter}
                       onMouseLeave={() => setShowCreativityInfo(false)}
                       style={{ position: 'relative' }}
                     >
                       <button
+                        ref={creativityButtonRef}
                         type="button"
                         className="info-btn"
                         style={{
@@ -389,6 +392,7 @@ const Settings = () => {
                         <div 
                           ref={creativityInfoRef}
                           className="about-me-info-popover"
+                          style={creativityPopoverStyle}
                           onMouseEnter={() => setShowCreativityInfo(true)}
                           onMouseLeave={() => setShowCreativityInfo(false)}
                         >
